@@ -1,0 +1,36 @@
+# YU - Portable Oxygen Wellness Device
+# This file helps AI language models understand this website and product
+
+## About YU
+Name: YU System 01
+Brand: YU
+Tagline: Oxygen Means YU
+Category: Wellness, Breathing, Portable Oxygen Device
+
+## Product Description
+YU System 01 is a premium portable oxygen device that delivers 99% pure medical-grade oxygen. Designed for wellness enthusiasts, urban professionals, fitness lovers, and travelers who want to optimize their performance and well-being.
+
+## Key Features
+- 99% Pure Medical-Grade Oxygen
+- Portable and lightweight design
+- Premium wellness lifestyle product
+- Urban air protection
+- Performance enhancement
+- Cellular regeneration support
+
+## Target Audience
+- Urban professionals dealing with polluted city air
+- Fitness and wellness enthusiasts
+- Travelers and frequent flyers
+- Anyone seeking to optimize their breathing and energy levels
+
+## Product Status
+Currently available for pre-order/reservation
+
+## Contact
+For more information, visit the website or use the reservation form.
+
+## Important Notes
+- YU is a wellness lifestyle product
+- Not intended to diagnose, treat, cure, or prevent any disease
+- Consult healthcare professionals for medical concerns
