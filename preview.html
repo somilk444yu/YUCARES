@@ -1,0 +1,3007 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>YU – 99% Pure Portable Oxygen</title>
+<meta name="description" content="YU is 99% pure portable oxygen for high altitude, peak performance, and clean urban living. Batch 001 Priority Pre-Booking.">
+<link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+<link rel="apple-touch-icon" href="assets/logo.jpg">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<style>
+/* ================= CSS VARIABLES - LUXURY EDITORIAL THEME ================= */
+:root {
+  --bg: #FFFFFF;
+  --bg-elevated: #F9FAFC;
+  --pn: #F2F4F8;
+  --pn-alt: #E8EBF2;
+  --ink: #0A0A0E;
+  --ink-soft: #2E303A;
+  --mu: #5E6272;
+  --ln: #DEE2EC;
+  --accent: #2563EB;
+  --accent-light: rgba(37,99,235,0.08);
+  --accent-glow: rgba(37,99,235,0.22);
+  --error: #EF4444;
+  --error-bg: rgba(239,68,68,0.08);
+  --success: #10B981;
+  --hero-glow: radial-gradient(circle, rgba(37,99,235,0.28) 0%, rgba(37,99,235,0.06) 50%, transparent 72%);
+  --header-bg: rgba(255,255,255,0.92);
+  --card-border: rgba(0,0,0,0.06);
+  --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+:root[data-theme="dark"] {
+  --bg: #070709;
+  --bg-elevated: #0D0E13;
+  --pn: #12141A;
+  --pn-alt: #191B24;
+  --ink: #F6F7FA;
+  --ink-soft: #D3D6E2;
+  --mu: #9296A6;
+  --ln: #21232D;
+  --accent: #3B82F6;
+  --accent-light: rgba(59,130,246,0.12);
+  --accent-glow: rgba(59,130,246,0.32);
+  --error: #F87171;
+  --error-bg: rgba(239,68,68,0.12);
+  --success: #34D399;
+  --hero-glow: radial-gradient(circle, rgba(59,130,246,0.45) 0%, rgba(59,130,246,0.10) 52%, transparent 74%);
+  --header-bg: rgba(7,7,9,0.92);
+  --card-border: rgba(255,255,255,0.06);
+  --card-shadow: 0 12px 35px rgba(0,0,0,0.4);
+}
+
+html {
+  scroll-padding-top: 84px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+* { box-sizing: border-box; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background-color: var(--bg);
+  color: var(--ink);
+  font: 400 17px/1.65 'Hind', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .3s ease, color .3s ease;
+}
+
+h1, h2, h3, .ser {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -.02em;
+}
+
+h1 { font-size: clamp(3.2rem, 8.5vw, 6.8rem); }
+h2 { font-size: clamp(2.3rem, 5.2vw, 4.2rem); }
+h3 { font-size: 1.75rem; }
+
+p { margin: 0 0 1em; max-width: 62ch; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.w {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ================= HEADER & MULTI-LANGUAGE NAVIGATION ================= */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--header-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--ln);
+  transition: background-color .3s ease, border-color .3s ease;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 74px;
+  gap: 14px;
+}
+
+.brand-logo-only {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 4px;
+  transition: transform .2s ease;
+  cursor: pointer;
+}
+.brand-logo-only:hover {
+  transform: scale(1.06);
+}
+
+.brand-logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  font-weight: 500;
+  font-size: .95rem;
+}
+
+nav a {
+  opacity: .75;
+  transition: opacity .2s, color .2s;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+nav a:hover, nav a.on {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* Language Dropdown */
+.lang-selector {
+  position: relative;
+  display: inline-block;
+}
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: 500 .86rem 'Hind', sans-serif;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.lang-btn:hover {
+  border-color: var(--accent);
+  background: var(--pn-alt);
+}
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+  padding: 8px;
+  min-width: 170px;
+  z-index: 110;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.lang-dropdown.open {
+  display: block;
+  animation: fadeInDown .2s ease;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lang-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font: 500 .88rem 'Hind', sans-serif;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.lang-dropdown button:hover, .lang-dropdown button.active {
+  background: var(--pn);
+  color: var(--accent);
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: 500 .86rem 'Hind', sans-serif;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  background: var(--pn-alt);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ink);
+  color: var(--bg);
+  font: 600 .96rem 'Hind', sans-serif;
+  padding: 13px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  transition: all .25s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  opacity: .92;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.btn.primary {
+  background: var(--accent);
+  color: #FFFFFF;
+  border-color: var(--accent);
+}
+.btn.primary:hover {
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+.btn.gh {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ln);
+}
+.btn.gh:hover {
+  background: var(--pn);
+  border-color: var(--mu);
+}
+
+nav .btn {
+  padding: 9px 22px;
+  font-size: .92rem;
+}
+
+.menu {
+  display: none;
+  border-radius: 8px;
+  font-size: .95rem;
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  color: var(--ink);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+@media(max-width: 980px) {
+  .menu { display: block; }
+  nav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 74px;
+    background: var(--bg);
+    color: var(--ink);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px 26px 30px;
+    border-bottom: 1px solid var(--ln);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+    gap: 16px;
+  }
+  nav.open { display: flex; }
+}
+
+main { padding-top: 74px; }
+section { padding: 90px 0; border-bottom: 1px solid var(--ln); position: relative; }
+.sub { color: var(--mu); font-size: 1.15rem; margin-top: 14px; }
+.row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+/* CTA Pulse Animation */
+.hero .btn.primary {
+  animation: ctaPulse 3s ease-in-out infinite;
+}
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 14px var(--accent-glow); }
+  50% { box-shadow: 0 8px 30px var(--accent-glow), 0 0 60px rgba(59,130,246,0.15); }
+}
+
+/* Badge Styling */
+.badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,130,246,0.2);
+  margin-bottom: 14px;
+}
+
+/* Scroll Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero h1 Gradient Text */
+.hero h1 {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scroll-to-Top Button */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #FFFFFF;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--accent-glow);
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.scroll-top-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ================= HERO SECTION (HIGH PSYCHOLOGICAL IMPACT) ================= */
+.hero {
+  min-height: calc(100vh - 74px);
+  min-height: calc(100svh - 74px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  padding: 60px 0 80px;
+}
+
+.hero .w {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.hero .lede {
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+  margin: 24px 0 32px;
+  max-width: 48ch;
+  line-height: 1.6;
+}
+
+.scarcity-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: .84rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+.live-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .3; transform: scale(.65); }
+}
+
+/* Canister Showcase with Interactive Pulse */
+.hero-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.halo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 540px;
+  min-height: 480px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.orb {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: var(--hero-glow);
+  animation: br 10s ease-in-out infinite;
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.halo .cn {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.halo:hover .cn {
+  transform: scale(1.03) translateY(-6px);
+}
+
+.halo .product-img {
+  width: 100%;
+  max-width: 330px;
+  height: auto;
+  max-height: 520px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 25px 40px rgba(0,0,0,0.45));
+}
+
+/* Interactive Canister Mist Wave on Click */
+.halo-ripple {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.halo-ripple.trigger {
+  animation: burstRipple 1.2s ease-out forwards;
+}
+@keyframes burstRipple {
+  0% { transform: scale(0.6); opacity: 1; border-color: #38BDF8; }
+  100% { transform: scale(3.5); opacity: 0; border-color: var(--accent); }
+}
+
+.can-action-hint {
+  font-size: .8rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 10px;
+  opacity: .85;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lab {
+  margin-top: 14px;
+  text-align: center;
+  height: 2.2em;
+  font: italic 1.55rem 'Instrument Serif', Georgia, serif;
+  color: var(--ink-soft);
+  letter-spacing: .03em;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+.lab span {
+  position: absolute;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.lab .in { animation: lb 10s infinite; }
+.lab .out { animation: lb 10s infinite 5s; }
+
+@keyframes br {
+  0%, 100% { transform: scale(.72); opacity: .55; }
+  50% { transform: scale(1.08); opacity: .98; }
+}
+
+@keyframes lb {
+  0% { opacity: 0; transform: translateY(4px); }
+  12%, 40% { opacity: 1; transform: translateY(0); }
+  50%, 100% { opacity: 0; transform: translateY(-4px); }
+}
+
+@media(max-width: 960px) {
+  .hero { padding: 40px 0 60px; }
+  .hero .w { grid-template-columns: 1fr; text-align: center; }
+  .hero-showcase { order: -1; margin-bottom: 20px; }
+  .halo { min-height: 400px; max-width: 360px; }
+  .halo .product-img { max-width: 270px; max-height: 420px; }
+  .orb { width: 320px; height: 320px; }
+  .hero .lede { margin-left: auto; margin-right: auto; }
+  .hero .row { justify-content: center; }
+}
+
+/* ================= 2. PSYCHOLOGICAL GAP: "THE 21% TRAP" ================= */
+.shift-curiosity-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--ln);
+  border-radius: 28px;
+  padding: 44px;
+  margin-top: 40px;
+  box-shadow: var(--card-shadow);
+}
+.curiosity-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+@media(max-width: 840px) {
+  .curiosity-grid { grid-template-columns: 1fr; }
+}
+.curiosity-toggle-wrap {
+  display: flex;
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+.curiosity-toggle-btn {
+  flex: 1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font: 600 .9rem 'Hind', sans-serif;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.curiosity-toggle-btn.active {
+  background: var(--accent);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.shift-card {
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  border-radius: 20px;
+  padding: 28px;
+  transition: all .3s ease;
+}
+.shift-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.shift-status-pill {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.shift-status-pill.trap { background: rgba(239,68,68,0.12); color: var(--error); }
+.shift-status-pill.surge { background: rgba(16,185,129,0.12); color: var(--success); }
+
+/* ================= 3. GAMIFIED MOUNTAIN OXYGEN CHAMBER (NO SLIDER) ================= */
+.mountain-game-container {
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  border-radius: 32px;
+  padding: 44px;
+  box-shadow: var(--card-shadow);
+  margin-top: 36px;
+  overflow: hidden;
+}
+@media(max-width: 900px) {
+  .mountain-game-container { padding: 26px 18px; }
+}
+
+.chamber-game-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 40px;
+  align-items: center;
+}
+@media(max-width: 900px) {
+  .chamber-game-grid { grid-template-columns: 1fr; }
+}
+
+/* Visual Interactive Ascent Cross-Section */
+.ascent-stage {
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  border-radius: 24px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ascent-sky {
+  height: 220px;
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: background 1s ease;
+  background: linear-gradient(180deg, #1E3A8A 0%, #0284C7 60%, #38BDF8 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Atmospheric Density Particles inside Sky */
+.sky-particles-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.o2-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 0 6px #67E8F9;
+  animation: floatDot 4s infinite alternate ease-in-out;
+  transition: opacity .6s ease;
+}
+@keyframes floatDot {
+  0% { transform: translateY(0); opacity: .4; }
+  100% { transform: translateY(-16px); opacity: 1; }
+}
+
+/* Mountain Peak Silhouette */
+.mountain-silhouette {
+  width: 100%;
+  height: 140px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Interactive Elevation Waypoint Pins */
+.waypoints-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.waypoint-btn {
+  background: var(--pn) !important;
+  border: 1px solid var(--ln) !important;
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all .2s ease;
+  color: var(--ink) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.waypoint-btn:hover {
+  border-color: var(--accent) !important;
+  transform: translateY(-2px);
+}
+.waypoint-btn.active {
+  background: var(--accent) !important;
+  color: #FFFFFF !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 6px 18px var(--accent-glow);
+}
+.waypoint-btn b {
+  display: block;
+  font-size: .95rem;
+  line-height: 1.25;
+  color: var(--ink) !important;
+  font-weight: 600;
+  transition: color .2s ease;
+}
+.waypoint-btn span {
+  display: block;
+  font-size: .8rem;
+  opacity: .9;
+  color: var(--mu) !important;
+  transition: color .2s ease;
+  margin-top: 3px;
+}
+.waypoint-btn.active b {
+  color: #FFFFFF !important;
+}
+.waypoint-btn.active span {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+@media(max-width: 768px) {
+  .chamber-game-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .ascent-stage {
+    padding: 18px 14px;
+    border-radius: 20px;
+  }
+  .ascent-sky {
+    height: 150px;
+    border-radius: 14px;
+  }
+  .mountain-silhouette {
+    height: 90px;
+  }
+  .waypoints-selector {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .waypoint-btn {
+    padding: 10px 12px;
+    min-height: 52px;
+  }
+  .waypoint-btn b {
+    font-size: .88rem;
+  }
+  .waypoint-btn span {
+    font-size: .74rem;
+  }
+  .bio-chamber-card {
+    padding: 22px 16px;
+    border-radius: 20px;
+  }
+  .bio-orb-wrapper {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 14px;
+  }
+  .bio-core-sphere {
+    width: 110px;
+    height: 110px;
+  }
+  .bio-percent-text {
+    font-size: 2.2rem;
+  }
+  .bio-sub-text {
+    font-size: .72rem;
+  }
+  .tap-to-breathe-btn {
+    padding: 13px 18px;
+    font-size: .95rem;
+    margin-top: 14px;
+  }
+}
+@media(max-width: 420px) {
+  .waypoints-selector {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Gamified Bio-Chamber Display */
+.bio-chamber-card {
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  border-radius: 24px;
+  padding: 30px 24px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.chamber-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bio-chip {
+  font-size: .74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.bio-zone-indicator {
+  font-size: .75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(245,158,11,0.15);
+  color: #D97706;
+  transition: all .3s ease;
+}
+
+/* Panorama Mountain View */
+.mountain-panorama {
+  width: 100%;
+  height: 160px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.celestial-orb {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FDE047 0%, #F59E0B 70%, transparent 100%);
+  box-shadow: 0 0 24px #FBBF24;
+  transition: all 1s ease;
+  z-index: 1;
+}
+
+.altitude-float-badge {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  background: rgba(15,23,42,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 3;
+}
+.altitude-float-badge span {
+  font-weight: 700;
+  font-size: .95rem;
+  color: #38BDF8;
+  line-height: 1.2;
+}
+.altitude-float-badge small {
+  font-size: .68rem;
+  color: rgba(255,255,255,0.75);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.bio-orb-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bio-outer-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px dashed var(--accent);
+  animation: spinRing 24s linear infinite;
+  opacity: .6;
+  transition: border-color .4s ease;
+}
+@keyframes spinRing { 100% { transform: rotate(360deg); } }
+
+.bio-pulse-waves {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(56,189,248,0.3);
+  opacity: 0;
+  pointer-events: none;
+}
+.bio-pulse-waves.active {
+  animation: pulseEcho 1.5s ease-out infinite;
+}
+@keyframes pulseEcho {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+.bio-core-sphere {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #38BDF8 0%, #2563EB 60%, rgba(37,99,235,0.2) 100%);
+  box-shadow: 0 0 35px var(--accent-glow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all .5s ease;
+  position: relative;
+}
+
+.bio-lungs-svg {
+  width: 28px;
+  height: 28px;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 2px;
+  animation: gentleBreathe 3.5s ease-in-out infinite;
+}
+@keyframes gentleBreathe {
+  0%, 100% { transform: scale(0.92); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px #67E8F9); }
+}
+
+.bio-percent-text {
+  font: 400 2.8rem/1 'Instrument Serif', serif;
+  color: #FFFFFF;
+}
+.bio-sub-text {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+
+/* Inhale Button with Visual Badge and Progress feedback */
+.tap-to-breathe-btn {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: linear-gradient(135deg, #0284C7 0%, #2563EB 60%, #4F46E5 100%);
+  color: #FFFFFF;
+  font: 600 .98rem 'Hind', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--accent-glow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: all .25s ease;
+  margin-top: 14px;
+}
+.tap-to-breathe-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px var(--accent-glow), 0 0 20px rgba(56,189,248,0.4);
+}
+.tap-to-breathe-btn:active {
+  transform: scale(0.98);
+}
+.inhale-burst-badge {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  background: rgba(255,255,255,0.22);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.inhale-feedback-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--ln);
+  border-radius: 999px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.inhale-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #38BDF8, #2563EB);
+  border-radius: 999px;
+  transition: width .4s ease;
+}
+
+.chamber-status-tag {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-top: 14px;
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= 4. CURATED MOMENTS GRID ================= */
+.moments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+@media(max-width: 800px) {
+  .moments-grid { grid-template-columns: 1fr; }
+}
+
+.moment-card {
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .3s ease, border-color .3s ease;
+}
+.moment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(37,99,235,0.12);
+  border-color: var(--accent);
+}
+
+.moment-img-wrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.moment-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.moment-card:hover .moment-img-wrap img {
+  transform: scale(1.04);
+}
+
+.moment-body {
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.moment-tag {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.moment-body h3 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.moment-body p {
+  color: var(--mu);
+  font-size: .98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ================= 5. THE RITUAL ================= */
+.ritual-strip {
+  background: var(--bg-elevated);
+}
+.ritual-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+@media(max-width: 780px) {
+  .ritual-grid { grid-template-columns: 1fr; }
+}
+.ritual-step {
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  border-radius: 20px;
+  padding: 36px 30px;
+  text-align: center;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.ritual-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow);
+}
+.ritual-step-num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 400 1.6rem 'Instrument Serif', serif;
+  margin: 0 auto 18px;
+}
+
+/* ================= 6. HONEST SCIENCE ================= */
+.science-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+@media(max-width: 860px) {
+  .science-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.cmp-card {
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  border-radius: 20px;
+  padding: 32px;
+}
+.cmp-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 50px;
+  gap: 14px;
+  align-items: center;
+  margin: 14px 0;
+  font-size: .95rem;
+}
+.cmp-track {
+  height: 10px;
+  background: var(--ln);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cmp-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+/* ================= 7. CURATED FAQS ================= */
+.faq-wrap {
+  max-width: 820px;
+  margin: 36px auto 0;
+}
+details {
+  border-top: 1px solid var(--ln);
+  padding: 22px 0;
+}
+details:last-child { border-bottom: 1px solid var(--ln); }
+summary {
+  cursor: pointer;
+  font: 400 1.55rem 'Instrument Serif', Georgia, serif;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: var(--ink);
+}
+summary::-webkit-details-marker { display: none; }
+summary:after {
+  content: "+";
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform .2s;
+}
+details[open] summary:after {
+  content: "\2212";
+}
+details p {
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ================= 8. PRE-BOOK RESERVATION ================= */
+.ord {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 48px;
+  align-items: start;
+}
+@media(max-width: 860px) {
+  .ord { grid-template-columns: 1fr; gap: 32px; }
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media(max-width: 640px) {
+  form { grid-template-columns: 1fr; }
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 500;
+  font-size: .92rem;
+  color: var(--ink);
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+input, select, textarea {
+  font: inherit;
+  font-size: 16px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--ln);
+  background: var(--pn);
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s, background-color .2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+}
+
+.input-invalid {
+  border-color: var(--error) !important;
+  background-color: var(--error-bg) !important;
+}
+.err-msg {
+  display: none;
+  font-size: .8rem;
+  color: var(--error);
+  margin-top: 4px;
+  font-weight: 600;
+}
+.input-invalid ~ .err-msg {
+  display: block;
+}
+
+.phone-group {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 8px;
+}
+
+.full { grid-column: 1 / -1; }
+.note { font-size: .88rem; color: var(--mu); line-height: 1.6; }
+
+.sum {
+  background: var(--pn);
+  border-radius: 24px;
+  padding: 32px;
+  position: sticky;
+  top: 96px;
+  border: 1px solid var(--ln);
+}
+.sum ul {
+  padding-left: 18px;
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: .95rem;
+}
+.sum li { margin-bottom: 8px; }
+
+/* ================= FOOTER ================= */
+footer {
+  padding: 70px 0 60px;
+  color: var(--mu);
+  font-size: .92rem;
+  background: var(--bg);
+  border-top: 1px solid var(--ln);
+}
+.fg {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+}
+@media(max-width: 740px) {
+  .fg { grid-template-columns: 1fr; }
+}
+footer a {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 8px;
+  color: var(--ink-soft);
+  transition: color .2s;
+}
+footer a:hover { color: var(--accent); }
+footer b {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.fine {
+  margin-top: 36px;
+  font-size: .84rem;
+  line-height: 1.8;
+  max-width: 95ch;
+  border-top: 1px solid var(--ln);
+  padding-top: 22px;
+  color: var(--mu);
+}
+
+.toast {
+  display: none;
+  background: var(--success);
+  color: #FFFFFF;
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-top: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+</style>
+</head>
+<body id="top">
+
+<!-- ================= NAVIGATION BAR ================= -->
+<header id="hd">
+  <div class="w bar">
+    <!-- Standalone YU Logo Button (Home Button) -->
+    <a class="brand-logo-only" href="#top" id="logo-home-btn" aria-label="YU Home">
+      <img src="assets/logo.jpg" alt="YU Logo" class="brand-logo-img">
+    </a>
+
+    <button class="menu" id="mb" aria-expanded="false" aria-controls="nv">Menu</button>
+
+    <nav id="nv">
+      <a href="#altitude" class="nav-anchor" data-i18n="nav_altitude">Altitude Chamber</a>
+      <a href="#trap" class="nav-anchor" data-i18n="nav_trap">The 21% Trap</a>
+      <a href="#moments" class="nav-anchor" data-i18n="nav_moments">Moments</a>
+      <a href="#ritual" class="nav-anchor" data-i18n="nav_ritual">Ritual</a>
+      <a href="#science" class="nav-anchor" data-i18n="nav_science">Science</a>
+      <a href="#faq" class="nav-anchor" data-i18n="nav_faq">FAQ</a>
+
+      <!-- Multilingual Dropdown -->
+      <div class="lang-selector">
+        <button class="lang-btn" id="lang-btn" aria-label="Select Language">
+          <span id="current-lang-flag">🌐</span> <span id="current-lang-name">English</span> ▾
+        </button>
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button type="button" data-lang="en">🇬🇧 English</button>
+          <button type="button" data-lang="hi">🇮🇳 हिन्दी (Hindi)</button>
+          <button type="button" data-lang="es">🇪🇸 Español (Spanish)</button>
+          <button type="button" data-lang="bn">🇮🇳 বাংলা (Bengali)</button>
+          <button type="button" data-lang="mr">🇮🇳 मराठी (Marathi)</button>
+          <button type="button" data-lang="te">🇮🇳 తెలుగు (Telugu)</button>
+          <button type="button" data-lang="ta">🇮🇳 தமிழ் (Tamil)</button>
+          <button type="button" data-lang="gu">🇮🇳 ગુજરાતી (Gujarati)</button>
+          <button type="button" data-lang="kn">🇮🇳 ಕನ್ನಡ (Kannada)</button>
+        </div>
+      </div>
+
+      <!-- Theme Button -->
+      <button class="theme-toggle-btn" id="theme-btn" aria-label="Toggle Theme">
+        <span id="theme-icon">☀️</span> <span id="theme-label">Light</span>
+      </button>
+
+      <a class="btn primary nav-anchor" href="#prebook" data-i18n="btn_prebook">Pre-Book YU</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ================= 1. HERO SECTION ================= -->
+  <section class="hero" id="hero">
+    <div class="w">
+      <div>
+        <div class="scarcity-pill">
+          <span class="live-pulse-dot"></span>
+          <span data-i18n="hero_badge">Batch 001 // Allocation Live</span>
+        </div>
+        <h1 data-i18n="hero_h1">The Most Overlooked Upgrade in Human Biology.</h1>
+        <p class="lede" data-i18n="hero_lede">
+          You upgraded your water. You upgraded your nutrition. But you take 20,000 breaths every day of 21% outdated air. Discover what 99% pure oxygen does to your brain, stamina, and cellular recovery.
+        </p>
+        <div class="row">
+          <a class="btn primary nav-anchor" href="#prebook" data-i18n="btn_claim_batch">Pre-Book Batch 001</a>
+          <a class="btn gh nav-anchor" href="#altitude" data-i18n="btn_test_chamber">Test Altitude Chamber</a>
+        </div>
+      </div>
+
+      <!-- Canister Showcase with Interactive Pulse -->
+      <div class="hero-showcase">
+        <div class="halo" id="hero-halo" title="Click to release 99% Oxygen">
+          <div class="orb"></div>
+          <div class="halo-ripple" id="halo-ripple"></div>
+          <div class="cn">
+            <img src="assets/product.png" alt="YU 12L Oxygen Can" class="product-img">
+          </div>
+        </div>
+        <div class="can-action-hint">
+          <span>⚡ Tap canister to test pulse</span>
+        </div>
+        <!-- Strictly below bottle: zero overlap -->
+        <div class="lab" aria-hidden="true">
+          <span class="in" data-i18n="breathe_in">Breathe in</span>
+          <span class="out" data-i18n="breathe_out">Breathe out</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. PSYCHOLOGICAL GAP: "THE 21% TRAP" ================= -->
+  <section id="trap" style="background:var(--bg-elevated)">
+    <div class="w">
+      <div style="text-align:center;max-width:38rem;margin:0 auto">
+        <span class="badge" data-i18n="trap_badge">Daily Breathing Reality</span>
+        <h2 data-i18n="trap_title">The 21% Oxygen Trap</h2>
+        <p class="sub" data-i18n="trap_sub">Why mid-day slumps, brain fog, and mountain fatigue aren't just lack of sleep — your body is simply low on clean oxygen.</p>
+      </div>
+
+      <div class="shift-curiosity-box">
+        <div class="curiosity-grid">
+          <div>
+            <h3 style="font-size:2rem;margin-bottom:12px" data-i18n="shift_heading">Experience the 3-Second Difference</h3>
+            <p style="color:var(--mu);line-height:1.6" data-i18n="shift_desc">
+              Your brain and muscles depend on oxygen for every thought and movement. In crowded rooms, smoggy traffic, or high mountains, your body gasps for air. Compare the difference below:
+            </p>
+            <div class="curiosity-toggle-wrap">
+              <button type="button" class="curiosity-toggle-btn active" id="btn-show-trap">21% Everyday Air</button>
+              <button type="button" class="curiosity-toggle-btn" id="btn-show-yu">99% Pure YU Oxygen</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Shift Card -->
+          <div class="shift-card" id="shift-card">
+            <div class="shift-card-header">
+              <span class="shift-status-pill trap" id="shift-pill">Everyday Ambient Air (21% O₂)</span>
+            </div>
+            <h4 id="shift-state-title" style="font-size:1.3rem;margin:0 0 10px">Mid-Day Slump &amp; Brain Fog</h4>
+            <p id="shift-state-desc" style="color:var(--mu);font-size:.95rem;margin:0">
+              Standard city air is 78% nitrogen and only 21% oxygen. In traffic, AC offices, or high altitudes, reduced oxygen intake leaves you feeling tired, yawning, and struggling to stay focused.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. GAMIFIED MOUNTAIN OXYGEN CHAMBER (NO SLIDER) ================= -->
+  <section id="altitude">
+    <div class="w">
+      <div style="text-align:center;max-width:40rem;margin:0 auto">
+        <span class="badge" data-i18n="game_badge">Interactive Altitude Chamber</span>
+        <h2 data-i18n="game_title">The Himalayan Ascent Chamber</h2>
+        <p class="sub" data-i18n="game_sub">See how oxygen drops as you travel higher. Tap any destination below to feel what happens to your breathing.</p>
+      </div>
+
+      <div class="mountain-game-container">
+        <div class="chamber-game-grid">
+          <!-- Ascent Stage Visualization -->
+          <div class="ascent-stage">
+            <div class="ascent-sky" id="ascent-sky">
+              <!-- Animated Atmospheric Particles -->
+              <div class="sky-particles-container" id="particles-container"></div>
+
+              <!-- Visual Sun / Moon Elevation Indicator -->
+              <div class="celestial-orb" id="celestial-orb"></div>
+
+              <!-- Layered Interactive Himalayan Peaks with Waypoint Markers -->
+              <svg class="mountain-panorama" viewBox="0 0 600 220" preserveAspectRatio="none">
+                <!-- Distant Range -->
+                <path d="M0,220 L60,130 L130,170 L210,80 L290,140 L370,40 L440,110 L520,30 L600,220 Z" fill="rgba(15,23,42,0.6)"/>
+                <!-- Mid Snow Caps -->
+                <polygon points="210,80 185,120 235,120" fill="rgba(255,255,255,0.3)"/>
+                <polygon points="370,40 340,95 400,95" fill="rgba(255,255,255,0.45)"/>
+                <polygon points="520,30 495,80 545,80" fill="rgba(255,255,255,0.55)"/>
+                <!-- Front Mountain Ridge -->
+                <path d="M0,220 L100,160 L180,190 L270,110 L350,165 L430,90 L510,150 L600,220 Z" fill="rgba(2,6,23,0.88)"/>
+                <!-- Elevation Contour Lines -->
+                <path d="M0,200 Q150,170 300,190 T600,180" stroke="rgba(56,189,248,0.25)" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
+                <path d="M0,160 Q200,120 400,140 T600,130" stroke="rgba(56,189,248,0.3)" stroke-width="1.5" fill="none" stroke-dasharray="6 6"/>
+              </svg>
+
+              <!-- Altitude Meter Overlay Badge -->
+              <div class="altitude-float-badge">
+                <span id="alt-meter-val">3,583 m</span>
+                <small id="alt-meter-sub">Himalayan Zone</small>
+              </div>
+            </div>
+
+            <!-- Waypoint Mountain Interactive Buttons -->
+            <div class="waypoints-selector" id="waypoints-selector"></div>
+          </div>
+
+          <!-- Gamified Cellular Bio-Chamber Monitor -->
+          <div class="bio-chamber-card">
+            <div class="chamber-card-top">
+              <span class="bio-chip">Real-Time Cellular Oxygen Sensor</span>
+              <span class="bio-zone-indicator" id="bio-zone-tag">Moderate Hypoxia</span>
+            </div>
+
+            <!-- Graphic Oxygen Biometric Core with Lungs Graphic & Wave -->
+            <div class="bio-orb-wrapper">
+              <div class="bio-outer-ring" id="bio-ring"></div>
+              <div class="bio-pulse-waves" id="bio-pulse-waves"></div>
+              <div class="bio-core-sphere" id="bio-sphere">
+                <!-- SVG Stylized Lungs Graphic Icon -->
+                <svg class="bio-lungs-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 4v7m-4-7a4 4 0 0 0-4 4v5a5 5 0 0 0 5 5h1a2 2 0 0 0 2-2v-5a3 3 0 0 0-3-3h-1m8-2a4 4 0 0 1 4 4v5a5 5 0 0 1-5 5h-1a2 2 0 0 1-2-2v-5a3 3 0 0 1 3-3h1"/>
+                </svg>
+                <span class="bio-percent-text" id="chamber-percent">65%</span>
+                <span class="bio-sub-text" id="chamber-label">Kedarnath</span>
+              </div>
+            </div>
+
+            <!-- Real-time Physiological Status -->
+            <div class="chamber-status-tag" id="chamber-status">High Pilgrimage: Steps feel heavier, heart pumps faster</div>
+
+            <!-- Visual Inhale Button with Mist Surge Effect -->
+            <button type="button" class="tap-to-breathe-btn" id="btn-restore-o2" aria-label="Inhale pure oxygen">
+              <span class="inhale-icon">⚡</span>
+              <span class="inhale-text">Click to Inhale 99% Pure O₂</span>
+              <span class="inhale-burst-badge">Instant Surge</span>
+            </button>
+            <div class="inhale-feedback-bar">
+              <div class="inhale-bar-fill" id="inhale-bar-fill"></div>
+            </div>
+            <p style="font-size:.8rem;color:var(--mu);margin:10px 0 0">Watch cellular oxygen surge to 99% in 3 seconds.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. CURATED LIFESTYLE MOMENTS ================= -->
+  <section id="moments">
+    <div class="w">
+      <div style="text-align:center;max-width:36rem;margin:0 auto">
+        <span class="badge" data-i18n="moments_badge">Targeted Situations</span>
+        <h2 data-i18n="moments_title">Four Moments for Pure Oxygen</h2>
+        <p class="sub" data-i18n="moments_sub">Tailored for the times your environment demands more from every breath.</p>
+      </div>
+
+      <div class="moments-grid">
+        <!-- 1. Treks -->
+        <div class="moment-card">
+          <div class="moment-img-wrap">
+            <img src="assets/hero-lifestyle.png" alt="High Altitude Trekker" loading="lazy">
+          </div>
+          <div class="moment-body">
+            <span class="moment-tag" data-i18n="m1_tag">High Altitude</span>
+            <h3 data-i18n="m1_title">Alpine Ascents</h3>
+            <p data-i18n="m1_desc">At 10,000+ feet, available oxygen drops by over 30%. Pure oxygen relieves altitude breathlessness, accelerates acclimatisation, and keeps you moving forward on Himalayan trails.</p>
+          </div>
+        </div>
+
+        <!-- 2. Athletes -->
+        <div class="moment-card">
+          <div class="moment-img-wrap">
+            <img src="assets/athlete.png" alt="Athlete Recovery" loading="lazy">
+          </div>
+          <div class="moment-body">
+            <span class="moment-tag" data-i18n="m2_tag">Athletic Output</span>
+            <h3 data-i18n="m2_title">Peak Performance</h3>
+            <p data-i18n="m2_desc">Clear lactic acid rapidly and re-oxygenate blood between intense sets. Delays fatigue during endurance runs and cuts recovery downtime in half.</p>
+          </div>
+        </div>
+
+        <!-- 3. Urban -->
+        <div class="moment-card">
+          <div class="moment-img-wrap">
+            <img src="assets/wellness.png" alt="Urban Air Defense" loading="lazy">
+          </div>
+          <div class="moment-body">
+            <span class="moment-tag" data-i18n="m3_tag">Urban Defense</span>
+            <h3 data-i18n="m3_title">City Pollution Armor</h3>
+            <p data-i18n="m3_desc">Heavy traffic and high-AQI urban smog drain cellular energy. A few breaths of 99% pure oxygen clear afternoon brain fog and fatigue without relying on caffeine.</p>
+          </div>
+        </div>
+
+        <!-- 4. Family -->
+        <div class="moment-card">
+          <div class="moment-img-wrap">
+            <img src="assets/family.png" alt="Family Pilgrimage Care" loading="lazy">
+          </div>
+          <div class="moment-body">
+            <span class="moment-tag" data-i18n="m4_tag">Care &amp; Travel</span>
+            <h3 data-i18n="m4_title">Caring for Loved Ones</h3>
+            <p data-i18n="m4_desc">Taking parents on pilgrimages like Kedarnath, Vaishno Devi, or high mountain roads? YU offers instant, gentle breathing reassurance for peace of mind.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. THE RITUAL ================= -->
+  <section class="ritual-strip" id="ritual">
+    <div class="w">
+      <div style="text-align:center;max-width:32rem;margin:0 auto">
+        <span class="badge" data-i18n="ritual_badge">Effortless Ritual</span>
+        <h2 data-i18n="ritual_title">Cover. Press. Breathe.</h2>
+        <p class="sub" data-i18n="ritual_sub">Three simple steps to instantaneous cellular rejuvenation.</p>
+      </div>
+
+      <div class="ritual-grid">
+        <div class="ritual-step">
+          <div class="ritual-step-num">1</div>
+          <h3 data-i18n="step1_title">Cover</h3>
+          <p style="color:var(--mu);margin:0" data-i18n="step1_desc">Place the ergonomic integrated mouthpiece gently near your mouth and nose.</p>
+        </div>
+        <div class="ritual-step">
+          <div class="ritual-step-num">2</div>
+          <h3 data-i18n="step2_title">Press</h3>
+          <p style="color:var(--mu);margin:0" data-i18n="step2_desc">Press the trigger down smoothly for 1 to 2 seconds as you begin your inhalation.</p>
+        </div>
+        <div class="ritual-step">
+          <div class="ritual-step-num">3</div>
+          <h3 data-i18n="step3_title">Breathe</h3>
+          <p style="color:var(--mu);margin:0" data-i18n="step3_desc">Inhale deeply and hold for two seconds. Repeat 3 to 5 times for immediate clarity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. HONEST SCIENCE ================= -->
+  <section id="science">
+    <div class="w science-grid">
+      <div>
+        <span class="badge" data-i18n="sci_badge">Pure &amp; Honest</span>
+        <h2 data-i18n="sci_title">99% Pure Oxygen vs 21% City Air</h2>
+        <p class="sub" data-i18n="sci_sub">Standard atmospheric air is nearly four-fifths nitrogen. YU delivers 99% pure oxygen in a lightweight 12L canister.</p>
+        <p style="color:var(--ink-soft);margin-top:16px" data-i18n="sci_note">We make no medical claims: YU is not a medical device and does not treat illness. It is a premium wellness companion engineered for comfortable, revitalizing breathing in demanding moments.</p>
+        <div class="row" style="margin-top:24px">
+          <a class="btn primary nav-anchor" href="#prebook" data-i18n="btn_prebook">Pre-Book YU</a>
+        </div>
+      </div>
+
+      <div class="cmp-card">
+        <h3 style="margin-bottom:16px" data-i18n="sci_cmp_h">Oxygen Concentration</h3>
+        <div class="cmp-row">
+          <span>City Air</span>
+          <div class="cmp-track"><div class="cmp-fill" style="width:21%"></div></div>
+          <b>21%</b>
+        </div>
+        <div class="cmp-row">
+          <span style="font-weight:600;color:var(--accent)">YU O₂</span>
+          <div class="cmp-track"><div class="cmp-fill" style="width:99%;background:var(--accent)"></div></div>
+          <b style="color:var(--accent)">99%</b>
+        </div>
+        <p class="note" style="margin-top:20px" data-i18n="sci_cmp_note">Each canister holds 12 Liters of compressed oxygen (~150 to 200 breaths), sealed in lightweight recyclable aluminium with an ergonomic trigger. Made honestly in India.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. CURATED ESSENTIAL FAQS ================= -->
+  <section id="faq">
+    <div class="w">
+      <div style="text-align:center;max-width:36rem;margin:0 auto">
+        <span class="badge" data-i18n="faq_badge">Clear Answers</span>
+        <h2 data-i18n="faq_title">Frequently Asked Questions</h2>
+        <p class="sub" data-i18n="faq_sub">Transparent information before you pre-book.</p>
+      </div>
+
+      <div class="faq-wrap">
+        <details>
+          <summary data-i18n="faq_q1">How is YU different from ordinary air?</summary>
+          <p data-i18n="faq_a1">Ordinary atmospheric air is only 21% oxygen and 78% nitrogen. YU provides 99% pure medical-grade oxygen. Each breath carries nearly five times the oxygen concentration of ambient air, giving your body immediate revitalization during elevation or exertion.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq_q2">How many breaths are in a 12L canister?</summary>
+          <p data-i18n="faq_a2">Each canister provides roughly 150 to 200 short breaths, which equals 15 to 20 sessions of 5 to 10 breaths each. Use it whenever air feels thin, during workouts, or after commuting through heavy traffic.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq_q3">Is it safe for older parents on mountain pilgrimages?</summary>
+          <p data-i18n="faq_a3">Yes. YU was designed to be lightweight, intuitive, and simple to trigger with one hand. It provides gentle, reassuring relief on yatra routes like Kedarnath and Vaishno Devi. Parents with chronic medical conditions should consult a doctor before travelling to altitude.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq_q4">Can I carry it on a flight?</summary>
+          <p data-i18n="faq_a4">Commercial airlines restrict pressurised aerosol canisters in passenger luggage. For mountain destinations like Leh, we recommend having your canisters delivered directly to your hotel upon arrival.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq_q5">How does Batch 001 Pre-Booking work?</summary>
+          <p data-i18n="faq_a5">Pre-booking is complimentary with zero upfront payment. It reserves your place for the initial 1,000 units. Our team will confirm dispatch schedules and address details with you directly before shipping.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 8. BATCH 001 PRIORITY PRE-BOOKING ================= -->
+  <section id="prebook">
+    <div class="w ord">
+      <div>
+        <span class="badge" data-i18n="book_badge">Batch 001 Allocation</span>
+        <h1 style="font-size:clamp(2.8rem,6vw,4.4rem)" data-i18n="book_title">Pre-Book YU</h1>
+        <p class="sub" data-i18n="book_sub">Secure your priority canister. Pre-booking is complimentary with zero upfront charges. Our team will reach out to confirm your allocation and dispatch details.</p>
+
+        <form id="order-form" style="margin-top:28px" novalidate>
+          <!-- Full Name -->
+          <div class="input-wrap full">
+            <label for="f-name">Full Name *</label>
+            <input name="name" id="f-name" required placeholder="Your Full Name" autocomplete="name">
+            <span class="err-msg" id="err-name">Please enter your full name (minimum 2 characters).</span>
+          </div>
+
+          <!-- Email Address -->
+          <div class="input-wrap full">
+            <label for="f-email">Email Address *</label>
+            <input name="email" id="f-email" type="email" required placeholder="name@domain.com" autocomplete="email">
+            <span class="err-msg" id="err-email">Please enter a valid email address (e.g. name@domain.com).</span>
+          </div>
+
+          <!-- Country Selector -->
+          <div class="input-wrap">
+            <label for="f-country">Country / Region *</label>
+            <select name="country" id="f-country"></select>
+          </div>
+
+          <!-- Phone Number with Dynamic Country Code -->
+          <div class="input-wrap">
+            <label for="f-phone">Phone Number *</label>
+            <div class="phone-group">
+              <input type="text" id="f-country-code" name="countryCode" value="+91" style="text-align:center;font-weight:600" readonly>
+              <input name="phone" id="f-phone" type="tel" required placeholder="98765 43210" autocomplete="tel">
+            </div>
+            <span class="err-msg" id="err-phone">Please enter a valid phone number (at least 7 digits).</span>
+          </div>
+
+          <!-- State Selector -->
+          <div class="input-wrap">
+            <label for="f-state">State / Province *</label>
+            <select name="state" id="f-state" required>
+              <option value="">Select State / UT</option>
+            </select>
+            <span class="err-msg" id="err-state">Please select your state or province.</span>
+          </div>
+
+          <!-- City Selector with Autocomplete & Dropdown -->
+          <div class="input-wrap">
+            <label for="f-city">Delivery City *</label>
+            <div style="position:relative">
+              <input name="city" id="f-city" list="city-datalist" required placeholder="Choose from list or type city" autocomplete="address-level2">
+              <datalist id="city-datalist"></datalist>
+            </div>
+            <span class="err-msg" id="err-city">Please select or enter your delivery city.</span>
+          </div>
+
+          <!-- Allocation Quantity -->
+          <div class="input-wrap">
+            <label for="f-quantity">Reservation Units</label>
+            <select name="quantity" id="f-quantity">
+              <option value="1 Can">1 Can (12L YU Canister)</option>
+              <option value="2 Cans">2 Cans (Trek / Couple Pack)</option>
+              <option value="3 Cans">3 Cans (Travel Pack)</option>
+              <option value="5+ Cans">5+ Cans (Family &amp; Group Pack)</option>
+            </select>
+          </div>
+
+          <!-- Primary Moment -->
+          <div class="input-wrap">
+            <label for="f-moment">Primary Moment</label>
+            <select name="moment" id="f-moment">
+              <option>Himalayan Trek or High Altitude</option>
+              <option>Pilgrimage / Yatra (Kedarnath, Amarnath)</option>
+              <option>Athletic Training &amp; Recovery</option>
+              <option>Urban AQI &amp; Pollution Defense</option>
+              <option>Gift for Parents or Loved Ones</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <button class="btn primary" id="btn-submit-order" type="submit" style="width:100%;padding:18px;font-size:1.02rem" data-i18n="btn_submit_order">Reserve Batch 001 Allocation</button>
+          </div>
+          <p class="note full" id="order-feedback">Zero upfront charges. Your details are securely saved. Our team will reach out to confirm your allocation.</p>
+          <div class="toast full" id="order-toast">✓ Reservation Confirmed! We will contact you with dispatch details soon.</div>
+        </form>
+      </div>
+
+      <aside class="sum">
+        <div style="display:flex;justify-content:center;margin-bottom:16px">
+          <img src="assets/product.png" alt="YU" style="max-height:220px;width:auto;filter:drop-shadow(0 15px 25px rgba(0,0,0,0.3))">
+        </div>
+        <h3>YU 12L Can</h3>
+        <p style="color:var(--accent);font-weight:600;margin:6px 0 14px">Batch 001 Priority Allocation</p>
+        <ul>
+          <li>99% Pure Medical-Grade Oxygen</li>
+          <li>12 Liters Compressed (150+ Breaths)</li>
+          <li>Ergonomic Integrated Mouthpiece</li>
+          <li>Complimentary Reservation</li>
+          <li>Priority Dispatch Notifications</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="w">
+    <div class="fg">
+      <div>
+        <a class="brand-logo-only" href="#top" style="margin-bottom: 14px;">
+          <img src="assets/logo.jpg" alt="YU Logo" class="brand-logo-img">
+        </a>
+        <p style="margin-top: 12px; color: var(--mu);">
+          Oxygen means YU. 99% pure portable oxygen engineered for peak output, high altitude, and clean urban living.
+          Made with trust in India.
+        </p>
+      </div>
+
+      <div>
+        <b>Explore</b>
+        <a href="#altitude">Altitude Chamber</a>
+        <a href="#trap">The 21% Trap</a>
+        <a href="#moments">Moments</a>
+        <a href="#ritual">Ritual</a>
+        <a href="#science">Science</a>
+        <a href="#faq">FAQ</a>
+        <a href="#prebook">Pre-Book YU</a>
+      </div>
+
+      <div>
+        <b>Contact</b>
+        <a id="fem" href="mailto:hello@yucares.com">Email Support</a>
+        <span style="display:block; margin-top:14px; font-size:.85rem; color:var(--mu);">Batch 001 // Allocation Open</span>
+      </div>
+    </div>
+
+    <p class="fine">
+      <b>Important Medical Disclaimer:</b> YU is a wellness and lifestyle product, NOT a medicine or medical device, and does not diagnose, treat, cure, or prevent any disease or medical condition. It is not a substitute for acclimatisation, rest, descent, or professional medical care. Anyone with chronic respiratory, cardiovascular, or blood-pressure conditions should consult a qualified doctor before travelling to altitude or engaging in intense physical exertion.
+    </p>
+  </div>
+</footer>
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">↑</button>
+
+<script>
+/* ================= FIREBASE INITIALIZATION ================= */
+var firebaseConfig = {
+  apiKey: "AIzaSyBECl9G8fCfulrkafobOQmOElP3YJ8j4MQ",
+  authDomain: "yucaress.firebaseapp.com",
+  projectId: "yucaress",
+  storageBucket: "yucaress.firebasestorage.app",
+  messagingSenderId: "546642505369",
+  appId: "1:546642505369:web:c190c70d621c644d319208",
+  measurementId: "G-LQ7WBZWYX6"
+};
+
+var db = null;
+try {
+  if (window.firebase) {
+    if (!firebase.apps || !firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    if (firebase.firestore) {
+      db = firebase.firestore();
+    }
+  }
+} catch (e) {
+  console.warn("Firebase initialization warning:", e);
+}
+
+/* ================= COMPREHENSIVE MULTI-LANGUAGE TRANSLATION DICTIONARY ================= */
+var TRANSLATIONS = {
+  en: {
+    name: "English", flag: "🇬🇧",
+    nav_altitude: "Altitude Chamber", nav_trap: "The 21% Trap", nav_moments: "Moments",
+    nav_ritual: "Ritual", nav_science: "Science", nav_faq: "FAQ", btn_prebook: "Pre-Book YU",
+    hero_badge: "Batch 001 // Allocation Live",
+    hero_h1: "The Most Overlooked Upgrade in Human Biology.",
+    hero_lede: "You upgraded your water. You upgraded your nutrition. But you take 20,000 breaths every day of 21% outdated air. Discover what 99% pure oxygen does to your brain, stamina, and cellular recovery.",
+    btn_claim_batch: "Pre-Book Batch 001", btn_test_chamber: "Test Altitude Chamber",
+    breathe_in: "Breathe in", breathe_out: "Breathe out",
+    trap_badge: "Cellular Reality", trap_title: "The 21% Oxygen Trap",
+    trap_sub: "Why 90% of mid-day brain fog and high-altitude fatigue isn't lack of sleep—it is oxygen starvation.",
+    shift_heading: "Experience the 3-Second Difference",
+    shift_desc: "Your red blood cells carry oxygen directly to your brain and muscles. Under stress, high AQI smog, or high elevation, your cells gasp for breath. Toggle below to compare:",
+    game_badge: "Gamified Simulation", game_title: "The Himalayan Ascent Chamber",
+    game_sub: "Watch what happens to your cellular oxygen as you climb. Tap any mountain peak below to ascend.",
+    moments_badge: "Targeted Situations", moments_title: "Four Moments for Pure Oxygen",
+    moments_sub: "Tailored for the times your environment demands more from every breath.",
+    m1_tag: "High Altitude", m1_title: "Alpine Ascents",
+    m1_desc: "At 10,000+ feet, available oxygen drops by over 30%. Pure oxygen relieves altitude breathlessness, accelerates acclimatisation, and keeps you moving forward on Himalayan trails.",
+    m2_tag: "Athletic Output", m2_title: "Peak Performance",
+    m2_desc: "Clear lactic acid rapidly and re-oxygenate blood between intense sets. Delays fatigue during endurance runs and cuts recovery downtime in half.",
+    m3_tag: "Urban Defense", m3_title: "City Pollution Armor",
+    m3_desc: "Heavy traffic and high-AQI urban smog drain cellular energy. A few breaths of 99% pure oxygen clear afternoon brain fog and fatigue without relying on caffeine.",
+    m4_tag: "Care & Travel", m4_title: "Caring for Loved Ones",
+    m4_desc: "Taking parents on pilgrimages like Kedarnath, Vaishno Devi, or high mountain roads? YU offers instant, gentle breathing reassurance for peace of mind.",
+    ritual_badge: "Effortless Ritual", ritual_title: "Cover. Press. Breathe.",
+    ritual_sub: "Three simple steps to instantaneous cellular rejuvenation.",
+    step1_title: "Cover", step1_desc: "Place the ergonomic integrated mouthpiece gently near your mouth and nose.",
+    step2_title: "Press", step2_desc: "Press the trigger down smoothly for 1 to 2 seconds as you begin your inhalation.",
+    step3_title: "Breathe", step3_desc: "Inhale deeply and hold for two seconds. Repeat 3 to 5 times for immediate clarity.",
+    sci_badge: "Pure & Honest", sci_title: "99% Pure Oxygen vs 21% City Air",
+    sci_sub: "Standard atmospheric air is nearly four-fifths nitrogen. YU delivers 99% pure oxygen in a lightweight 12L canister.",
+    sci_note: "We make no medical claims: YU is not a medical device and does not treat illness. It is a premium wellness companion engineered for comfortable, revitalizing breathing in demanding moments.",
+    sci_cmp_h: "Oxygen Concentration",
+    sci_cmp_note: "Each canister holds 12 Liters of compressed oxygen (~150 to 200 breaths), sealed in lightweight recyclable aluminium with an ergonomic trigger. Made honestly in India.",
+    faq_badge: "Clear Answers", faq_title: "Frequently Asked Questions",
+    faq_sub: "Transparent information before you pre-book.",
+    faq_q1: "How is YU different from ordinary air?",
+    faq_a1: "Ordinary atmospheric air is only 21% oxygen and 78% nitrogen. YU provides 99% pure medical-grade oxygen. Each breath carries nearly five times the oxygen concentration of ambient air, giving your body immediate revitalization during elevation or exertion.",
+    faq_q2: "How many breaths are in a 12L canister?",
+    faq_a2: "Each canister provides roughly 150 to 200 short breaths, which equals 15 to 20 sessions of 5 to 10 breaths each. Use it whenever air feels thin, during workouts, or after commuting through heavy traffic.",
+    faq_q3: "Is it safe for older parents on mountain pilgrimages?",
+    faq_a3: "Yes. YU was designed to be lightweight, intuitive, and simple to trigger with one hand. It provides gentle, reassuring relief on yatra routes like Kedarnath and Vaishno Devi. Parents with chronic medical conditions should consult a doctor before travelling to altitude.",
+    faq_q4: "Can I carry it on a flight?",
+    faq_a4: "Commercial airlines restrict pressurised aerosol canisters in passenger luggage. For mountain destinations like Leh, we recommend having your canisters delivered directly to your hotel upon arrival.",
+    faq_q5: "How does Batch 001 Pre-Booking work?",
+    faq_a5: "Pre-booking is complimentary with zero upfront payment. It reserves your place for the initial 1,000 units. Our team will confirm dispatch schedules and address details with you directly before shipping.",
+    book_badge: "Batch 001 Allocation", book_title: "Pre-Book YU",
+    book_sub: "Secure your priority canister. Pre-booking is complimentary with zero upfront charges. Our team will reach out to confirm your allocation and dispatch details.",
+    btn_submit_order: "Reserve Batch 001 Allocation"
+  },
+  hi: {
+    name: "हिन्दी", flag: "🇮🇳",
+    nav_altitude: "ऑक्सीजन चैंबर", nav_trap: "21% का सच", nav_moments: "उपयोग के पल",
+    nav_ritual: "उपयोग विधि", nav_science: "वैज्ञानिक आधार", nav_faq: "सवाल-जवाब", btn_prebook: "प्री-बुक करें",
+    hero_badge: "बैच 001 // आरक्षण खुला",
+    hero_h1: "मानव स्वास्थ्य का सबसे अनदेखा अपग्रेड।",
+    hero_lede: "आपने पानी अपग्रेड किया, भोजन सुधारा। लेकिन प्रतिदिन 20,000 साँसें 21% पुरानी हवा की लेते हैं। जानिए 99% शुद्ध ऑक्सीजन आपके मस्तिष्क और ऊर्जा को कैसे पुनर्जीवित करती है।",
+    btn_claim_batch: "बैच 001 प्री-बुक करें", btn_test_chamber: "ऊंचाई चैंबर टेस्ट करें",
+    breathe_in: "साँस अंदर", breathe_out: "साँस बाहर",
+    trap_badge: "शारीरिक वास्तविकता", trap_title: "21% ऑक्सीजन का सच",
+    trap_sub: "थकान और सिरदर्द नींद की कमी नहीं, बल्कि ऑक्सीजन की कमी के कारण होते हैं।",
+    shift_heading: "3 सेकंड में अंतर महसूस करें",
+    shift_desc: "प्रदूषण या ऊंचाई पर शरीर ऑक्सीजन के लिए तड़पता है। नीचे दोनों स्थितियों की तुलना करें:",
+    game_badge: "सिमुलेशन अनुभव", game_title: "हिमालयन ऑक्सीजन चैंबर",
+    game_sub: "ऊंचाई बढ़ने पर ऑक्सीजन कैसे गिरती है, नीचे किसी भी पहाड़ पर टैप करके देखें।",
+    moments_badge: "विशिष्ट क्षण", moments_title: "शुद्ध ऑक्सीजन के 4 मुख्य पल",
+    moments_sub: "उन पलों के लिए जब आपकी हर साँस सबसे अधिक मायने रखती है।",
+    m1_tag: "ऊंचे पहाड़", m1_title: "पर्वतीय यात्राएं",
+    m1_desc: "10,000 फीट से ऊपर 30% से अधिक ऑक्सीजन कम हो जाती है। YU तुरंत साँस फूलने से राहत देता है और यात्रा आसान बनाता है।",
+    m2_tag: "खेल और फिटनेस", m2_title: "शीर्ष प्रदर्शन",
+    m2_desc: "मांसपेशियों से लैक्टिक एसिड तेजी से साफ करें और वर्कआउट के बीच तुरंत रिकवर हों।",
+    m3_tag: "शहरी सुरक्षा", m3_title: "प्रदूषण से कवच",
+    m3_desc: "ट्रैफिक और भारी प्रदूषण मानसिक ऊर्जा छीन लेते हैं। YU बिना कैफीन के तुरंत दिमागी ताजगी देता है।",
+    m4_tag: "परिवार की देखभाल", m4_title: "तीर्थ यात्रा पर अपनों की रक्षा",
+    m4_desc: "केदारनाथ, वैष्णो देवी या चारधाम पर माता-पिता के लिए सुरक्षित व आसान साँस का सहारा।",
+    ritual_badge: "सरल नियम", ritual_title: "लगाएं · दबाएं · साँस लें",
+    ritual_sub: "तीन आसान चरणों में तुरंत ताजगी पाएं।",
+    step1_title: "लगाएं", step1_desc: "माउथपीस को अपने मुंह और नाक के पास रखें।",
+    step2_title: "दबाएं", step2_desc: "साँस खींचते समय 1 से 2 सेकंड के लिए ट्रिगर दबाएं।",
+    step3_title: "साँस लें", step3_desc: "गहरी साँस लें और दो सेकंड रोकें। 3 से 5 बार दोहराएं।",
+    sci_badge: "सच्चाई और विज्ञान", sci_title: "99% शुद्ध ऑक्सीजन बनाम 21% सामान्य हवा",
+    sci_sub: "सामान्य हवा में 78% नाइट्रोजन होती है। YU 12 लीटर के हल्के कैन में 99% शुद्ध ऑक्सीजन प्रदान करता है।",
+    sci_note: "हम कोई मेडिकल दावा नहीं करते। YU एक प्रीमियम वेलनेस उत्पाद है जो कठिन पलों में राहत देता है।",
+    sci_cmp_h: "ऑक्सीजन घनत्व",
+    sci_cmp_note: "प्रत्येक कैन में 12 लीटर संपीड़ित ऑक्सीजन (~150 से 200 साँसें) होती है। भारत में निर्मित।",
+    faq_badge: "सीधे उत्तर", faq_title: "अक्सर पूछे जाने वाले सवाल",
+    faq_sub: "प्री-बुक करने से पहले सभी पारदर्शी जानकारियां।",
+    faq_q1: "YU सामान्य हवा से कैसे अलग है?",
+    faq_a1: "सामान्य हवा में केवल 21% ऑक्सीजन होती है। YU में 99% शुद्ध ऑक्सीजन है, जो सामान्य हवा से 5 गुना अधिक है।",
+    faq_q2: "एक 12L कैन में कितनी साँसें होती हैं?",
+    faq_a2: "एक कैन से लगभग 150 से 200 छोटी साँसें मिलती हैं, जो 15-20 सत्रों के लिए पर्याप्त हैं।",
+    faq_q3: "क्या यह बुजुर्ग माता-पिता के लिए सुरक्षित है?",
+    faq_a3: "हाँ, यह अत्यंत हल्का और एक हाथ से चलाने में आसान है। चारधाम और वैष्णो देवी जैसी यात्राओं के लिए आदर्श है।",
+    faq_q4: "क्या इसे फ्लाइट में ले जा सकते हैं?",
+    faq_a4: "एयरलाइंस प्रेशराइज्ड कैन की अनुमति नहीं देतीं। लेह जैसी जगहों पर सीधे होटल में डिलीवरी की सलाह दी जाती है।",
+    faq_q5: "बैच 001 प्री-बुकिंग कैसे काम करती है?",
+    faq_a5: "प्री-बुकिंग बिल्कुल मुफ्त है। आपका स्लॉट सुरक्षित होते ही हमारी टीम आपसे संपर्क करेगी।",
+    book_badge: "बैच 001 आरक्षण", book_title: "YU प्री-बुक करें",
+    book_sub: "बिना किसी अग्रिम शुल्क के अपना कैन सुरक्षित करें। हमारी टीम आपसे संपर्क करेगी।",
+    btn_submit_order: "बैच 001 आरक्षण सुरक्षित करें"
+  },
+  es: {
+    name: "Español", flag: "🇪🇸",
+    nav_altitude: "Cámara Altitud", nav_trap: "Trampa del 21%", nav_moments: "Momentos",
+    nav_ritual: "Ritual", nav_science: "Ciencia", nav_faq: "Preguntas", btn_prebook: "Reservar YU",
+    hero_badge: "Lote 001 // Asignación Abierta",
+    hero_h1: "La Mejora Más Ignorada en la Biología Humana.",
+    hero_lede: "Mejoraste tu agua y tu nutrición. Pero respiras 20,000 veces al día aire desactualizado al 21%. Descubre lo que el oxígeno puro al 99% hace por tu cerebro y rendimiento.",
+    btn_claim_batch: "Reservar Lote 001", btn_test_chamber: "Probar Cámara de Altitud",
+    breathe_in: "Inhala", breathe_out: "Exhala",
+    trap_badge: "Realidad Celular", trap_title: "La Trampa del 21% de Oxígeno",
+    trap_sub: "La niebla mental vespertina y la fatiga en altitud no son falta de sueño: es déficit de oxígeno.",
+    shift_heading: "Experimenta la Diferencia en 3 Segundos",
+    shift_desc: "Tus glóbulos rojos transportan oxígeno al cerebro y músculos. Compara ambos estados:",
+    game_badge: "Simulación Visual", game_title: "Cámara de Ascenso del Himalaya",
+    game_sub: "Observa cómo disminuye el oxígeno al ascender. Pulsa cualquier pico para escalar.",
+    moments_badge: "Situaciones Clave", moments_title: "Cuatro Momentos para Oxígeno Puro",
+    moments_sub: "Diseñado para cuando tu entorno exige más de cada respiración.",
+    m1_tag: "Gran Altitud", m1_title: "Ascensos Alpinos",
+    m1_desc: "A más de 3,000 m, el oxígeno disminuye más del 30%. YU alivia la asfixia y acelera la aclimatación.",
+    m2_tag: "Rendimiento Deportivo", m2_title: "Máxima Potencia",
+    m2_desc: "Elimina el ácido láctico rápidamente y reoxigena la sangre entre series intensas.",
+    m3_tag: "Defensa Urbana", m3_title: "Escudo Antipolución",
+    m3_desc: "El smog urbano agota la energía celular. El oxígeno puro despeja la mente sin necesidad de cafeína.",
+    m4_tag: "Cuidado y Familia", m4_title: "Cuidando a Seres Queridos",
+    m4_desc: "Brinda tranquilidad y respiración cómoda a tus padres en viajes a la montaña.",
+    ritual_badge: "Ritual Sencillo", ritual_title: "Coloca · Presiona · Respira",
+    ritual_sub: "Tres simples pasos para una revitalización celular instantánea.",
+    step1_title: "Coloca", step1_desc: "Coloca la boquilla integrada cerca de la boca y nariz.",
+    step2_title: "Presiona", step2_desc: "Presiona el actuador durante 1 a 2 segundos al inhalar.",
+    step3_title: "Respira", step3_desc: "Inhala profundamente y mantén dos segundos. Repite de 3 a 5 veces.",
+    sci_badge: "Puro y Honesto", sci_title: "99% Oxígeno Puro vs 21% Aire Común",
+    sci_sub: "El aire común es casi 80% nitrógeno. YU entrega oxígeno puro al 99% en una lata ligera de 12L.",
+    sci_note: "No es un dispositivo médico. Es bienestar puro para momentos de alta exigencia.",
+    sci_cmp_h: "Concentración de Oxígeno",
+    sci_cmp_note: "Cada lata contiene 12 litros de oxígeno comprimido (~150 a 200 respiraciones).",
+    faq_badge: "Respuestas Claras", faq_title: "Preguntas Frecuentes",
+    faq_sub: "Información transparente antes de reservar.",
+    faq_q1: "¿En qué se diferencia YU del aire normal?",
+    faq_a1: "El aire normal tiene solo 21% de oxígeno. YU ofrece 99% de oxígeno puro, casi 5 veces más concentración.",
+    faq_q2: "¿Cuántas inhalaciones tiene una lata?",
+    faq_a2: "Aproximadamente 150 a 200 inhalaciones cortas, equivalente a 15 a 20 sesiones.",
+    faq_q3: "¿Es seguro para personas mayores?",
+    faq_a3: "Sí, es ligero y muy fácil de usar con una sola mano.",
+    faq_q4: "¿Puedo llevarlo en avión?",
+    faq_a4: "Las aerolíneas restringen aerosoles a presión. Se recomienda entrega en destino.",
+    faq_q5: "¿Cómo funciona la reserva del Lote 001?",
+    faq_a5: "Es gratuita sin pagos anticipados. Nuestro equipo confirmará contigo los detalles antes del envío.",
+    book_badge: "Asignación Lote 001", book_title: "Reservar YU",
+    book_sub: "Asegura tu lata prioritaria sin costo inicial. Nuestro equipo te contactará con los detalles.",
+    btn_submit_order: "Confirmar Reserva Lote 001"
+  },
+  bn: { name: "বাংলা", flag: "🇮🇳", nav_altitude: "অক্সিজেন চেম্বার", nav_trap: "২১% সত্য", nav_moments: "ব্যবহার", nav_ritual: "নিয়ম", nav_science: "বিজ্ঞান", nav_faq: "প্রশ্নোত্তর", btn_prebook: "প্রি-বুক করুন", hero_badge: "ব্যাচ ০০১ // বুকিং শুরু", hero_h1: "মানব স্বাস্থ্যের সবচেয়ে অবহেলিত আপগ্রেড।", hero_lede: "আপনি জল এবং খাবার উন্নত করেছেন। কিন্তু প্রতিদিন ২০,০০০ বার শ্বাস নেন ২১% পুরনো বাতাসের। জানুন ৯৯% বিশুদ্ধ অক্সিজেন কীভাবে শক্তি বাড়ায়।", btn_claim_batch: "ব্যাচ ০০১ বুক করুন", btn_test_chamber: "উচ্চতা চেম্বার পরীক্ষা করুন", breathe_in: "শ্বাস নিন", breathe_out: "শ্বাস ছাড়ুন", trap_badge: "শারীরিক বাস্তবতা", trap_title: "২১% অক্সিজেনের ফাঁদ", trap_sub: "ক্লান্তি ঘুমের অভাব নয়, অক্সিজেন ঘাটতির ফল।", shift_heading: "৩ সেকেন্ডের পার্থক্য বুঝুন", shift_desc: "কোষগুলি কীভাবে সতেজ হয় তুলনা করুন:", game_badge: "সিমুলেশন", game_title: "হিমালয়ান অক্সিজেন চেম্বার", game_sub: "উচ্চতা বৃদ্ধির সাথে অক্সিজেন কীভাবে কমে নিজেই দেখুন।", moments_badge: "মুহূর্ত", moments_title: "বিশুদ্ধ অক্সিজেনের ৪টি ক্ষেত্র", moments_sub: "যখন প্রতি শ্বাস অত্যন্ত গুরুত্বপূর্ণ।", m1_tag: "উচ্চ পর্বত", m1_title: "পাহাড় ভ্রমণ", m1_desc: "১০,০০০ ফুটের উপরে অক্সিজেনের ঘাটতিতে তাৎক্ষণিক স্বস্তি দেয়।", m2_tag: "খেলাধুলা", m2_title: "সেরা পারফরম্যান্স", m2_desc: "ল্যাকটিক অ্যাসিড দূর করে দ্রুত শক্তি ফিরিয়ে আনে।", m3_tag: "শহুরে দূষণ", m3_title: "দূষণ প্রতিরোধক", m3_desc: "দূষিত শহরের ক্লান্তিতে তাৎক্ষণিক মানসিক সতেজতা।", m4_tag: "পরিবারের যত্ন", m4_title: "তীর্থযাত্রায় সুরক্ষা", m4_desc: "কেদারনাথ বা অমরনাথ যাত্রায় বাবা-মায়ের শ্বাসকষ্ট দূর করে।", ritual_badge: "সহজ পদ্ধতি", ritual_title: "ধরুন · চাপুন · শ্বাস নিন", ritual_sub: "৩টি সহজ পদক্ষেপে সতেজ হন।", step1_title: "ধরুন", step1_desc: "মাউথপিসটি মুখের কাছে রাখুন।", step2_title: "চাপুন", step2_desc: "শ্বাস নেওয়ার সময় ট্রিগার চাপুন।", step3_title: "শ্বাস নিন", step3_desc: "গভীর শ্বাস নিয়ে ২ সেকেন্ড ধরে রাখুন।", sci_badge: "বিশুদ্ধতা", sci_title: "৯৯% অক্সিজেন বনাম ২১% সাধারণ বাতাস", sci_sub: "১২ লিটারের পোর্টেবল ক্যানে ৯৯% মেডিকেল গ্রেড অক্সিজেন।", sci_note: "এটি কোনো ওষুধ নয়, প্রিমিয়াম সুস্থতার সহযোগী।", sci_cmp_h: "অক্সিজেন ঘনত্ব", sci_cmp_note: "প্রতি ক্যানে ১৫০ থেকে ২০০ শ্বাস। ভারতে তৈরি।", faq_badge: "উত্তর", faq_title: "সাধারণ প্রশ্নাবলী", faq_sub: "বুক করার আগে স্বচ্ছ তথ্য।", faq_q1: "সাধারণ বাতাসের সাথে পার্থক্য কী?", faq_a1: "সাধারণ বাতাসে ২১% অক্সিজেন থাকে, YU-তে ৯৯% থাকে।", faq_q2: "একটি ক্যানে কতগুলি শ্বাস থাকে?", faq_a2: "প্রায় ১৫০-২০০ বার শ্বাস নেওয়া যায়।", faq_q3: "বয়স্কদের জন্য নিরাপদ?", faq_a3: "হ্যাঁ, সম্পূর্ণ নিরাপদ ও সহজ।", faq_q4: "বিমানে নেওয়া যাবে?", faq_a4: "বিমানে নিষিদ্ধ, গন্তব্যে ডেলিভারি নেওয়া ভালো।", faq_q5: "প্রি-বুক কীভাবে হয়?", faq_a5: "সম্পূর্ণ বিনামূল্যে, আমাদের টিম আপনার সাথে যোগাযোগ করবে।", book_badge: "ব্যাচ ০০১", book_title: "YU প্রি-বুক করুন", book_sub: "বিনামূল্যে অগ্রাধিকার স্লট সংরক্ষণ করুন।", btn_submit_order: "বুকিং নিশ্চিত করুন" },
+  mr: { name: "मराठी", flag: "🇮🇳", nav_altitude: "ऑक्सिजन चेंबर", nav_trap: "२१% चे वास्तव", nav_moments: "क्षण", nav_ritual: "पद्धत", nav_science: "विज्ञान", nav_faq: "प्रश्नोत्तरे", btn_prebook: "प्री-बुक करा", hero_badge: "बॅच ००१ // बुकिंग सुरू", hero_h1: "मानवी शरीराचे सर्वात दुर्लक्षित अपग्रेड.", hero_lede: "तुम्ही पाणी आणि अन्न अपग्रेड केले. पण रोज २०,००० श्वास २१% जुन्या हवेचे घेता. ९९% शुद्ध ऑक्सिजन मेंदूला आणि शरीराला कशी ऊर्जा देतो ते अनुभवा.", btn_claim_batch: "बॅच ००१ प्री-बुक करा", btn_test_chamber: "उंची चेंबर तपासा", breathe_in: "श्वास घ्या", breathe_out: "श्वास सोडा", trap_badge: "वास्तव", trap_title: "२१% ऑक्सिजनचा ट्रॅप", trap_sub: "दुपारचा थकवा झोपेची कमतरता नसून ऑक्सिजनची कमतरता असते.", shift_heading: "३ सेकंदात फरक अनुभवा", shift_desc: "शरीराला ताजेतवाने करणारा बदल खाली तपासा:", game_badge: "सिम्युलेशन", game_title: "हिमालयीन ऑक्सिजन चेंबर", game_sub: "उंची वाढल्यावर ऑक्सिजन कसा कमी होतो ते स्वतः अनुभवा.", moments_badge: "महत्त्वाचे क्षण", moments_title: "शुद्ध ऑक्सिजनचे ४ मुख्य प्रसंग", moments_sub: "जेव्हा प्रत्येक श्वास महत्त्वाचा असतो.", m1_tag: "उंच पर्वत", m1_title: "पर्वतीय ट्रेकिंग", m1_desc: "१०,००० फुटांवर ३०% ऑक्सिजन कमी होतो. YU तात्काळ आराम देतो.", m2_tag: "क्रीडा", m2_title: "उत्कृष्ट कामगिरी", m2_desc: "लॅक्टिक ॲसिड कमी करून त्वरित ऊर्जा परत मिळवा.", m3_tag: "शहरी प्रदूषण", m3_title: "प्रदूषणापासून संरक्षण", m3_desc: "प्रदूषणात मेंदूला त्वरित ताजेतवाने करा.", m4_tag: "कुटुंबाची काळजी", m4_title: "तीर्थयात्रेसाठी सुरक्षा", m4_desc: "केदारनाथ किंवा वैष्णोदेवी येथे पालकांसाठी सुरक्षित श्वास.", ritual_badge: "सोपे नियम", ritual_title: "लावा · दाबा · श्वास घ्या", ritual_sub: "तीन सोप्या पायऱ्यांमध्ये त्वरित ऊर्जा मिळवा.", step1_title: "लावा", step1_desc: "माउथपीस तोंडाजवळ ठेवा.", step2_title: "दाबा", step2_desc: "श्वास घेताना १-२ सेकंद ट्रिगर दाबा.", step3_title: "श्वास घ्या", step3_desc: "दीर्घ श्वास घ्या आणि २ सेकंद थांबवा.", sci_badge: "शुद्धता", sci_title: "९९% शुद्ध ऑक्सिजन विरूद्ध २१% हवा", sci_sub: "१२ लिटरच्या हलक्या कॅनमध्ये ९९% शुद्ध ऑक्सिजन.", sci_note: "हे औषध नसून एक प्रीमियम वेलनेस उत्पादन आहे.", sci_cmp_h: "ऑक्सिजन प्रमाण", sci_cmp_note: "प्रत्येक कॅनमध्ये १५० ते २०० श्वास. भारतात निर्मित.", faq_badge: "उत्तरे", faq_title: "नेहमी विचारले जाणारे प्रश्न", faq_sub: "आरक्षण करण्यापूर्वी स्पष्ट माहिती.", faq_q1: "सामान्य हवेपेक्षा काय वेगळे आहे?", faq_a1: "सामान्य हवेत २१% ऑक्सिजन असतो, YU मध्ये ९९% असतो.", faq_q2: "एका कॅनमध्ये किती श्वास असतात?", faq_a2: "साधारणपणे १५० ते २०० श्वास मिळतात.", faq_q3: "ज्येष्ठ नागरिकांसाठी सुरक्षित आहे का?", faq_a3: "होय, वापरण्यास अत्यंत हलके आणि सोपे आहे.", faq_q4: "विमानात नेता येईल का?", faq_a4: "विमानात नेण्यास मनाई आहे, हॉटेलवर डिलिव्हरी घ्या.", faq_q5: "प्री-बुकिंग कशी चालते?", faq_a5: "पूर्णपणे विनामूल्य आहे, व्हॉट्सॲपवर माहिती दिली जाईल.", book_badge: "बॅच ००१", book_title: "YU प्री-बुक करा", book_sub: "विनामूल्य स्लॉट आरक्षित करा.", btn_submit_order: "आरक्षण निश्चित करा" },
+  te: { name: "తెలుగు", flag: "🇮🇳", nav_altitude: "ఆక్సిజన్ ఛాంబర్", nav_trap: "21% వాస్తవం", nav_moments: "సందర్భాలు", nav_ritual: "విధానం", nav_science: "సైన్స్", nav_faq: "ప్రశ్నలు", btn_prebook: "ప్రీ-బుక్ చేయండి", hero_badge: "బ్యాచ్ 001 // రిజర్వేషన్ ప్రారంభం", hero_h1: "మానవ జీవశాస్త్రంలో అత్యంత నిర్లక్ష్యం చేయబడిన అప్‌గ్రేడ్.", hero_lede: "మీరు నీటిని, ఆహారాన్ని మార్చారు. కానీ ప్రతిరోజూ 20,000 సార్లు 21% పాత గాలినే పీలుస్తున్నారు. 99% స్వచ్ఛమైన ఆక్సిజన్ మీ శక్తిని ఎలా పెంచుతుందో తెలుసుకోండి.", btn_claim_batch: "బ్యాచ్ 001 ప్రీ-బుక్ చేయండి", btn_test_chamber: "ఆల్టిట్యూడ్ ఛాంబర్ పరీక్షించండి", breathe_in: "శ్వాస పీల్చండి", breathe_out: "శ్వాస వదలండి", trap_badge: "శరీర వాస్తవం", trap_title: "21% ఆక్సిజన్ ట్రాప్", trap_sub: "అలసట నిద్రలేమి వల్ల కాదు, ఆక్సిజన్ కొరత వల్ల వస్తుంది.", shift_heading: "3 సెకన్లలో తేడా గమనించండి", shift_desc: "రెండు స్థితులను కింద సరిపోల్చండి:", game_badge: "సిమ్యులేషన్", game_title: "హిమాలయన్ ఆక్సిజన్ ఛాంబర్", game_sub: "ఎత్తు పెరిగేకొద్దీ ఆక్సిజన్ ఎలా తగ్గుతుందో పర్వతంపై క్లిక్ చేసి చూడండి.", moments_badge: "ముఖ్య సందర్భాలు", moments_title: "స్వచ్ఛమైన ఆక్సిజన్ 4 సందర్భాలు", moments_sub: "ప్రతి శ్వాస ముఖ్యమైన సమయాల్లో.", m1_tag: "ఎత్తైన కొండలు", m1_title: "ఆల్పైన్ ట్రెక్స్", m1_desc: "10,000 అడుగుల పైన 30% ఆక్సిజన్ తగ్గుతుంది. YU వెంటనే ఉపశమనం ఇస్తుంది.", m2_tag: "క్రీడలు", m2_title: "గరిష్ట ప్రదర్శన", m2_desc: "లాక్టిక్ యాసిడ్‌ను తొలగించి వెంటనే శక్తిని పునరుద్ధరిస్తుంది.", m3_tag: "కాలుష్య రక్షణ", m3_title: "నగర కాలుష్య కవచం", m3_desc: "నగర కాలుష్యంలో మెదడుకు తక్షణ తాజాదనం ఇస్తుంది.", m4_tag: "కుటుంబ సంరక్షణ", m4_title: "తీర్థయాత్రలలో రక్షణ", m4_desc: "కేదార్‌నాథ్ వంటి పుణ్యక్షేత్రాలలో తల్లిదండ్రులకు శ్వాస భద్రత.", ritual_badge: "సులభ పద్ధతి", ritual_title: "కవర్ చేయండి · నొక్కండి · పీల్చండి", ritual_sub: "మూడు సాధారణ దశల్లో తక్షణ తాజాదనం.", step1_title: "కవర్ చేయండి", step1_desc: "మౌత్‌పీస్‌ను నోరు, ముక్కు దగ్గర ఉంచండి.", step2_title: "నొక్కండి", step2_desc: "శ్వాస పీలుస్తూ 1-2 సెకన్లు నొక్కండి.", step3_title: "పీల్చండి", step3_desc: "లోతుగా పీల్చి 2 సెకన్లు ఆపండి.", sci_badge: "స్వచ్ఛత", sci_title: "99% ఆక్సిజన్ vs 21% సాధారణ గాలి", sci_sub: "12 లీటర్ల తేలికపాటి క్యాన్‌లో 99% స్వచ్ఛమైన ఆక్సిజన్.", sci_note: "ఇది మందు కాదు, ఒక ప్రీమియం వెల్‌నెస్ సాధనం.", sci_cmp_h: "ఆక్సిజన్ గాఢత", sci_cmp_note: "ఒక్కో క్యాన్‌లో 150-200 శ్వాసలు ఉంటాయి. భారతదేశంలో తయారైంది.", faq_badge: "సమాధానాలు", faq_title: "తరచుగా అడిగే ప్రశ్నలు", faq_sub: "ప్రీ-బుకింగ్ ముందు స్పష్టమైన సమాచారం.", faq_q1: "సాధారణ గాలితో తేడా ఏమిటి?", faq_a1: "సాధారణ గాలిలో 21% మాత్రమే ఉంటుంది, YU లో 99% ఉంటుంది.", faq_q2: "ఒక క్యాన్ ఎన్ని శ్వాసలు ఇస్తుంది?", faq_a2: "సుమారు 150 నుండి 200 చిన్న శ్వాసలు వస్తాయి.", faq_q3: "పెద్దవారికి సురక్షితమేనా?", faq_a3: "అవును, చాలా తేలికైనది మరియు సులభంగా వాడవచ్చు.", faq_q4: "విమానంలో తీసుకెళ్లవచ్చా?", faq_a4: "విమానాలలో అనుమతించరు, హోటల్‌కు డెలివరీ తీసుకోవడం మంచిది.", faq_q5: "ప్రీ-బుకింగ్ ఎలా పనిచేస్తుంది?", faq_a5: "పూర్తిగా ఉచితం, వాట్సాప్ ద్వారా వివరాలు అందిస్తాము.", book_badge: "బ్యాచ్ 001", book_title: "YU ప్రీ-బుక్ చేయండి", book_sub: "ఉచితంగా మీ స్లాట్ రిజర్వ్ చేసుకోండి.", btn_submit_order: "రిజర్వేషన్ నిర్ధారించండి" },
+  ta: { name: "தமிழ்", flag: "🇮🇳", nav_altitude: "ஆக்சிஜன் சேம்பர்", nav_trap: "21% உண்மை", nav_moments: "தருணங்கள்", nav_ritual: "பயன்பாடு", nav_science: "அறிவியல்", nav_faq: "கேள்விகள்", btn_prebook: "முன்பதிவு செய்", hero_badge: "தொகுதி 001 // முன்பதிவு தயார்", hero_h1: "மனித உடலியலின் மிக முக்கியமான மேம்பாடு.", hero_lede: "நீங்கள் நீரையும் உணவையும் மாற்றினீர்கள். ஆனால் தினமும் 20,000 முறை 21% பழைய காற்றையே சுவாசிக்கிறீர்கள். 99% தூய ஆக்சிஜன் தரும் மாற்றத்தை உணருங்கள்.", btn_claim_batch: "தொகுதி 001 முன்பதிவு செய்", btn_test_chamber: "உயர சேம்பரை சோதிக்கவும்", breathe_in: "மூச்சை உள்ளிழு", breathe_out: "மூச்சை வெளிவிடு", trap_badge: "உண்மை", trap_title: "21% ஆக்சிஜன் பொறி", trap_sub: "பகல் சோர்வு தூக்கமின்மையால் அல்ல, ஆக்சிஜன் பற்றாக்குறையால் ஏற்படுகிறது.", shift_heading: "3 வினாடிகளில் வித்தியாசத்தை உணருங்கள்", shift_desc: "இரண்டு நிலைகளையும் கீழே ஒப்பிட்டுப் பாருங்கள்:", game_badge: "விளையாட்டு முறை", game_title: "இமாலய ஆக்சிஜன் சேம்பர்", game_sub: "உயரம் கூடும் போது ஆக்சிஜன் எவ்வாறு குறைகிறது என்பதை மலை மீது கிளிக் செய்து பாருங்கள்.", moments_badge: "தருணங்கள்", moments_title: "தூய ஆக்சிஜனின் 4 முக்கிய தருணங்கள்", moments_sub: "ஒவ்வொரு மூச்சும் மிக முக்கியமானதாக இருக்கும் போது.", m1_tag: "உயர்ந்த மலைகள்", m1_title: "மலைப் பயணங்கள்", m1_desc: "10,000 அடிக்கு மேல் 30% ஆக்சிஜன் குறைகிறது. YU உடனடி நிவாரணம் தருகிறது.", m2_tag: "விளையாட்டு", m2_title: "உச்ச செயல்திறன்", m2_desc: "லாக்டிக் அமிலத்தை நீக்கி உடனடியாக உடலை மீட்டெடுக்கிறது.", m3_tag: "நகரப் பாதுகாப்பு", m3_title: "மாசு கவசம்", m3_desc: "மாசு நிறைந்த நகரங்களில் மூளைக்கு உடனடி புத்துணர்ச்சி.", m4_tag: "குடும்பப் பாதுகாப்பு", m4_title: "புனிதப் பயணத்தில் பாதுகாப்பு", m4_desc: "கேதார்நாத் போன்ற புனிதப் பயணங்களில் பெற்றோரின் சுவாசப் பாதுகாப்பு.", ritual_badge: "எளிய முறை", ritual_title: "மூடு · அழுத்து · சுவாசி", ritual_sub: "மூன்று எளிய படிகளில் உடனடி புத்துணர்ச்சி பெறுங்கள்.", step1_title: "மூடு", step1_desc: "மவுத்பீஸை வாய் மற்றும் மூக்கின் அருகில் வைக்கவும்.", step2_title: "அழுத்து", step2_desc: "சுவாசிக்கும் போது 1-2 வினாடிகள் அழுத்தவும்.", step3_title: "சுவாசி", step3_desc: "ஆழமாக சுவாசித்து 2 வினாடிகள் நிறுத்துங்கள்.", sci_badge: "தூய்மை", sci_title: "99% தூய ஆக்சிஜன் vs 21% சாதாரண காற்று", sci_sub: "12 லிட்டர் எடைக் குறைந்த கேனில் 99% தூய ஆக்சிஜன்.", sci_note: "இது மருந்து அல்ல, ஒரு பிரீமியம் ஆரோக்கிய துணை சாதனம்.", sci_cmp_h: "ஆக்சிஜன் அடர்த்தி", sci_cmp_note: "ஒவ்வொரு கேனிலும் 150 முதல் 200 மூச்சுகள் வரை கிடைக்கும். இந்தியாவில் தயாரிக்கப்பட்டது.", faq_badge: "விடைகள்", faq_title: "அடிக்கடி கேட்கப்படும் கேள்விகள்", faq_sub: "முன்பதிவு செய்யும் முன் தெளிவான தகவல்கள்.", faq_q1: "சாதாரண காற்றில் இருந்து எவ்வாறு வேறுபடுகிறது?", faq_a1: "சாதாரண காற்றில் 21% மட்டுமே உள்ளது, YU-வில் 99% தூய ஆக்சிஜன் உள்ளது.", faq_q2: "ஒரு கேனில் எத்தனை மூச்சுகள் கிடைக்கும்?", faq_a2: "சுமார் 150 முதல் 200 சிறிய மூச்சுகள் வரை கிடைக்கும்.", faq_q3: "வயதானவர்களுக்கு பாதுகாப்பானதா?", faq_a3: "ஆம், மிகவும் எடை குறைவானது மற்றும் பயன்படுத்த எளிதானது.", faq_q4: "விமானத்தில் கொண்டு செல்லலாமா?", faq_a4: "விமானங்களில் அனுமதி இல்லை, சேருமிடத்தில் டெலிவரி பெறுங்கள்.", faq_q5: "முன்பதிவு எவ்வாறு செயல்படுகிறது?", faq_a5: "முற்றிலும் இலவசம், வாட்ஸ்அப் மூலம் தொடர்பு கொள்வோம்.", book_badge: "தொகுதி 001", book_title: "YU முன்பதிவு செய்", book_sub: "கட்டணமின்றி உங்கள் இடத்தை பதிவு செய்யுங்கள்.", btn_submit_order: "முன்பதிவை உறுதி செய்" },
+  gu: { name: "ગુજરાતી", flag: "🇮🇳", nav_altitude: "ઓક્સિજન ચેમ્બર", nav_trap: "21% નું સત્ય", nav_moments: "પળો", nav_ritual: "રીત", nav_science: "વિજ્ઞાન", nav_faq: "પ્રશ્નોત્તરી", btn_prebook: "પ્રી-બુક કરો", hero_badge: "બેચ 001 // બુકિંગ ચાલુ", hero_h1: "માનવ શરીરનું સૌથી ઉપેક્ષિત અપગ્રેડ.", hero_lede: "તમે પાણી અને ખોરાક અપગ્રેડ કર્યો. પરંતુ રોજ ૨૦,૦૦૦ શ્વાસ ૨૧% જૂની હવાના લો છો. ૯૯% શુદ્ધ ઓક્સિજન મગજ અને ઊર્જાને કેવી રીતે નવજીવન આપે છે તે જાણો.", btn_claim_batch: "બેચ 001 પ્રી-બુક કરો", btn_test_chamber: "ઊંચાઈ ચેમ્બર તપાસો", breathe_in: "શ્વાસ લો", breathe_out: "શ્વાસ છોડો", trap_badge: "વાસ્તવિકતા", trap_title: "21% ઓક્સિજન ટ્રેપ", trap_sub: "થાક એ ઊંઘની કમી નથી પરંતુ ઓક્સિજનની કમી છે.", shift_heading: "3 સેકન્ડમાં તફાવત અનુભવો", shift_desc: "બંને સ્થિતિઓની નીચે સરખામણી કરો:", game_badge: "સિમ્યુલેશન", game_title: "હિમાલયન ઓક્સિજન ચેમ્બર", game_sub: "ઊંચાઈ વધતાં ઓક્સિજન કેવી રીતે ઘટે છે તે પર્વત પર ક્લિક કરીને જુઓ.", moments_badge: "ખાસ પળો", moments_title: "શુદ્ધ ઓક્સિજનની 4 મુખ્ય ક્ષણો", moments_sub: "જ્યારે દરેક શ્વાસ કિંમતી હોય.", m1_tag: "ઊંચા પહાડ", m1_title: "પર્વતીય યાત્રાઓ", m1_desc: "૧૦,૦૦૦ ફૂટથી વધુ ઊંચાઈએ શ્વાસ ફૂલવાથી તુરંત રાહત આપે છે.", m2_tag: "રમતગમત", m2_title: "શ્રેષ્ઠ પ્રદર્શન", m2_desc: "લેક્ટિક એસિડ દૂર કરી ઝડપી રિકવરી આપે છે.", m3_tag: "શહેરી સુરક્ષા", m3_title: "પ્રદૂષણથી રક્ષણ", m3_desc: "પ્રદૂષિત શહેરોમાં મગજને તુરંત તાજગી આપે છે.", m4_tag: "પરિવારની કાળજી", m4_title: "તીર્થયાત્રામાં રક્ષણ", m4_desc: "કેદારનાથ કે વૈષ્ણોદેવીમાં માતા-પિતા માટે શ્વાસની સુરક્ષા.", ritual_badge: "સરળ રીત", ritual_title: "લગાવો · દબાવો · શ્વાસ લો", ritual_sub: "ત્રણ સરળ પગલાંમાં ત્વરિત તાજગી મેળવો.", step1_title: "લગાવો", step1_desc: "માઉથપીસ મોં અને નાક પાસે રાખો.", step2_title: "દબાવો", step2_desc: "શ્વાસ લેતી વખતે ૧-૨ સેકન્ડ ટ્રિગર દબાવો.", step3_title: "શ્વાસ લો", step3_desc: "ઊંડો શ્વાસ લો અને ૨ સેકન્ડ રોકો.", sci_badge: "શુદ્ધતા", sci_title: "99% શુદ્ધ ઓક્સિજન vs 21% સામાન્ય હવા", sci_sub: "૧૨ લિટરના હલકા કેનમાં ૯૯% શુદ્ધ ઓક્સિજન.", sci_note: "આ દવા નથી, એક પ્રીમિયમ વેલનેસ પ્રોડક્ટ છે.", sci_cmp_h: "ઓક્સિજન ઘનતા", sci_cmp_note: "દરેક કેનમાં ૧૫૦ થી ૨૦૦ શ્વાસ મળે છે. ભારતમાં નિર્મિત.", faq_badge: "જવાબો", faq_title: "વારંવાર પૂછાતા પ્રશ્નો", faq_sub: "પ્રી-બુક કરતાં પહેલાં સ્પષ્ટ માહિતી.", faq_q1: "સામાન્ય હવાથી શું ફરક છે?", faq_a1: "સામાન્ય હવામાં ૨૧% ઓક્સિજન હોય છે, YU માં ૯૯% હોય છે.", faq_q2: "એક કેનમાં કેટલા શ્વાસ હોય છે?", faq_a2: "લગભગ ૧૫૦ થી ૨૦૦ શ્વાસ મળે છે.", faq_q3: "વડીલો માટે સુરક્ષિત છે?", faq_a3: "હા, ખૂબ હલકું અને વાપરવામાં સરળ છે.", faq_q4: "ફ્લાઇટમાં લઈ જઈ શકાય?", faq_a4: "ફ્લાઇટમાં મંજૂરી નથી, હોટેલ પર ડિલિવરી લેવી શ્રેષ્ઠ છે.", faq_q5: "પ્રી-બુકિંગ કેવી રીતે કામ કરે છે?", faq_a5: "સંપૂર્ણ મફત છે, વ્હોટ્સએપ પર માહિતી આપવામાં આવશે.", book_badge: "બેચ 001", book_title: "YU પ્રી-બુક કરો", book_sub: "વિનામૂલ્યે તમારો સ્લોટ અનામત રાખો.", btn_submit_order: "બુકિંગ કન્ફર્મ કરો" },
+  kn: { name: "ಕನ್ನಡ", flag: "🇮🇳", nav_altitude: "ಆಕ್ಸಿಜನ್ ಚೇಂಬರ್", nav_trap: "21% ಸತ್ಯ", nav_moments: "ಸಂದರ್ಭಗಳು", nav_ritual: "ವಿಧಾನ", nav_science: "ವಿಜ್ಞಾನ", nav_faq: "ಪ್ರಶ್ನೋತ್ತರ", btn_prebook: "ಪ್ರೀ-ಬುಕ್ ಮಾಡಿ", hero_badge: "ಬ್ಯಾಚ್ 001 // ಬುಕಿಂಗ್ ಲಭ್ಯ", hero_h1: "ಮಾನವ ಜೀವಶಾಸ್ತ್ರದ ಅತ್ಯಂತ ನಿರ್ಲಕ್ಷಿತ ಅಪ್‌ಗ್ರೇಡ್.", hero_lede: "ನೀವು ನೀರು ಮತ್ತು ಆಹಾರವನ್ನು ಬದಲಾಯಿಸಿದ್ದೀರಿ. ಆದರೆ ಪ್ರತಿದಿನ 20,000 ಬಾರಿ 21% ಹಳೆಯ ಗಾಳಿಯನ್ನೇ ಉಸಿರಾಡುತ್ತಿದ್ದೀರಿ. 99% ಶುದ್ಧ ಆಕ್ಸಿಜನ್ ಶಕ್ತಿಯನ್ನು ಹೇಗೆ ಹೆಚ್ಚಿಸುತ್ತದೆ ಎಂದು ತಿಳಿಯಿರಿ.", btn_claim_batch: "ಬ್ಯಾಚ್ 001 ಪ್ರೀ-ಬುಕ್ ಮಾಡಿ", btn_test_chamber: "ಆಲ್ಟಿಟ್ಯೂಡ್ ಚೇಂಬರ್ ಪರೀಕ್ಷಿಸಿ", breathe_in: "ಉಸಿರು ತೆಗೆದುಕೊಳ್ಳಿ", breathe_out: "ಉಸಿರು ಬಿಡಿ", trap_badge: "ದೇಹದ ವಾಸ್ತವ", trap_title: "21% ಆಕ್ಸಿಜನ್ ಟ್ರ್ಯಾಪ್", trap_sub: "ಆಯಾಸ ನಿದ್ರೆಯ ಕೊರತೆಯಿಂದಲ್ಲ, ಆಕ್ಸಿಜನ್ ಕೊರತೆಯಿಂದ ಬರುತ್ತದೆ.", shift_heading: "3 ಸೆಕೆಂಡುಗಳಲ್ಲಿ ವ್ಯತ್ಯಾಸ ತಿಳಿಯಿರಿ", shift_desc: "ಎರಡೂ ಸ್ಥಿತಿಗಳನ್ನು ಕೆಳಗೆ ಹೋಲಿಸಿ ನೋಡಿ:", game_badge: "ಸಿಮ್ಯುಲೇಶನ್", game_title: "ಹಿಮಾಲಯನ್ ಆಕ್ಸಿಜನ್ ಚೇಂಬರ್", game_sub: "ಎತ್ತರ ಹೆಚ್ಚಾದಂತೆ ಆಕ್ಸಿಜನ್ ಹೇಗೆ ಕಡಿಮೆಯಾಗುತ್ತದೆ ಎಂದು ಪರ್ವತದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ನೋಡಿ.", moments_badge: "ಮುಖ್ಯ ಸಂದರ್ಭಗಳು", moments_title: "ಶುದ್ಧ ಆಕ್ಸಿಜನ್‌ನ 4 ಪ್ರಮುಖ ಸಂದರ್ಭಗಳು", moments_sub: "ಪ್ರತಿ ಉಸಿರೂ ಅಮೂಲ್ಯವಾದ ಸಮಯದಲ್ಲಿ.", m1_tag: "ಎತ್ತರದ ಪರ್ವತ", m1_title: "ಆಲ್ಪೈನ್ ಟ್ರೆಕ್ಸ್", m1_desc: "10,000 ಅಡಿಗಳಿಗಿಂತ ಹೆಚ್ಚು ಎತ್ತರದಲ್ಲಿ ತಕ್ಷಣ ಉಸಿರಾಟದ ಆರಾಮ ನೀಡುತ್ತದೆ.", m2_tag: "ಕ್ರೀಡೆ", m2_title: "ಗರಿಷ್ಠ ಸಾಮರ್ಥ್ಯ", m2_desc: "ಲ್ಯಾಕ್ಟಿಕ್ ಆಮ್ಲವನ್ನು ಕಡಿಮೆ ಮಾಡಿ ತಕ್ಷಣ ಚೇತರಿಕೆ ನೀಡುತ್ತದೆ.", m3_tag: "ನಗರ ರಕ್ಷಣೆ", m3_title: "ಮಾಲಿನ್ಯ ರಕ್ಷಾ ಕವಚ", m3_desc: "ನಗರದ ಮಾಲಿನ್ಯದಲ್ಲಿ ಮೆದುಳಿಗೆ ತಕ್ಷಣ ತಾಜಾತನ ನೀಡುತ್ತದೆ.", m4_tag: "ಕುಟುಂಬದ ಕಾಳಜಿ", m4_title: "ತೀರ್ಥಯಾತ್ರೆಯಲ್ಲಿ ಸುರಕ್ಷತೆ", m4_desc: "ಕೇದಾರನಾಥ ಮುಂತಾದ ಯಾತ್ರೆಗಳಲ್ಲಿ ಪೋಷಕರಿಗೆ ಉಸಿರಾಟದ ಭದ್ರತೆ.", ritual_badge: "ಸರಳ ನಿಯಮ", ritual_title: "ಕವರ್ ಮಾಡಿ · ಒತ್ತಿ · ಉಸಿರಾಡಿ", ritual_sub: "ಮೂರು ಸರಳ ಹಂತಗಳಲ್ಲಿ ತಕ್ಷಣ ತಾಜಾತನ ಪಡೆಯಿರಿ.", step1_title: "ಕವರ್ ಮಾಡಿ", step1_desc: "ಮೌತ್‌ಪೀಸ್ ಅನ್ನು ಮೂಗು ಮತ್ತು ಬಾಯಿಯ ಹತ್ತಿರ ಇರಿಸಿ.", step2_title: "ಒತ್ತಿ", step2_desc: "ಉಸಿರೆಳೆಯುವಾಗ 1-2 ಸೆಕೆಂಡುಗಳ ಕಾಲ ಪ್ರೆಸ್ ಮಾಡಿ.", step3_title: "ಉಸಿರಾಡಿ", step3_desc: "ಆಳವಾಗಿ ಉಸಿರೆಳೆದು 2 ಸೆಕೆಂಡ್ ನಿಲ್ಲಿಸಿ.", sci_badge: "ಶುದ್ಧತೆ", sci_title: "99% ಶುದ್ಧ ಆಕ್ಸಿಜನ್ vs 21% ಸಾಮಾನ್ಯ ಗಾಳಿ", sci_sub: "12 ಲೀಟರ್ ಕ್ಯಾನ್‌ನಲ್ಲಿ 99% ಶುದ್ಧ ಆಕ್ಸಿಜನ್.", sci_note: "ಇದು ಔಷಧಿಯಲ್ಲ, ಪ್ರೀಮಿಯಂ ವೆಲ್ನೆಸ್ ಉತ್ಪನ್ನ.", sci_cmp_h: "ಆಕ್ಸಿಜನ್ ಸಾಂದ್ರತೆ", sci_cmp_note: "ಪ್ರತಿ ಕ್ಯಾನ್‌ನಲ್ಲಿ 150 ರಿಂದ 200 ಉಸಿರಾಟಗಳು ಇರುತ್ತವೆ. ಭಾರತದಲ್ಲಿ ತಯಾರಾಗಿದೆ.", faq_badge: "ಉತ್ತರಗಳು", faq_title: "ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳು", faq_sub: "ಪ್ರೀ-ಬುಕ್ ಮಾಡುವ ಮುನ್ನ ಸ್ಪಷ್ಟ ಮಾಹಿತಿ.", faq_q1: "ಸಾಮಾನ್ಯ ಗಾಳಿಗಿಂತ ಹೇಗೆ ಭಿನ್ನ?", faq_a1: "ಸಾಮಾನ್ಯ ಗಾಳಿಯಲ್ಲಿ 21% ಇರುತ್ತದೆ, YU ನಲ್ಲಿ 99% ಶುದ್ಧ ಆಕ್ಸಿಜನ್ ಇರುತ್ತದೆ.", faq_q2: "ಒಂದು ಕ್ಯಾನ್‌ನಲ್ಲಿ ಎಷ್ಟು ಉಸಿರಾಟಗಳು ಇರುತ್ತವೆ?", faq_a2: "ಸುಮಾರು 150 ರಿಂದ 200 ಉಸಿರಾಟಗಳು ಲಭ್ಯ.", faq_q3: "ಹಿರಿಯರಿಗೆ ಸುರಕ್ಷಿತವೇ?", faq_a3: "ಹೌದು, ಬಳಸಲು ತುಂಬಾ ಸುಲಭ ಮತ್ತು ಹಗುರವಾಗಿದೆ.", faq_q4: "ವಿಮಾನದಲ್ಲಿ ಕೊಂಡೊಯ್ಯಬಹುದೇ?", faq_a4: "ವಿಮಾನದಲ್ಲಿ ಅನುಮತಿ ಇಲ್ಲ, ತಲುಪುವ ಸ್ಥಳಕ್ಕೆ ಡೆಲಿವರಿ ಪಡೆಯುವುದು ಸೂಕ್ತ.", faq_q5: "ಪ್ರೀ-ಬುಕಿಂಗ್ ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ?", faq_a5: "ಸಂಪೂರ್ಣ ಉಚಿತ, ನಮ್ಮ ತಂಡ ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತದೆ.", book_badge: "ಬ್ಯಾಚ್ 001", book_title: "YU ಪ್ರೀ-ಬುಕ್ ಮಾಡಿ", book_sub: "ಯಾವುದೇ ಮುಂಗಡ ಶುಲ್ಕವಿಲ್ಲದೆ ಸ್ಲಾಟ್ ಕಾಯ್ದಿರಿಸಿ.", btn_submit_order: "ಬುಕಿಂಗ್ ಖಚಿತಪಡಿಸಿ" }
+};
+
+/* State */
+var currentLang = localStorage.getItem('yu-lang') || 'en';
+if (!TRANSLATIONS[currentLang]) currentLang = 'en';
+
+function setLanguage(langCode) {
+  if (!TRANSLATIONS[langCode]) langCode = 'en';
+  currentLang = langCode;
+  localStorage.setItem('yu-lang', langCode);
+
+  var dict = TRANSLATIONS[langCode];
+  document.getElementById('current-lang-flag').textContent = dict.flag;
+  document.getElementById('current-lang-name').textContent = dict.name;
+
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      el.textContent = dict[key];
+    }
+  });
+
+  // Active state in dropdown
+  document.querySelectorAll('#lang-dropdown button').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-lang') === langCode);
+  });
+}
+
+// Language dropdown toggling
+var langBtn = document.getElementById('lang-btn');
+var langDropdown = document.getElementById('lang-dropdown');
+if (langBtn && langDropdown) {
+  langBtn.onclick = function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('open');
+  };
+  document.addEventListener('click', function(e) {
+    if (!langDropdown.contains(e.target) && e.target !== langBtn) {
+      langDropdown.classList.remove('open');
+    }
+  });
+  langDropdown.querySelectorAll('button').forEach(function(btn) {
+    btn.onclick = function() {
+      var selected = this.getAttribute('data-lang');
+      setLanguage(selected);
+      langDropdown.classList.remove('open');
+    };
+  });
+}
+
+/* ================= 2. THE 21% TRAP PSYCHOLOGICAL TOGGLE ================= */
+var btnTrap = document.getElementById('btn-show-trap');
+var btnYu = document.getElementById('btn-show-yu');
+var shiftPill = document.getElementById('shift-pill');
+var shiftTitle = document.getElementById('shift-state-title');
+var shiftDesc = document.getElementById('shift-state-desc');
+
+if (btnTrap && btnYu) {
+  btnTrap.onclick = function() {
+    btnTrap.classList.add('active');
+    btnYu.classList.remove('active');
+    shiftPill.className = 'shift-status-pill trap';
+    shiftPill.textContent = 'Everyday Ambient Air (21% O₂)';
+    shiftTitle.textContent = 'Mid-Day Slump & Brain Fog';
+    shiftDesc.textContent = 'Standard city air is 78% nitrogen and only 21% oxygen. In traffic, AC rooms, or altitude, reduced oxygen intake leaves you feeling tired, yawning, and struggling to stay focused.';
+  };
+  btnYu.onclick = function() {
+    btnYu.classList.add('active');
+    btnTrap.classList.remove('active');
+    shiftPill.className = 'shift-status-pill surge';
+    shiftPill.textContent = 'YU Pure Oxygen Surge (99% O₂)';
+    shiftTitle.textContent = 'Instant Focus & Clean Energy';
+    shiftDesc.textContent = 'A few deep breaths of 99% pure oxygen flood your bloodstream in 3 seconds. It blows away heavy head fog, clears workout fatigue, and recharges your stamina naturally without caffeine.';
+  };
+}
+
+/* ================= 3. HERO CANISTER INTERACTIVE PULSE ================= */
+var heroHalo = document.getElementById('hero-halo');
+var haloRipple = document.getElementById('halo-ripple');
+if (heroHalo && haloRipple) {
+  heroHalo.onclick = function() {
+    haloRipple.classList.remove('trigger');
+    void haloRipple.offsetWidth; // trigger reflow
+    haloRipple.classList.add('trigger');
+  };
+}
+
+/* ================= 4. GAMIFIED MOUNTAIN OXYGEN CHAMBER (NO SLIDER) ================= */
+var GAMIFIED_WAYPOINTS = [
+  { name: "Sea Level", alt: "0 m", pct: 100, tag: "Coastal Baseline", zone: "Normal Saturation", status: "Optimal Atmospheric Air: 100% natural baseline oxygen", sky: "linear-gradient(180deg, #1E3A8A 0%, #0284C7 60%, #38BDF8 100%)", coreBg: "radial-gradient(circle, #38BDF8 0%, #2563EB 60%, rgba(37,99,235,0.2) 100%)", ringColor: "#3B82F6", sunTop: "20px", sunBg: "#FDE047", zoneColor: "#10B981", zoneBg: "rgba(16,185,129,0.15)", particles: 26 },
+  { name: "Vaishno Devi", alt: "1,584 m", pct: 83, tag: "1,584 m", zone: "Mild Altitude", status: "Gentle Hill Slopes: Breathing feels slightly deeper during climbs", sky: "linear-gradient(180deg, #1E293B 0%, #0369A1 60%, #0284C7 100%)", coreBg: "radial-gradient(circle, #06B6D4 0%, #0284C7 60%, rgba(2,132,199,0.2) 100%)", ringColor: "#06B6D4", sunTop: "45px", sunBg: "#FBBF24", zoneColor: "#0284C7", zoneBg: "rgba(2,132,199,0.15)", particles: 20 },
+  { name: "Machu Picchu", alt: "2,430 m", pct: 75, tag: "2,430 m", zone: "Cloudline", status: "Cloud Forest Exertion: Heart beats faster; steps require pacing", sky: "linear-gradient(180deg, #0F172A 0%, #1E3A8A 60%, #0369A1 100%)", coreBg: "radial-gradient(circle, #10B981 0%, #0D9488 60%, rgba(13,148,136,0.2) 100%)", ringColor: "#10B981", sunTop: "70px", sunBg: "#F59E0B", zoneColor: "#10B981", zoneBg: "rgba(16,185,129,0.15)", particles: 15 },
+  { name: "Leh Ladakh", alt: "3,500 m", pct: 66, tag: "3,500 m", zone: "High Altitude Hypoxia", status: "Thin Air Plateau: Heavy breathing, altitude headaches, slow acclimatisation", sky: "linear-gradient(180deg, #0B0F19 0%, #312E81 60%, #1E3A8A 100%)", coreBg: "radial-gradient(circle, #F59E0B 0%, #D97706 60%, rgba(217,119,6,0.2) 100%)", ringColor: "#F59E0B", sunTop: "95px", sunBg: "#FB923C", zoneColor: "#D97706", zoneBg: "rgba(217,119,6,0.15)", particles: 10 },
+  { name: "Kedarnath", alt: "3,583 m", pct: 65, tag: "3,583 m", zone: "Pilgrimage Strain", status: "High Himalayan Yatra: Steep ascent strains lungs and legs rapidly", sky: "linear-gradient(180deg, #090D16 0%, #4338CA 60%, #312E81 100%)", coreBg: "radial-gradient(circle, #F59E0B 0%, #B45309 60%, rgba(180,83,9,0.2) 100%)", ringColor: "#F59E0B", sunTop: "105px", sunBg: "#EA580C", zoneColor: "#EA580C", zoneBg: "rgba(234,88,12,0.15)", particles: 8 },
+  { name: "Everest Base Camp", alt: "5,364 m", pct: 51, tag: "5,364 m", zone: "Severe Oxygen Deficit", status: "Glacial Extreme: Nearly half the oxygen of sea level in every breath", sky: "linear-gradient(180deg, #05070B 0%, #581C87 60%, #3B0764 100%)", coreBg: "radial-gradient(circle, #EF4444 0%, #B91C1C 60%, rgba(185,28,28,0.2) 100%)", ringColor: "#EF4444", sunTop: "130px", sunBg: "#E11D48", zoneColor: "#DC2626", zoneBg: "rgba(220,38,38,0.15)", particles: 4 },
+  { name: "Kilimanjaro Summit", alt: "5,895 m", pct: 47, tag: "5,895 m", zone: "Extreme Alpine Hypoxia", status: "Summit Ridge: Extreme physical exhaustion with every single breath", sky: "linear-gradient(180deg, #020204 0%, #701A75 60%, #4A044E 100%)", coreBg: "radial-gradient(circle, #DC2626 0%, #991B1B 60%, rgba(153,27,27,0.2) 100%)", ringColor: "#DC2626", sunTop: "145px", sunBg: "#9F1239", zoneColor: "#B91C1C", zoneBg: "rgba(185,28,28,0.15)", particles: 3 }
+];
+
+var currentWaypointIdx = 4; // default Kedarnath
+
+function initChamberGame() {
+  var waypointsContainer = document.getElementById('waypoints-selector');
+  var ascentSky = document.getElementById('ascent-sky');
+  var particlesContainer = document.getElementById('particles-container');
+  var chamberPercent = document.getElementById('chamber-percent');
+  var chamberLabel = document.getElementById('chamber-label');
+  var chamberStatus = document.getElementById('chamber-status');
+  var bioSphere = document.getElementById('bio-sphere');
+  var bioRing = document.getElementById('bio-ring');
+  var bioPulseWaves = document.getElementById('bio-pulse-waves');
+  var celestialOrb = document.getElementById('celestial-orb');
+  var altMeterVal = document.getElementById('alt-meter-val');
+  var bioZoneTag = document.getElementById('bio-zone-tag');
+  var inhaleBarFill = document.getElementById('inhale-bar-fill');
+  var btnRestore = document.getElementById('btn-restore-o2');
+
+  function renderParticles(count) {
+    if (!particlesContainer) return;
+    particlesContainer.innerHTML = '';
+    for (var i = 0; i < count; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'o2-dot';
+      dot.style.top = Math.random() * 75 + '%';
+      dot.style.left = Math.random() * 95 + '%';
+      dot.style.animationDelay = (Math.random() * 3) + 's';
+      particlesContainer.appendChild(dot);
+    }
+  }
+
+  function applyWaypoint(idx) {
+    currentWaypointIdx = idx;
+    var wp = GAMIFIED_WAYPOINTS[idx];
+
+    if (ascentSky) ascentSky.style.background = wp.sky;
+    if (chamberPercent) chamberPercent.textContent = wp.pct + '%';
+    if (chamberLabel) chamberLabel.textContent = wp.name;
+    if (chamberStatus) chamberStatus.textContent = wp.status;
+    if (bioSphere) bioSphere.style.background = wp.coreBg;
+    if (bioRing) bioRing.style.borderColor = wp.ringColor;
+    if (altMeterVal) altMeterVal.textContent = wp.alt;
+    if (celestialOrb) celestialOrb.style.top = wp.sunTop;
+    if (bioZoneTag) {
+      bioZoneTag.textContent = wp.zone;
+      bioZoneTag.style.color = wp.zoneColor;
+      bioZoneTag.style.background = wp.zoneBg;
+    }
+    if (inhaleBarFill) inhaleBarFill.style.width = wp.pct + '%';
+
+    renderParticles(wp.particles);
+
+    if (waypointsContainer) {
+      var btns = waypointsContainer.querySelectorAll('.waypoint-btn');
+      btns.forEach(function(b, i) {
+        b.classList.toggle('active', i === idx);
+      });
+    }
+  }
+
+  if (waypointsContainer) {
+    waypointsContainer.innerHTML = '';
+    GAMIFIED_WAYPOINTS.forEach(function(wp, i) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'waypoint-btn' + (i === currentWaypointIdx ? ' active' : '');
+      btn.innerHTML = '<b>' + wp.name + '</b><span>' + wp.tag + ' · ' + wp.pct + '% O₂</span>';
+      btn.onclick = function() {
+        applyWaypoint(i);
+      };
+      waypointsContainer.appendChild(btn);
+    });
+  }
+
+  if (btnRestore) {
+    btnRestore.onclick = function() {
+      // Audio-visual pure oxygen inhalation surge
+      chamberPercent.textContent = '99%';
+      chamberLabel.textContent = 'Cellular Surge (YU)';
+      chamberStatus.textContent = '⚡ 99% Pure Medical-Grade Oxygen Inhaled: Instant Freshness & Cellular Recovery!';
+      bioSphere.style.background = 'radial-gradient(circle, #38BDF8 0%, #2563EB 60%, rgba(56,189,248,0.6) 100%)';
+      bioRing.style.borderColor = '#38BDF8';
+      if (bioZoneTag) {
+        bioZoneTag.textContent = 'Peak Hyper-Oxygenated';
+        bioZoneTag.style.color = '#10B981';
+        bioZoneTag.style.background = 'rgba(16,185,129,0.2)';
+      }
+      if (bioPulseWaves) bioPulseWaves.classList.add('active');
+      if (inhaleBarFill) inhaleBarFill.style.width = '100%';
+      renderParticles(34);
+
+      setTimeout(function() {
+        if (bioPulseWaves) bioPulseWaves.classList.remove('active');
+        applyWaypoint(currentWaypointIdx);
+      }, 4200);
+    };
+  }
+
+  applyWaypoint(currentWaypointIdx);
+}
+initChamberGame();
+
+/* ================= 5. COMPREHENSIVE COUNTRY, STATE & CITY DATA ================= */
+var COUNTRY_DATA = {
+            "Afghanistan": { code: "+93", states: { "Kabul": ["Kabul City"], "Herat": ["Herat City"] } },
+            "Albania": { code: "+355", states: { "Tirana": ["Tirana City"], "Durrës": ["Durrës City"] } },
+            "Algeria": { code: "+213", states: { "Algiers": ["Algiers City"], "Oran": ["Oran City"] } },
+            "Argentina": { code: "+54", states: { "Buenos Aires": ["Buenos Aires City", "La Plata"], "Córdoba": ["Córdoba City"] } },
+            "Australia": {
+                code: "+61", states: {
+                    "New South Wales": ["Sydney", "Newcastle", "Wollongong"],
+                    "Victoria": ["Melbourne", "Geelong", "Ballarat"],
+                    "Queensland": ["Brisbane", "Gold Coast", "Cairns"],
+                    "Western Australia": ["Perth", "Fremantle"],
+                    "South Australia": ["Adelaide"],
+                    "Tasmania": ["Hobart"]
+                }
+            },
+            "Austria": { code: "+43", states: { "Vienna": ["Vienna City"], "Salzburg": ["Salzburg City"], "Tyrol": ["Innsbruck"] } },
+            "Bahrain": { code: "+973", states: { "Capital": ["Manama"] } },
+            "Bangladesh": { code: "+880", states: { "Dhaka": ["Dhaka City"], "Chittagong": ["Chittagong City"], "Khulna": ["Khulna City"] } },
+            "Belgium": { code: "+32", states: { "Brussels": ["Brussels City"], "Antwerp": ["Antwerp City"], "Flemish Brabant": ["Leuven"] } },
+            "Brazil": {
+                code: "+55", states: {
+                    "São Paulo": ["São Paulo City", "Campinas", "Santos"],
+                    "Rio de Janeiro": ["Rio de Janeiro City", "Niterói"],
+                    "Minas Gerais": ["Belo Horizonte"],
+                    "Bahia": ["Salvador"],
+                    "Brasília": ["Brasília City"]
+                }
+            },
+            "Bulgaria": { code: "+359", states: { "Sofia": ["Sofia City"], "Plovdiv": ["Plovdiv City"], "Varna": ["Varna City"] } },
+            "Canada": {
+                code: "+1", states: {
+                    "Ontario": ["Toronto", "Ottawa", "Mississauga", "Hamilton", "London"],
+                    "Quebec": ["Montreal", "Quebec City", "Laval"],
+                    "British Columbia": ["Vancouver", "Victoria", "Surrey", "Burnaby"],
+                    "Alberta": ["Calgary", "Edmonton", "Red Deer"],
+                    "Manitoba": ["Winnipeg"],
+                    "Saskatchewan": ["Regina", "Saskatoon"],
+                    "Nova Scotia": ["Halifax"]
+                }
+            },
+            "Chile": { code: "+56", states: { "Santiago": ["Santiago City"], "Valparaíso": ["Valparaíso City", "Viña del Mar"] } },
+            "China": {
+                code: "+86", states: {
+                    "Beijing": ["Beijing City"],
+                    "Shanghai": ["Shanghai City"],
+                    "Guangdong": ["Guangzhou", "Shenzhen", "Dongguan"],
+                    "Zhejiang": ["Hangzhou", "Ningbo"],
+                    "Jiangsu": ["Nanjing", "Suzhou"],
+                    "Sichuan": ["Chengdu"],
+                    "Hubei": ["Wuhan"]
+                }
+            },
+            "Colombia": { code: "+57", states: { "Bogotá": ["Bogotá City"], "Antioquia": ["Medellín"], "Valle del Cauca": ["Cali"] } },
+            "Costa Rica": { code: "+506", states: { "San José": ["San José City"], "Alajuela": ["Alajuela City"] } },
+            "Croatia": { code: "+385", states: { "Zagreb": ["Zagreb City"], "Split-Dalmatia": ["Split"] } },
+            "Czech Republic": { code: "+420", states: { "Prague": ["Prague City"], "South Moravian": ["Brno"] } },
+            "Denmark": { code: "+45", states: { "Capital Region": ["Copenhagen"], "Central Jutland": ["Aarhus"] } },
+            "Egypt": { code: "+20", states: { "Cairo": ["Cairo City", "Giza"], "Alexandria": ["Alexandria City"] } },
+            "Estonia": { code: "+372", states: { "Harju": ["Tallinn"] } },
+            "Finland": { code: "+358", states: { "Uusimaa": ["Helsinki", "Espoo"], "Pirkanmaa": ["Tampere"] } },
+            "France": {
+                code: "+33", states: {
+                    "Île-de-France": ["Paris", "Versailles", "Boulogne-Billancourt"],
+                    "Provence-Alpes-Côte d'Azur": ["Marseille", "Nice", "Cannes"],
+                    "Auvergne-Rhône-Alpes": ["Lyon", "Grenoble"],
+                    "Occitanie": ["Toulouse", "Montpellier"],
+                    "Nouvelle-Aquitaine": ["Bordeaux"]
+                }
+            },
+            "Germany": {
+                code: "+49", states: {
+                    "Bavaria": ["Munich", "Nuremberg", "Augsburg"],
+                    "Berlin": ["Berlin City"],
+                    "Hamburg": ["Hamburg City"],
+                    "Hesse": ["Frankfurt", "Wiesbaden"],
+                    "North Rhine-Westphalia": ["Cologne", "Düsseldorf", "Dortmund", "Essen"],
+                    "Baden-Württemberg": ["Stuttgart", "Mannheim"]
+                }
+            },
+            "Greece": { code: "+30", states: { "Attica": ["Athens", "Piraeus"], "Central Macedonia": ["Thessaloniki"] } },
+            "Hong Kong": { code: "+852", states: { "Hong Kong Island": ["Central", "Wan Chai"], "Kowloon": ["Tsim Sha Tsui"] } },
+            "Hungary": { code: "+36", states: { "Budapest": ["Budapest City"], "Pest": ["Gödöllő"] } },
+            "Iceland": { code: "+354", states: { "Capital Region": ["Reykjavik"] } },
+            "India": {
+                code: "+91", states: {
+                    "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Rajahmundry", "Tirupati", "Kakinada", "Kadapa", "Anantapur"],
+                    "Arunachal Pradesh": ["Itanagar", "Naharlagun", "Pasighat", "Tawang", "Ziro", "Along", "Bomdila", "Tezu"],
+                    "Assam": ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Nagaon", "Tinsukia", "Tezpur", "Bongaigaon", "Dhubri", "Sibsagar"],
+                    "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Purnia", "Darbhanga", "Arrah", "Begusarai", "Katihar", "Munger"],
+                    "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba", "Durg", "Rajnandgaon", "Raigarh", "Jagdalpur", "Ambikapur"],
+                    "Goa": ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda", "Calangute", "Candolim"],
+                    "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand", "Nadiad", "Morbi", "Mehsana", "Bharuch", "Porbandar", "Dwarka"],
+                    "Haryana": ["Gurgaon", "Faridabad", "Panipat", "Ambala", "Karnal", "Rohtak", "Hisar", "Sonipat", "Yamunanagar", "Panchkula", "Bhiwani", "Sirsa", "Kurukshetra"],
+                    "Himachal Pradesh": ["Shimla", "Manali", "Dharamshala", "Kullu", "Solan", "Mandi", "Dalhousie", "Kasauli", "Chamba", "Kangra", "Bilaspur", "Hamirpur", "Una", "Nahan", "Palampur", "Keylong", "Kaza", "Spiti"],
+                    "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro", "Deoghar", "Hazaribagh", "Giridih", "Ramgarh", "Dumka"],
+                    "Karnataka": ["Bangalore", "Mysore", "Mangalore", "Hubli", "Belgaum", "Dharwad", "Gulbarga", "Davangere", "Bellary", "Shimoga", "Tumkur", "Udupi", "Bidar", "Hospet", "Hassan", "Chikmagalur", "Coorg"],
+                    "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Kollam", "Alappuzha", "Palakkad", "Kannur", "Kottayam", "Malappuram", "Munnar", "Wayanad", "Idukki"],
+                    "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Dewas", "Satna", "Ratlam", "Rewa", "Katni", "Singrauli", "Burhanpur", "Khandwa", "Pachmarhi"],
+                    "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Aurangabad", "Solapur", "Kolhapur", "Amravati", "Nanded", "Sangli", "Jalgaon", "Akola", "Latur", "Dhule", "Ahmednagar", "Chandrapur", "Parbhani", "Satara", "Mahabaleshwar", "Lonavala", "Matheran"],
+                    "Manipur": ["Imphal", "Thoubal", "Bishnupur", "Churachandpur", "Kakching"],
+                    "Meghalaya": ["Shillong", "Tura", "Jowai", "Nongstoin", "Cherrapunji", "Mawsynram"],
+                    "Mizoram": ["Aizawl", "Lunglei", "Champhai", "Serchhip", "Kolasib"],
+                    "Nagaland": ["Kohima", "Dimapur", "Mokokchung", "Tuensang", "Wokha", "Zunheboto"],
+                    "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Berhampur", "Sambalpur", "Puri", "Balasore", "Baripada", "Bhadrak", "Jharsuguda"],
+                    "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali", "Hoshiarpur", "Pathankot", "Moga", "Firozpur", "Batala", "Phagwara", "Kapurthala"],
+                    "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Bikaner", "Ajmer", "Bhilwara", "Alwar", "Sikar", "Sri Ganganagar", "Pali", "Bharatpur", "Mount Abu", "Pushkar", "Jaisalmer", "Chittorgarh"],
+                    "Sikkim": ["Gangtok", "Namchi", "Gyalshing", "Mangan", "Ravangla", "Pelling", "Lachung", "Lachen"],
+                    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli", "Erode", "Vellore", "Thoothukudi", "Dindigul", "Thanjavur", "Tiruppur", "Nagercoil", "Ooty", "Kodaikanal", "Yercaud"],
+                    "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Khammam", "Ramagundam", "Mahbubnagar", "Nalgonda", "Adilabad", "Suryapet"],
+                    "Tripura": ["Agartala", "Udaipur", "Dharmanagar", "Kailashahar", "Belonia", "Ambassa"],
+                    "Uttar Pradesh": ["Lucknow", "Kanpur", "Ghaziabad", "Agra", "Noida", "Meerut", "Varanasi", "Prayagraj", "Bareilly", "Moradabad", "Aligarh", "Saharanpur", "Gorakhpur", "Firozabad", "Jhansi", "Muzaffarnagar", "Mathura", "Ayodhya", "Haridwar"],
+                    "Uttarakhand": ["Dehradun", "Haridwar", "Rishikesh", "Nainital", "Mussoorie", "Roorkee", "Haldwani", "Rudrapur", "Kashipur", "Almora", "Pithoragarh", "Chamoli", "Uttarkashi", "Tehri", "Pauri", "Kedarnath", "Badrinath", "Gangotri", "Yamunotri", "Auli", "Chopta", "Valley of Flowers"],
+                    "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Asansol", "Siliguri", "Bardhaman", "Malda", "Baharampur", "Habra", "Kharagpur", "Shantiniketan", "Darjeeling", "Kalimpong", "Kurseong"],
+                    "Andaman and Nicobar Islands": ["Port Blair", "Havelock Island", "Neil Island", "Diglipur"],
+                    "Chandigarh": ["Chandigarh City", "Sector 17", "Sector 22", "Sector 35"],
+                    "Dadra and Nagar Haveli and Daman and Diu": ["Silvassa", "Daman", "Diu"],
+                    "Delhi": ["New Delhi", "Central Delhi", "South Delhi", "North Delhi", "East Delhi", "West Delhi", "Dwarka", "Rohini", "Saket", "Karol Bagh", "Connaught Place"],
+                    "Jammu and Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla", "Sopore", "Gulmarg", "Pahalgam", "Sonamarg", "Leh", "Kargil", "Nubra Valley", "Pangong", "Kathua", "Udhampur", "Patnitop"],
+                    "Ladakh": ["Leh", "Kargil", "Nubra Valley", "Pangong Lake", "Tso Moriri", "Zanskar", "Hanle", "Diskit"],
+                    "Lakshadweep": ["Kavaratti", "Agatti", "Minicoy", "Andrott", "Kalpeni"],
+                    "Puducherry": ["Puducherry City", "Karaikal", "Mahe", "Yanam", "Auroville"]
+                }
+            },
+            "Indonesia": {
+                code: "+62", states: {
+                    "Jakarta": ["Jakarta City"],
+                    "West Java": ["Bandung", "Bekasi"],
+                    "East Java": ["Surabaya"],
+                    "Bali": ["Denpasar"]
+                }
+            },
+            "Iran": { code: "+98", states: { "Tehran": ["Tehran City"], "Isfahan": ["Isfahan City"] } },
+            "Iraq": { code: "+964", states: { "Baghdad": ["Baghdad City"], "Basra": ["Basra City"] } },
+            "Ireland": { code: "+353", states: { "Leinster": ["Dublin", "Cork"], "Munster": ["Limerick"] } },
+            "Israel": { code: "+972", states: { "Tel Aviv": ["Tel Aviv City"], "Jerusalem": ["Jerusalem City"], "Haifa": ["Haifa City"] } },
+            "Italy": {
+                code: "+39", states: {
+                    "Lazio": ["Rome"],
+                    "Lombardy": ["Milan", "Bergamo", "Brescia"],
+                    "Campania": ["Naples"],
+                    "Sicily": ["Palermo", "Catania"],
+                    "Veneto": ["Venice", "Verona"],
+                    "Piedmont": ["Turin"]
+                }
+            },
+            "Japan": {
+                code: "+81", states: {
+                    "Tokyo": ["Tokyo City", "Shibuya", "Shinjuku"],
+                    "Osaka": ["Osaka City"],
+                    "Kyoto": ["Kyoto City"],
+                    "Kanagawa": ["Yokohama"],
+                    "Aichi": ["Nagoya"],
+                    "Hokkaido": ["Sapporo"]
+                }
+            },
+            "Jordan": { code: "+962", states: { "Amman": ["Amman City"] } },
+            "Kazakhstan": { code: "+7", states: { "Almaty": ["Almaty City"], "Nur-Sultan": ["Nur-Sultan City"] } },
+            "Kenya": { code: "+254", states: { "Nairobi": ["Nairobi City"], "Mombasa": ["Mombasa City"] } },
+            "Kuwait": { code: "+965", states: { "Capital": ["Kuwait City"] } },
+            "Latvia": { code: "+371", states: { "Riga": ["Riga City"] } },
+            "Lebanon": { code: "+961", states: { "Beirut": ["Beirut City"] } },
+            "Lithuania": { code: "+370", states: { "Vilnius": ["Vilnius City"] } },
+            "Luxembourg": { code: "+352", states: { "Luxembourg": ["Luxembourg City"] } },
+            "Malaysia": {
+                code: "+60", states: {
+                    "Kuala Lumpur": ["Kuala Lumpur City"],
+                    "Selangor": ["Petaling Jaya", "Shah Alam"],
+                    "Penang": ["George Town"],
+                    "Johor": ["Johor Bahru"]
+                }
+            },
+            "Mexico": {
+                code: "+52", states: {
+                    "Mexico City": ["Mexico City"],
+                    "Jalisco": ["Guadalajara"],
+                    "Nuevo León": ["Monterrey"],
+                    "Puebla": ["Puebla City"],
+                    "Quintana Roo": ["Cancún"]
+                }
+            },
+            "Morocco": { code: "+212", states: { "Casablanca-Settat": ["Casablanca"], "Rabat-Salé-Kénitra": ["Rabat"] } },
+            "Netherlands": {
+                code: "+31", states: {
+                    "North Holland": ["Amsterdam", "Haarlem"],
+                    "South Holland": ["Rotterdam", "The Hague"],
+                    "Utrecht": ["Utrecht City"]
+                }
+            },
+            "New Zealand": {
+                code: "+64", states: {
+                    "Auckland": ["Auckland City"],
+                    "Wellington": ["Wellington City"],
+                    "Canterbury": ["Christchurch"],
+                    "Otago": ["Dunedin"]
+                }
+            },
+            "Nigeria": { code: "+234", states: { "Lagos": ["Lagos City"], "Abuja": ["Abuja City"], "Kano": ["Kano City"] } },
+            "Norway": { code: "+47", states: { "Oslo": ["Oslo City"], "Hordaland": ["Bergen"] } },
+            "Oman": { code: "+968", states: { "Muscat": ["Muscat City"] } },
+            "Pakistan": {
+                code: "+92", states: {
+                    "Sindh": ["Karachi"],
+                    "Punjab": ["Lahore", "Faisalabad", "Rawalpindi"],
+                    "Khyber Pakhtunkhwa": ["Peshawar"],
+                    "Islamabad": ["Islamabad City"]
+                }
+            },
+            "Peru": { code: "+51", states: { "Lima": ["Lima City"], "Cusco": ["Cusco City"] } },
+            "Philippines": {
+                code: "+63", states: {
+                    "Metro Manila": ["Manila", "Quezon City", "Makati"],
+                    "Cebu": ["Cebu City"],
+                    "Davao": ["Davao City"]
+                }
+            },
+            "Poland": {
+                code: "+48", states: {
+                    "Masovian": ["Warsaw"],
+                    "Lesser Poland": ["Kraków"],
+                    "Greater Poland": ["Poznań"],
+                    "Lower Silesian": ["Wrocław"]
+                }
+            },
+            "Portugal": { code: "+351", states: { "Lisbon": ["Lisbon City"], "Porto": ["Porto City"] } },
+            "Qatar": { code: "+974", states: { "Doha": ["Doha City"] } },
+            "Romania": { code: "+40", states: { "Bucharest": ["Bucharest City"], "Cluj": ["Cluj-Napoca"] } },
+            "Russia": {
+                code: "+7", states: {
+                    "Moscow": ["Moscow City"],
+                    "Saint Petersburg": ["Saint Petersburg City"],
+                    "Sverdlovsk": ["Yekaterinburg"],
+                    "Tatarstan": ["Kazan"]
+                }
+            },
+            "Saudi Arabia": {
+                code: "+966", states: {
+                    "Riyadh": ["Riyadh City"],
+                    "Makkah": ["Jeddah", "Mecca"],
+                    "Eastern": ["Dammam", "Khobar"]
+                }
+            },
+            "Serbia": { code: "+381", states: { "Belgrade": ["Belgrade City"], "Novi Sad": ["Novi Sad City"] } },
+            "Singapore": { code: "+65", states: { "Central": ["Singapore City", "Marina Bay", "Orchard"] } },
+            "Slovakia": { code: "+421", states: { "Bratislava": ["Bratislava City"] } },
+            "Slovenia": { code: "+386", states: { "Ljubljana": ["Ljubljana City"] } },
+            "South Africa": {
+                code: "+27", states: {
+                    "Gauteng": ["Johannesburg", "Pretoria"],
+                    "Western Cape": ["Cape Town"],
+                    "KwaZulu-Natal": ["Durban"]
+                }
+            },
+            "South Korea": {
+                code: "+82", states: {
+                    "Seoul": ["Seoul City"],
+                    "Busan": ["Busan City"],
+                    "Incheon": ["Incheon City"],
+                    "Gyeonggi": ["Suwon"]
+                }
+            },
+            "Spain": {
+                code: "+34", states: {
+                    "Madrid": ["Madrid City"],
+                    "Catalonia": ["Barcelona", "Tarragona"],
+                    "Andalusia": ["Seville", "Málaga"],
+                    "Valencia": ["Valencia City"],
+                    "Basque Country": ["Bilbao"]
+                }
+            },
+            "Sri Lanka": { code: "+94", states: { "Western": ["Colombo"] } },
+            "Sweden": {
+                code: "+46", states: {
+                    "Stockholm": ["Stockholm City"],
+                    "Västra Götaland": ["Gothenburg"],
+                    "Skåne": ["Malmö"]
+                }
+            },
+            "Switzerland": {
+                code: "+41", states: {
+                    "Zürich": ["Zürich City"],
+                    "Geneva": ["Geneva City"],
+                    "Bern": ["Bern City"],
+                    "Basel-Stadt": ["Basel"]
+                }
+            },
+            "Taiwan": { code: "+886", states: { "Taipei": ["Taipei City"], "Kaohsiung": ["Kaohsiung City"] } },
+            "Thailand": {
+                code: "+66", states: {
+                    "Bangkok": ["Bangkok City"],
+                    "Chiang Mai": ["Chiang Mai City"],
+                    "Phuket": ["Phuket City"]
+                }
+            },
+            "Turkey": {
+                code: "+90", states: {
+                    "Istanbul": ["Istanbul City"],
+                    "Ankara": ["Ankara City"],
+                    "Izmir": ["Izmir City"],
+                    "Antalya": ["Antalya City"]
+                }
+            },
+            "Ukraine": { code: "+380", states: { "Kyiv": ["Kyiv City"], "Kharkiv": ["Kharkiv City"], "Odessa": ["Odessa City"] } },
+            "United Arab Emirates": {
+                code: "+971", states: {
+                    "Dubai": ["Dubai City", "Dubai Marina"],
+                    "Abu Dhabi": ["Abu Dhabi City"],
+                    "Sharjah": ["Sharjah City"],
+                    "Ajman": ["Ajman City"]
+                }
+            },
+            "United Kingdom": {
+                code: "+44", states: {
+                    "England": ["London", "Manchester", "Birmingham", "Liverpool", "Leeds", "Bristol", "Newcastle"],
+                    "Scotland": ["Edinburgh", "Glasgow", "Aberdeen"],
+                    "Wales": ["Cardiff", "Swansea"],
+                    "Northern Ireland": ["Belfast"]
+                }
+            },
+            "United States": {
+                code: "+1", states: {
+                    "California": ["Los Angeles", "San Francisco", "San Diego", "San Jose", "Sacramento"],
+                    "New York": ["New York City", "Buffalo", "Rochester", "Albany"],
+                    "Texas": ["Houston", "Austin", "Dallas", "San Antonio", "Fort Worth"],
+                    "Florida": ["Miami", "Orlando", "Tampa", "Jacksonville"],
+                    "Illinois": ["Chicago", "Aurora", "Naperville"],
+                    "Pennsylvania": ["Philadelphia", "Pittsburgh"],
+                    "Ohio": ["Columbus", "Cleveland", "Cincinnati"],
+                    "Georgia": ["Atlanta", "Savannah"],
+                    "North Carolina": ["Charlotte", "Raleigh"],
+                    "Michigan": ["Detroit"],
+                    "Massachusetts": ["Boston", "Cambridge"],
+                    "Washington": ["Seattle", "Spokane"],
+                    "Arizona": ["Phoenix", "Tucson"],
+                    "Colorado": ["Denver", "Colorado Springs"],
+                    "Nevada": ["Las Vegas", "Reno"]
+                }
+            },
+            "Uruguay": { code: "+598", states: { "Montevideo": ["Montevideo City"] } },
+            "Venezuela": { code: "+58", states: { "Capital District": ["Caracas"], "Zulia": ["Maracaibo"] } },
+            "Vietnam": {
+                code: "+84", states: {
+                    "Hanoi": ["Hanoi City"],
+                    "Ho Chi Minh": ["Ho Chi Minh City"],
+                    "Da Nang": ["Da Nang City"]
+                }
+            },
+            "Other": { code: "", states: { "Manual Entry": ["Manual Entry"] } }
+        };
+
+var countrySelect = document.getElementById('f-country');
+var countryCodeInput = document.getElementById('f-country-code');
+var stateSelect = document.getElementById('f-state');
+var citySelect = document.getElementById('f-city');
+
+function populateCities(country, state) {
+  var dataList = document.getElementById('city-datalist');
+  var cityInput = document.getElementById('f-city');
+  if (dataList) dataList.innerHTML = '';
+
+  if (!country || !state || !COUNTRY_DATA[country] || !COUNTRY_DATA[country].states || !COUNTRY_DATA[country].states[state]) {
+    if (cityInput) {
+      cityInput.placeholder = 'Type your city or town name';
+      cityInput.value = '';
+    }
+    return;
+  }
+
+  var cities = COUNTRY_DATA[country].states[state];
+  cities.forEach(function(cityName) {
+    if (dataList) {
+      var opt = document.createElement('option');
+      opt.value = cityName;
+      dataList.appendChild(opt);
+    }
+  });
+
+  if (cityInput) {
+    cityInput.value = '';
+    cityInput.placeholder = 'Select from ' + cities.length + ' cities or type here...';
+  }
+}
+
+function populateStates(country) {
+  if (!stateSelect) return;
+  stateSelect.innerHTML = '<option value="">Select State / UT</option>';
+  if (!country || !COUNTRY_DATA[country] || !COUNTRY_DATA[country].states) {
+    stateSelect.innerHTML += '<option value="General State">General State / Region</option>';
+    populateCities('', '');
+    return;
+  }
+  var states = Object.keys(COUNTRY_DATA[country].states);
+  states.sort().forEach(function(stateName) {
+    var opt = document.createElement('option');
+    opt.value = stateName;
+    opt.textContent = stateName;
+    stateSelect.appendChild(opt);
+  });
+  populateCities(country, '');
+}
+
+if (countrySelect) {
+  countrySelect.innerHTML = '';
+  // India first
+  var countryList = Object.keys(COUNTRY_DATA).sort(function(a, b) {
+    if (a === 'India') return -1;
+    if (b === 'India') return 1;
+    return a.localeCompare(b);
+  });
+
+  countryList.forEach(function(cName) {
+    var cInfo = COUNTRY_DATA[cName];
+    var opt = document.createElement('option');
+    opt.value = cName;
+    opt.setAttribute('data-code', cInfo.code || '+91');
+    opt.textContent = (cName === 'India' ? '🇮🇳 ' : '') + cName + (cInfo.code ? ' (' + cInfo.code + ')' : '');
+    countrySelect.appendChild(opt);
+  });
+
+  countrySelect.onchange = function() {
+    var selectedCountry = countrySelect.value;
+    var opt = countrySelect.options[countrySelect.selectedIndex];
+    var code = opt.getAttribute('data-code') || '+91';
+    if (countryCodeInput) countryCodeInput.value = code;
+    populateStates(selectedCountry);
+  };
+
+  if (stateSelect) {
+    stateSelect.onchange = function() {
+      var selectedCountry = countrySelect.value;
+      var selectedState = stateSelect.value;
+      populateCities(selectedCountry, selectedState);
+    };
+  }
+
+  // Initial population for India
+  countrySelect.value = 'India';
+  if (countryCodeInput) countryCodeInput.value = '+91';
+  populateStates('India');
+}
+
+/* ================= 6. STRICT FORM VALIDATION ================= */
+function sanitizeInput(str) {
+  if (!str) return '';
+  return str.toString()
+    .replace(/[<>"'`]/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+\s*=/gi, '')
+    .trim()
+    .substring(0, 500);
+}
+
+function validateEmail(email) {
+  return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/.test(email.trim());
+}
+
+function validatePhone(phone) {
+  var cleaned = phone.replace(/[\s\-\(\)]/g, '');
+  return /^\d{7,15}$/.test(cleaned);
+}
+
+function setFieldState(input, isValid) {
+  if (isValid) {
+    input.classList.remove('input-invalid');
+  } else {
+    input.classList.add('input-invalid');
+  }
+}
+
+var of = document.getElementById('order-form');
+if (of) {
+  var fName = document.getElementById('f-name');
+  var fEmail = document.getElementById('f-email');
+  var fPhone = document.getElementById('f-phone');
+  var fState = document.getElementById('f-state');
+  var fCity = document.getElementById('f-city');
+
+  fName.oninput = function() { if (fName.value.trim().length >= 2) setFieldState(fName, true); };
+  fEmail.oninput = function() { if (validateEmail(fEmail.value)) setFieldState(fEmail, true); };
+  fPhone.oninput = function() { if (validatePhone(fPhone.value)) setFieldState(fPhone, true); };
+  fState.oninput = fState.onchange = function() { if (fState.value.trim().length >= 2) setFieldState(fState, true); };
+  fCity.oninput = fCity.onchange = function() { if (fCity.value.trim().length >= 2) setFieldState(fCity, true); };
+
+  fName.onblur = function() { setFieldState(fName, fName.value.trim().length >= 2); };
+  fEmail.onblur = function() { setFieldState(fEmail, validateEmail(fEmail.value)); };
+  fPhone.onblur = function() { setFieldState(fPhone, validatePhone(fPhone.value)); };
+  fState.onblur = function() { setFieldState(fState, fState.value.trim().length >= 2); };
+  fCity.onblur = function() { setFieldState(fCity, fCity.value.trim().length >= 2); };
+
+  of.onsubmit = function(e) {
+    e.preventDefault();
+
+    // Rate limiting
+    var now = Date.now();
+    if (of._lastSubmit && now - of._lastSubmit < 10000) {
+      alert('Please wait a moment before submitting again.');
+      return;
+    }
+
+    var nameOk = fName.value.trim().length >= 2;
+    var emailOk = validateEmail(fEmail.value);
+    var phoneOk = validatePhone(fPhone.value);
+    var stateOk = fState.value.trim().length >= 2;
+    var cityOk = fCity.value.trim().length >= 2;
+
+    setFieldState(fName, nameOk);
+    setFieldState(fEmail, emailOk);
+    setFieldState(fPhone, phoneOk);
+    setFieldState(fState, stateOk);
+    setFieldState(fCity, cityOk);
+
+    if (!nameOk) { fName.focus(); return; }
+    if (!emailOk) { fEmail.focus(); return; }
+    if (!phoneOk) { fPhone.focus(); return; }
+    if (!stateOk) { fState.focus(); return; }
+    if (!cityOk) { fCity.focus(); return; }
+
+    var country = sanitizeInput(countrySelect.value);
+    var code = sanitizeInput(countryCodeInput.value);
+    var phoneNum = sanitizeInput(fPhone.value);
+    var nameVal = sanitizeInput(fName.value);
+    var emailVal = sanitizeInput(fEmail.value);
+    var stateVal = sanitizeInput(fState.value);
+    var cityVal = sanitizeInput(fCity.value);
+    var qtyVal = sanitizeInput(document.getElementById('f-quantity').value);
+    var momentVal = sanitizeInput(document.getElementById('f-moment').value);
+    var fullPhone = code + ' ' + phoneNum;
+
+    // Show loading state
+    var submitBtn = document.getElementById('btn-submit-order');
+    var originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving...';
+    submitBtn.style.opacity = '0.7';
+
+    // Save to Firebase Firestore (primary storage)
+    try {
+      var firestoreDb = db || (window.firebase && firebase.firestore ? firebase.firestore() : null);
+      if (firestoreDb) {
+        firestoreDb.collection("prebookings").add({
+          name: nameVal,
+          email: emailVal,
+          phone: fullPhone,
+          country: country,
+          state: stateVal,
+          city: cityVal,
+          quantity: qtyVal,
+          moment: momentVal,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          source: 'prebook-v6'
+        }).then(function() {
+          // Success
+          of._lastSubmit = Date.now();
+          var toast = document.getElementById('order-toast');
+          if (toast) {
+            toast.style.display = 'block';
+            setTimeout(function() { toast.style.display = 'none'; }, 6000);
+          }
+          of.reset();
+          if (countrySelect) countrySelect.selectedIndex = 0;
+          if (countryCodeInput) countryCodeInput.value = '+91';
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.style.opacity = '1';
+        }).catch(function(err) {
+          console.error("Firebase save error:", err);
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.style.opacity = '1';
+          alert('Could not complete reservation at this moment. Please check your connection and try again.');
+        });
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        submitBtn.style.opacity = '1';
+        alert('Database service currently connecting. Please try again in a few seconds.');
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      submitBtn.style.opacity = '1';
+      alert('Could not submit details. Please try again.');
+    }
+  };
+}
+
+/* ================= 7. LOGO HOME BUTTON & SMOOTH ANCHORS ================= */
+var logoHomeBtn = document.getElementById('logo-home-btn');
+if (logoHomeBtn) {
+  logoHomeBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.pushState(null, '', '#top');
+    document.getElementById('nv').classList.remove('open');
+    document.getElementById('mb').setAttribute('aria-expanded', 'false');
+  });
+}
+
+document.querySelectorAll('.nav-anchor').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    var targetId = this.getAttribute('href');
+    if (targetId && targetId.startsWith('#')) {
+      e.preventDefault();
+      var targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', targetId);
+      }
+      document.getElementById('nv').classList.remove('open');
+      document.getElementById('mb').setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+
+/* ================= 8. THEME TOGGLE (LIGHT & DARK MODE) ================= */
+var themeBtn = document.getElementById('theme-btn');
+var themeIcon = document.getElementById('theme-icon');
+var themeLabel = document.getElementById('theme-label');
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('yu-theme', theme);
+  if (theme === 'dark') {
+    themeIcon.textContent = '☀️';
+    themeLabel.textContent = 'Light';
+  } else {
+    themeIcon.textContent = '🌙';
+    themeLabel.textContent = 'Dark';
+  }
+}
+
+var currentTheme = localStorage.getItem('yu-theme') || 'dark';
+applyTheme(currentTheme);
+
+themeBtn.onclick = function() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(currentTheme);
+};
+
+/* Mobile Menu */
+document.getElementById('mb').onclick = function() {
+  var o = document.getElementById('nv').classList.toggle('open');
+  this.setAttribute('aria-expanded', o);
+};
+
+/* Footer email link */
+document.getElementById('fem').href = 'mailto:hello@yucares.com';
+
+// Initialize Language on start
+setLanguage(currentLang);
+
+/* Reveal animations on scroll */
+document.querySelectorAll('section > .w').forEach(function(el) {
+  el.classList.add('reveal');
+});
+if ('IntersectionObserver' in window) {
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    el.classList.add('visible');
+  });
+}
+
+/* Scroll to top button */
+var scrollTopBtn = document.getElementById('scroll-top-btn');
+if (scrollTopBtn) {
+  window.addEventListener('scroll', function() {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+  }, { passive: true });
+  scrollTopBtn.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+}
+</script>
+</body>
+</html>
