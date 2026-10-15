@@ -1,0 +1,271 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>YU — 99% Pure Portable Oxygen</title>
+<style>
+:root{color-scheme:dark;--bg:#000;--fg:#f4f4f4;--mu:#8d8d8d;--ln:#262626;--card:#0c0c0c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;line-height:1.55}
+section{padding:84px 20px;max-width:980px;margin:0 auto}h1,h2,h3{letter-spacing:-.03em;line-height:1.05;margin:0}
+h1{font-size:clamp(44px,11vw,104px)}h2{font-size:clamp(30px,6vw,52px);margin-bottom:14px}p{color:var(--mu);margin:0 0 14px}
+.k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);margin-bottom:14px;display:block}
+.btn{display:inline-block;padding:15px 24px;border-radius:999px;border:1px solid #fff;color:#fff;text-decoration:none;font:600 14px inherit;background:none;cursor:pointer}.btn.p{background:#fff;color:#000}
+nav{position:sticky;top:0;z-index:9;display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#000c;backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+nav b{font-size:22px;letter-spacing:.1em}nav div a{color:var(--mu);text-decoration:none;font-size:13px;margin-right:18px}@media(max-width:700px){nav div a{display:none}}
+#hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center;position:relative}
+#hero h1{animation:f 2s ease both}#hero p{max-width:520px;animation:f 2s .8s ease both}.cta{animation:f 2s 1.4s ease both;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+@keyframes f{from{opacity:0;filter:blur(14px)}to{opacity:1;filter:none}}
+.can{width:160px;margin:34px auto;cursor:pointer;position:relative;animation:f 2s 1.1s ease both}
+.can img{width:100%;height:auto;max-height:360px;object-fit:contain;filter:drop-shadow(0 20px 30px rgba(0,0,0,0.85))}
+.can:after{content:"";position:absolute;inset:-20px;border:1px solid #fff;border-radius:50%;animation:p 3.6s ease-in-out infinite;opacity:0}@keyframes p{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+#meter{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:8;font-size:10px;color:var(--mu);text-align:right;letter-spacing:.1em;pointer-events:none}#meter b{display:block;color:#fff;font-size:15px}
+.rv{opacity:0;transform:translateY(24px);transition:.8s}.rv.in{opacity:1;transform:none}
+/* altitude lab */
+#labbox{border:1px solid var(--ln);border-radius:18px;background:var(--card);overflow:hidden;position:relative}
+#scene{padding:34px 22px;min-height:230px;transition:filter .5s;position:relative}#scene .n{font-size:clamp(70px,20vw,150px);font-weight:700;letter-spacing:-.05em;line-height:1}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 15%,#000 80%);transition:opacity .5s}
+#pk{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 14px}#pk button{padding:9px 14px;border-radius:999px;border:1px solid var(--ln);background:none;color:var(--mu);font:500 13px inherit;cursor:pointer}#pk button.on{background:#fff;color:#000;border-color:#fff}
+input[type=range]{width:calc(100% - 44px);margin:6px 22px 16px;accent-color:#fff}
+#ybtn{display:block;width:calc(100% - 44px);margin:0 22px 22px;padding:18px;border-radius:14px;border:0;background:#fff;color:#000;font:700 15px inherit;cursor:pointer}
+#feel{color:#fff;font-size:16px;margin-top:8px;min-height:50px}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.card{border:1px solid var(--ln);border-radius:16px;padding:22px;background:var(--card)}.card h3{font-size:22px;margin-bottom:8px}.card .i{font-size:12px;letter-spacing:.15em;color:var(--mu);display:block;margin-bottom:26px}
+.b{height:46px;border-radius:8px;background:#1a1a1a;margin:8px 0 14px;overflow:hidden}.b i{display:flex;align-items:center;padding-left:12px;height:100%;background:#fff;color:#000;font-weight:700;width:0;transition:width 1.4s}
+#bt{border:1px solid var(--ln);border-radius:16px;padding:22px;text-align:center}#bt b{font-size:56px;display:block;letter-spacing:-.04em}
+details{border-bottom:1px solid var(--ln);padding:16px 0}summary{cursor:pointer;font-weight:600;color:#fff}details p{margin:10px 0 0}
+form{display:grid;gap:12px;grid-template-columns:1fr 1fr}form .f{grid-column:1/-1}input,select{width:100%;padding:14px;border-radius:12px;border:1px solid var(--ln);background:var(--card);color:#fff;font:inherit}@media(max-width:600px){form{grid-template-columns:1fr}}
+#ok{display:none;color:#fff;border:1px solid #fff;border-radius:12px;padding:14px;margin-top:12px}
+footer{border-top:1px solid var(--ln);padding:40px 20px;text-align:center;color:var(--mu);font-size:12px;max-width:760px;margin:0 auto}
+</style>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="countries_data.js"></script>
+</head><body>
+<div id="meter">ALTITUDE<b id="mh">0 m</b>AIR <span id="ma">100</span>%</div>
+<nav><a href="#hero" style="text-decoration:none;display:flex;align-items:center"><img src="assets/logo.jpg" alt="YU" style="height:34px;width:auto;border-radius:6px"></a><div><a href="#lab">Altitude</a><a href="#trap">The 21% trap</a><a href="#moments">Moments</a><a href="#ritual">Ritual</a><a href="#faq">FAQ</a></div><a class="btn p" href="#prebook">Pre-Book</a></nav>
+
+<section id="hero"><span class="k">Batch 001 · 1,000 units</span><h1>Take a<br>breath.</h1>
+<div class="can" id="can">
+  <img src="assets/product.png" alt="YU Oxygen Canister">
+</div>
+<p>The air you breathe is 21% oxygen. YU is 99%. Pocket-sized, one trigger, for mountains, workouts and city days.</p>
+<div class="cta"><a class="btn p" href="#prebook">Pre-Book Batch 001</a><a class="btn" href="#lab">Feel the altitude ↓</a></div></section>
+
+<section id="lab"><div class="rv"><span class="k">Altitude lab · 5 seconds</span><h2>Pick a place.<br>Feel the air.</h2><p>Drag or tap. Then tap YU once. That's the whole thing.</p></div>
+<div id="labbox" class="rv" style="margin-top:20px"><div id="scene"><span class="k" id="pn">Kedarnath · 3,583 m</span><div class="n"><span id="pc">64</span>%</div><div id="feel"></div><div id="vig"></div></div>
+<div id="pk"></div><input id="rg" type="range" min="0" max="8849" value="3583" aria-label="Altitude"><button id="ybtn">TAP · BREATHE YU</button></div></section>
+
+<section id="trap"><div class="rv"><span class="k">The 21% trap</span><h2>You upgraded your water.<br>Not your air.</h2><p>About 20,000 breaths a day, and almost four-fifths of each one is nitrogen. Compare:</p>
+<div class="b"><i data-w="21%">City air 21%</i></div><div class="b"><i data-w="99%">YU 99%</i></div></div>
+<div id="bt" class="rv"><span class="k">2 taps · how long can you go?</span><b id="bn">0.0s</b><button class="btn" id="bb">Start, then tap when you need air</button></div></section>
+
+<section id="moments"><div class="rv"><span class="k">Moments</span><h2>Four times air asks for more.</h2></div><div class="g">
+<div class="card rv"><span class="i">01 · ALPINE</span><h3>Thin-air trails</h3><p>Above 3,000 m the air holds far less oxygen. Carry a few breaths of reassurance, alongside proper acclimatisation.</p></div>
+<div class="card rv"><span class="i">02 · EFFORT</span><h3>Between hard sets</h3><p>Breathe in after intense intervals or hill repeats and reset your focus before the next round.</p></div>
+<div class="card rv"><span class="i">03 · CITY</span><h3>Gridlock afternoons</h3><p>After smoggy traffic or a stuffy office, a few deep breaths of pure oxygen for a clearer head.</p></div>
+<div class="card rv"><span class="i">04 · FAMILY</span><h3>Yatra with parents</h3><p>Kedarnath, Vaishno Devi, mountain roads: something simple within one hand's reach.</p></div></div></section>
+
+<section id="ritual"><div class="rv"><span class="k">Ritual</span><h2>Cover. Press. Breathe.</h2></div><div class="g">
+<div class="card rv"><span class="i">1</span><h3>Cover</h3><p>Place the mouthpiece gently over nose and mouth.</p></div>
+<div class="card rv"><span class="i">2</span><h3>Press</h3><p>Press the trigger for 1 to 2 seconds as you inhale.</p></div>
+<div class="card rv"><span class="i">3</span><h3>Breathe</h3><p>Inhale deeply, hold two seconds. Repeat 3 to 5 times.</p></div></div>
+<p style="margin-top:22px">12 L of compressed oxygen, roughly 150 to 200 short breaths. Lightweight recyclable aluminium. Made in India.</p></section>
+
+<section id="faq"><div class="rv"><span class="k">FAQ</span><h2>Straight answers.</h2>
+<details><summary>Is YU a medical device?</summary><p>No. YU is a wellness product. It does not diagnose, treat or prevent any condition, and it does not replace acclimatisation, rest or descent.</p></details>
+<details><summary>How many breaths in a can?</summary><p>Roughly 150 to 200 short breaths, around 15 to 20 sessions of 5 to 10 breaths.</p></details>
+<details><summary>Is it okay for older parents?</summary><p>It is light and works with one hand. Anyone with heart, lung or blood-pressure conditions should speak to a doctor before going to altitude.</p></details>
+<details><summary>Can I fly with it?</summary><p>Airlines restrict pressurised canisters in passenger luggage. For Leh and similar trips, have it delivered to your hotel.</p></details>
+<details><summary>How does pre-booking work?</summary><p>Free, no payment now. It reserves a place among the first 1,000 units. Our team confirms dispatch and address with you directly.</p></details></div></section>
+
+<section id="prebook"><div class="rv"><span class="k">Batch 001 · Allocation live</span><h2>Reserve your can.</h2><p>Free. Zero upfront payment.</p>
+<form id="fm">
+  <input required id="f-name" placeholder="Full name">
+  <input required id="f-email" type="email" placeholder="Email">
+  <div style="display:flex;gap:6px">
+    <input id="f-code" value="+91" style="width:75px;text-align:center;font-weight:600" readonly>
+    <input required id="f-phone" type="tel" placeholder="Phone Number" style="flex:1">
+  </div>
+  <select id="f-country"></select>
+  <select id="f-state" required><option value="">Select State / UT</option></select>
+  <div style="position:relative">
+    <input id="f-city" list="city-datalist" required placeholder="Choose city or type" autocomplete="address-level2">
+    <datalist id="city-datalist"></datalist>
+  </div>
+  <select id="f-quantity" class="f"><option>1 can (12L YU Canister)</option><option>2 cans (trek / couple)</option><option>3 cans (travel pack)</option><option>5+ (family / group)</option></select>
+  <select id="f-moment" class="f"><option>Himalayan trek / altitude</option><option>Yatra (Kedarnath, Amarnath)</option><option>Training &amp; recovery</option><option>City air defense</option><option>Gift for parents</option></select>
+  <button class="btn p f" id="sub-btn" type="submit">Reserve Batch 001</button>
+</form>
+<div id="ok">✓ Reserved. Your allocation has been securely recorded. We'll contact you with dispatch details.</div></div></section>
+
+<footer><b style="color:#fff;letter-spacing:.1em">YU</b><br>Oxygen means YU. Made with trust in India. · support@yucares.com<br><br>YU is a wellness and lifestyle product, not a medicine or medical device, and does not diagnose, treat, cure or prevent any disease. Not a substitute for acclimatisation, rest, descent or medical care. Anyone with respiratory, cardiovascular or blood-pressure conditions should consult a doctor before going to altitude.</footer>
+
+<script>
+/* Firebase Initialization */
+const firebaseConfig = {
+  apiKey: "AIzaSyBECl9G8fCfulrkafobOQmOElP3YJ8j4MQ",
+  authDomain: "yucaress.firebaseapp.com",
+  projectId: "yucaress",
+  storageBucket: "yucaress.firebasestorage.app",
+  messagingSenderId: "546642505369",
+  appId: "1:546642505369:web:c190c70d621c644d319208",
+  measurementId: "G-LQ7WBZWYX6"
+};
+let db = null;
+try {
+  if (window.firebase) {
+    if (!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+  }
+} catch(e) { console.warn(e); }
+
+function getEl(id) { return document.getElementById(id); }
+const amb = h => 100 * Math.exp(-h / 8000);
+const P = [['Delhi', 216], ['Manali', 2050], ['Kedarnath', 3583], ['Base Camp', 5364], ['Everest', 8849]];
+let h = 3583, boost = 0, bt = 0;
+
+P.forEach(([n, v]) => {
+  const b = document.createElement('button');
+  b.textContent = n;
+  b.onclick = () => { getEl('rg').value = v; set(v); };
+  b.dataset.v = v;
+  getEl('pk').appendChild(b);
+});
+
+const feel = l => l > 90 ? 'Easy air. Your lungs barely notice.' : l > 70 ? 'Steps feel a touch heavier. You breathe a little faster.' : l > 55 ? 'Thin. Heart pumping, breath short, focus drifting.' : l > 40 ? 'Every step is a negotiation.' : 'Survival air. Tunnel vision is next.';
+
+function draw() {
+  const a = amb(h), l = boost > 0 ? 99 : a;
+  getEl('pc').textContent = Math.round(l);
+  getEl('pn').textContent = (P.reduce((x, p) => Math.abs(p[1] - h) < Math.abs(x[1] - h) ? p : x)[0]) + ' · ' + Math.round(h).toLocaleString() + ' m' + (boost > 0 ? ' · YU' : '');
+  getEl('feel').textContent = boost > 0 ? 'Clear. Sharp. A few seconds of sea-level-plus air.' : feel(a);
+  getEl('vig').style.opacity = boost > 0 ? 0 : Math.min(.9, (100 - a) / 70);
+  getEl('scene').style.filter = boost > 0 ? 'none' : 'blur(' + Math.max(0, (80 - a) / 20) + 'px)';
+  document.querySelectorAll('#pk button').forEach(b => b.classList.toggle('on', Math.abs(b.dataset.v - h) < 400));
+}
+
+function set(v) { h = +v; boost = 0; draw(); }
+getEl('rg').oninput = e => set(e.target.value);
+getEl('ybtn').onclick = () => {
+  boost = 1; draw(); clearTimeout(bt);
+  bt = setTimeout(() => { boost = 0; draw(); }, 3500);
+  if (navigator.vibrate) navigator.vibrate(40);
+};
+getEl('can').onclick = () => getEl('can').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], 400);
+draw();
+
+// scroll altitude meter
+addEventListener('scroll', () => {
+  const p = scrollY / (document.body.scrollHeight - innerHeight || 1), a = p * 8849;
+  getEl('mh').textContent = Math.round(a).toLocaleString() + ' m';
+  getEl('ma').textContent = Math.round(amb(a));
+  document.body.style.opacity = 1;
+}, { passive: true });
+
+// reveal + bars
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) {
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.b i').forEach(i => i.style.width = i.dataset.w);
+  }
+}), { threshold: .2 });
+document.querySelectorAll('.rv').forEach(e => io.observe(e));
+
+// breath timer
+let s = 0, r = 0;
+getEl('bb').onclick = () => {
+  if (!r) {
+    r = 1; s = performance.now();
+    getEl('bb').textContent = 'Tap when you need air';
+    (function u() {
+      if (r) {
+        getEl('bn').textContent = ((performance.now() - s) / 1000).toFixed(1) + 's';
+        requestAnimationFrame(u);
+      }
+    })();
+  } else {
+    r = 0;
+    getEl('bb').textContent = 'Again · now imagine doing that at 5,000 m';
+  }
+};
+
+/* Country, State & City Dropdowns */
+if (typeof COUNTRY_DATA !== 'undefined') {
+  const cSel = getEl('f-country'), sSel = getEl('f-state'), cInput = getEl('f-city'), cList = getEl('city-datalist'), codeIn = getEl('f-code');
+  const countries = Object.keys(COUNTRY_DATA).sort((a, b) => a === 'India' ? -1 : b === 'India' ? 1 : a.localeCompare(b));
+  countries.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c;
+    o.textContent = (c === 'India' ? '🇮🇳 ' : '') + c;
+    cSel.appendChild(o);
+  });
+  function fillStates(c) {
+    sSel.innerHTML = '<option value="">Select State / UT</option>';
+    cList.innerHTML = '';
+    cInput.value = '';
+    if (!c || !COUNTRY_DATA[c] || !COUNTRY_DATA[c].states) return;
+    Object.keys(COUNTRY_DATA[c].states).sort().forEach(s => {
+      const o = document.createElement('option');
+      o.value = s; o.textContent = s;
+      sSel.appendChild(o);
+    });
+  }
+  function fillCities(c, s) {
+    cList.innerHTML = '';
+    cInput.value = '';
+    if (!c || !s || !COUNTRY_DATA[c] || !COUNTRY_DATA[c].states || !COUNTRY_DATA[c].states[s]) return;
+    const cities = COUNTRY_DATA[c].states[s];
+    cities.forEach(city => {
+      const o = document.createElement('option');
+      o.value = city;
+      cList.appendChild(o);
+    });
+    cInput.placeholder = 'Select from ' + cities.length + ' cities or type here...';
+  }
+  cSel.onchange = () => {
+    const c = cSel.value;
+    codeIn.value = COUNTRY_DATA[c]?.code || '+91';
+    fillStates(c);
+  };
+  sSel.onchange = () => {
+    fillCities(cSel.value, sSel.value);
+  };
+  cSel.value = 'India';
+  codeIn.value = '+91';
+  fillStates('India');
+}
+
+/* Secure Firebase Form Submission */
+let lastSub = 0;
+getEl('fm').onsubmit = async e => {
+  e.preventDefault();
+  if (Date.now() - lastSub < 10000) { alert('Please wait a moment before submitting again.'); return; }
+  const btn = getEl('sub-btn');
+  const origText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Saving to Database...';
+
+  const data = {
+    name: getEl('f-name').value.trim(),
+    email: getEl('f-email').value.trim(),
+    phone: getEl('f-code').value + ' ' + getEl('f-phone').value.trim(),
+    country: getEl('f-country').value,
+    state: getEl('f-state').value,
+    city: getEl('f-city').value.trim(),
+    quantity: getEl('f-quantity').value,
+    moment: getEl('f-moment').value,
+    timestamp: window.firebase ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString(),
+    source: 'yu-editorial-v1'
+  };
+
+  try {
+    if (db) {
+      await db.collection('prebookings').add(data);
+    }
+    lastSub = Date.now();
+    getEl('ok').style.display = 'block';
+    getEl('fm').style.display = 'none';
+  } catch(err) {
+    console.error('Firebase save error:', err);
+    alert('Could not record reservation. Please check your connection.');
+    btn.disabled = false;
+    btn.textContent = origText;
+  }
+};
+</script></body></html>
