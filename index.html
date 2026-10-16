@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>YU — 99% Pure Portable Oxygen</title>
 <meta name="description" content="YU is 99% pure portable oxygen for high altitude, peak performance, and clean urban living. Batch 001 Priority Allocation.">
-<link rel="icon" type="image/jpeg" href="assets/logo.jpg">
-<link rel="apple-touch-icon" href="assets/logo.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://www.gstatic.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://firestore.googleapis.com https://*.firebaseio.com https://identitytoolkit.googleapis.com; media-src 'self' blob:;">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -204,6 +206,18 @@ nav .nav-brand {
   align-items: center;
   gap: 10px;
   text-decoration: none;
+}
+nav .nav-brand img {
+  height: 44px;
+  width: auto;
+  display: block;
+  transition: transform .2s ease, filter .2s ease;
+}
+nav .nav-brand:hover img {
+  transform: scale(1.05);
+}
+[data-theme="light"] nav .nav-brand img {
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.22));
 }
 nav b {
   font: 500 27px 'Playfair Display', serif;
@@ -973,9 +987,8 @@ footer b {
 
 <!-- Navigation -->
 <nav>
-  <a class="nav-brand" href="#hero">
-    <img src="assets/logo.jpg" alt="YU" style="height:36px;width:auto;border-radius:6px">
-    <b>YU</b>
+  <a class="nav-brand" href="#hero" aria-label="YU">
+    <img src="assets/logo.png" alt="YU">
   </a>
   <div class="nav-links">
     <a href="#lab" data-i18n="nav_altitude">Altitude Lab</a>
@@ -1391,7 +1404,7 @@ footer b {
 
 <!-- Footer -->
 <footer>
-  <b>YU</b><br>
+  <a href="#hero" aria-label="YU" style="display:inline-block;margin-bottom:12px;text-decoration:none"><img src="assets/logo.png" alt="YU" style="height:48px;width:auto;vertical-align:middle"></a><br>
   <span data-i18n="footer_desc">Oxygen means YU. 99% pure portable oxygen engineered for peak output, high altitude, and clean urban living.</span><br>
   <span data-i18n="footer_origin">Made with trust in India.</span> · <a href="mailto:support@yucares.com" style="color:var(--ac);text-decoration:none">support@yucares.com</a><br><br>
   <b data-i18n="footer_disclaimer_title">Important Medical Disclaimer:</b> <span data-i18n="footer_disclaimer_text">YU is a wellness and lifestyle product, NOT a medicine or medical device, and does not diagnose, treat, cure, or prevent any disease. Not a substitute for acclimatisation, rest, descent, or medical care. Anyone with respiratory, cardiovascular, or blood-pressure conditions should consult a doctor before travelling to altitude.</span>
