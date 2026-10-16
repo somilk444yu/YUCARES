@@ -1144,6 +1144,7 @@ footer a[aria-label="YU"]:hover img {
     <button class="ch" data-k="city" data-i18n="who_p3">🚗 City commuter</button>
     <button class="ch" data-k="well" data-i18n="who_p4">🧘 Daily wellness</button>
     <button class="ch" data-k="fam" data-i18n="who_p5">🤍 For my parents</button>
+    <button class="ch" data-k="skin" data-i18n="who_p6">✨ Skin glow & beauty</button>
   </div>
 </section>
 
@@ -1286,6 +1287,27 @@ footer a[aria-label="YU"]:hover img {
         <span class="moment-perk-pill" data-i18n="m5_perk">⚡ Complimentary Allocation</span>
       </div>
     </div>
+
+    <!-- Moment 06: Skincare & Beauty Glow (Photo: skincare.jpg) -->
+    <div class="moment-card rv" data-s="skin">
+      <div class="moment-img-box">
+        <img src="assets/skincare.jpg" alt="Radiant healthy skin and beauty wellness ritual with YU Pure Oxygen Canister">
+        <div class="moment-img-overlay"></div>
+        <span class="moment-badge-tag" data-i18n="m6_tag">06 · Beauty</span>
+      </div>
+      <div class="moment-body">
+        <h3 data-i18n="m6_title">Skin radiance &amp; cellular glow</h3>
+        <p data-i18n="m6_desc">Dullness and premature aging often stem from skin hypoxia (oxygen starvation). Inhaling 99% pure oxygen supercharges microcirculation, stimulates collagen synthesis, and nourishes skin cells from within for a luminous, fresh radiance.</p>
+        <span class="moment-perk-pill" data-i18n="m6_perk">✨ Collagen &amp; Microcirculation Boost</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skincare Educational Callout Card -->
+  <div class="card rv" style="margin-top:22px;border:1px solid rgba(2,132,199,0.25);background:linear-gradient(135deg,rgba(2,132,199,0.06),transparent);">
+    <span class="k" style="margin-bottom:8px" data-i18n="who_p6">✨ Skin glow &amp; beauty</span>
+    <h3 data-i18n="skin_callout_title">The Oxygen Glow: Inside-Out Skin Nourishment</h3>
+    <p data-i18n="skin_callout_desc">Your skin is the last organ to receive oxygen from ambient breathing. When stress, urban smog, or high altitudes deplete oxygen delivery, skin cells starve, causing dry patches, dull tone, and sluggish collagen renewal. Breathing 99% pure oxygen saturates your capillaries, delivering vital cellular fuel directly to dermal layers for natural plumping and radiant vitality.</p>
   </div>
 
   <div class="card rv" id="care" style="margin-top:22px">
@@ -1411,6 +1433,7 @@ footer a[aria-label="YU"]:hover img {
           <option value="ath" data-i18n="mom_opt3">Training &amp; workout recovery</option>
           <option value="city" data-i18n="mom_opt4">City smog &amp; gridlock reset</option>
           <option value="well" data-i18n="mom_opt5">Daily wellness breathing ritual</option>
+          <option value="skin" data-i18n="mom_opt6">Skin nourishment &amp; beauty glow</option>
         </select>
 
         <div id="form-error" style="display:none; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); border-radius:10px; padding:12px; margin-bottom:14px; font-size:14px; text-align:center; font-weight:500;"></div>
@@ -1633,6 +1656,39 @@ function ritual() {
   cx.lineWidth = 1;
 }
 
+function skinGlow() {
+  const isLight = isLightTheme();
+  const X = W * .68, Y = H * .52;
+  const R0 = Math.min(W, H) * .36;
+  const pulse = Math.sin(T * 2.2) * 0.12;
+  const glowR = R0 * (1 + pulse + (boost > 0 ? (boost / 4) * 0.4 : 0));
+
+  // Radiating cellular glow rings
+  for (let i = 3; i >= 1; i--) {
+    cx.beginPath();
+    cx.arc(X, Y, glowR * (1 + i * 0.28), 0, 7);
+    const alpha = (boost > 0 ? 0.35 : 0.12) / i;
+    cx.fillStyle = isLight ? `rgba(2, 132, 199, ${alpha})` : `rgba(166, 219, 230, ${alpha})`;
+    cx.fill();
+  }
+
+  // Core dermal vitality orb
+  cx.beginPath();
+  cx.arc(X, Y, glowR, 0, 7);
+  cx.fillStyle = isLight ? (boost > 0 ? 'rgba(2, 132, 199, 0.45)' : 'rgba(2, 132, 199, 0.22)') : (boost > 0 ? 'rgba(166, 219, 230, 0.55)' : 'rgba(166, 219, 230, 0.25)');
+  cx.fill();
+  cx.strokeStyle = isLight ? '#0284c7' : '#a6dbe6';
+  cx.lineWidth = 2.5;
+  cx.stroke();
+  cx.lineWidth = 1;
+
+  // Dermal cellular text
+  cx.fillStyle = isLight ? '#0f172a' : '#ffffff';
+  cx.font = '700 16px "Plus Jakarta Sans", sans-serif';
+  cx.textAlign = 'center';
+  cx.fillText(boost > 0 ? '✨ Dermal Oxygenated' : '✨ Cellular Glow', X, Y + 6);
+}
+
 const M = {
   trek: {
     k: 'Altitude lab · 5 seconds',
@@ -1703,6 +1759,20 @@ const M = {
     yb: 'TAP · SEE WHAT YU ADDS',
     y: 'A few pure-oxygen breaths while resting, for peace of mind. Still: go slow, hydrate, descend if unwell.',
     clr: 1, d: 4, r: () => mtn(1)
+  },
+  skin: {
+    k: 'Beauty lab · 5 seconds',
+    h: 'Nourish your skin.<br>From within.',
+    p: 'Select daily skin stress levels. Tap YU to flood capillaries with 99% pure oxygen.',
+    pk: [['Resting', 20], ['Screen fatigue', 50], ['City pollution', 80], ['Skin hypoxia', 100]],
+    min: 0, max: 100, def: 50, u: '% glow',
+    n: v => Math.min(100, 35 + v * 0.4),
+    nm: v => 'Skin vitality',
+    f: v => v > 70 ? 'Skin hypoxia: microcirculation sluggish, cellular renewal slow.' : v > 40 ? 'Moderate dullness. Capillaries craving cellular fuel.' : 'Balanced. Hydrated and rested.',
+    fx: () => ({ b: 0, vg: 0 }),
+    yb: 'TAP · INFUSE PURE OXYGEN',
+    y: 'Capillaries saturated. Oxygen stimulates fibroblast collagen production and accelerates dermal cell repair.',
+    clr: 0, d: 4.5, r: skinGlow
   }
 };
 
@@ -1880,7 +1950,8 @@ const S = {
   ath: ['A pure-oxygen breath between hard sets. Small enough for your gym bag.', 'ath'],
   city: ['A fresh reset after smoggy commutes. Not a purifier, just pure oxygen on demand.', 'city'],
   well: ['A small, clean breathing ritual for people who look after themselves.', 'well'],
-  fam: ['Simple one-hand reassurance for parents on yatra. Ask their doctor before altitude.', 'fam']
+  fam: ['Simple one-hand reassurance for parents on yatra. Ask their doctor before altitude.', 'fam'],
+  skin: ['Cellular oxygen for skin renewal. Stimulates collagen, boosts microcirculation, and delivers an undeniable natural glow.', 'skin']
 };
 
 let currentPersona = 'trek';
