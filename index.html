@@ -969,7 +969,7 @@ footer b {
 </svg>
 
 <!-- Fixed Right Altitude Meter -->
-<div id="meter">ALTITUDE<b id="mh">0 m</b>AIR <span id="ma">100</span>%</div>
+<div id="meter"><span data-i18n="meter_altitude">ALTITUDE</span><b id="mh">0 m</b><span data-i18n="meter_air">AIR</span> <span id="ma">100</span>%</div>
 
 <!-- Navigation -->
 <nav>
@@ -1028,20 +1028,20 @@ footer b {
 <!-- Infinite Marquee Ticker -->
 <div id="tick">
   <div>
-    <span>99% PURE O₂</span>
-    <span>12 L CAN</span>
-    <span>150–200 BREATHS</span>
-    <span>MADE IN INDIA</span>
-    <span>BATCH 001 · 1,000 UNITS</span>
-    <span>ONE TRIGGER</span>
-    <span>BUILT FOR THIN AIR</span>
-    <span>99% PURE O₂</span>
-    <span>12 L CAN</span>
-    <span>150–200 BREATHS</span>
-    <span>MADE IN INDIA</span>
-    <span>BATCH 001 · 1,000 UNITS</span>
-    <span>ONE TRIGGER</span>
-    <span>BUILT FOR THIN AIR</span>
+    <span data-i18n="tick_1">99% PURE O₂</span>
+    <span data-i18n="tick_2">12 L CAN</span>
+    <span data-i18n="tick_3">150–200 BREATHS</span>
+    <span data-i18n="tick_4">MADE IN INDIA</span>
+    <span data-i18n="tick_5">BATCH 001 · 1,000 UNITS</span>
+    <span data-i18n="tick_6">ONE TRIGGER</span>
+    <span data-i18n="tick_7">BUILT FOR THIN AIR</span>
+    <span data-i18n="tick_1">99% PURE O₂</span>
+    <span data-i18n="tick_2">12 L CAN</span>
+    <span data-i18n="tick_3">150–200 BREATHS</span>
+    <span data-i18n="tick_4">MADE IN INDIA</span>
+    <span data-i18n="tick_5">BATCH 001 · 1,000 UNITS</span>
+    <span data-i18n="tick_6">ONE TRIGGER</span>
+    <span data-i18n="tick_7">BUILT FOR THIN AIR</span>
   </div>
 </div>
 
@@ -1050,15 +1050,15 @@ footer b {
   <div class="g">
     <div class="card rv st">
       <b data-n="20000">0</b>
-      <span>breaths you take every single day</span>
+      <span data-i18n="stat_1">breaths you take every single day</span>
     </div>
     <div class="card rv st">
       <b><i data-n="21" data-s="%">0</i> → <i data-n="99" data-s="%">0</i></b>
-      <span>everyday air vs YU</span>
+      <span data-i18n="stat_2">everyday air vs YU</span>
     </div>
     <div class="card rv st">
       <b data-n="150" data-s="–200">0</b>
-      <span>breaths in one 12 L can</span>
+      <span data-i18n="stat_3">breaths in one 12 L can</span>
     </div>
   </div>
 </section>
@@ -1083,14 +1083,14 @@ footer b {
 
 <!-- 4. Persona Switcher -->
 <section id="who">
-  <span class="k">One tap · who's breathing?</span>
-  <h2>Make this page yours.</h2>
+  <span class="k" data-i18n="who_k">One tap · who's breathing?</span>
+  <h2 data-i18n="who_h2">Make this page yours.</h2>
   <div class="persona-pills-wrap" id="ch">
-    <button class="ch on" data-k="trek">🏔️ Trekker / hill dweller</button>
-    <button class="ch" data-k="ath">⚡ Athlete / gym</button>
-    <button class="ch" data-k="city">🚗 City commuter</button>
-    <button class="ch" data-k="well">🧘 Daily wellness</button>
-    <button class="ch" data-k="fam">🤍 For my parents</button>
+    <button class="ch on" data-k="trek" data-i18n="who_p1">🏔️ Trekker / hill dweller</button>
+    <button class="ch" data-k="ath" data-i18n="who_p2">⚡ Athlete / gym</button>
+    <button class="ch" data-k="city" data-i18n="who_p3">🚗 City commuter</button>
+    <button class="ch" data-k="well" data-i18n="who_p4">🧘 Daily wellness</button>
+    <button class="ch" data-k="fam" data-i18n="who_p5">🤍 For my parents</button>
   </div>
 </section>
 
@@ -1133,25 +1133,25 @@ footer b {
       <div>
         <div class="mg" id="m1"></div>
         <b class="mn">21%</b>
-        <span>City air (Ambient)</span>
+        <span data-i18n="trap_city">City air (Ambient)</span>
       </div>
       <div>
         <div class="mg" id="m2"></div>
         <b class="mn hi">99%</b>
-        <span>YU Pure Oxygen</span>
+        <span data-i18n="trap_yu">YU Pure Oxygen</span>
       </div>
     </div>
     <div class="lg2">
-      <span><i class="o"></i>Oxygen</span>
-      <span><i></i>Nitrogen &amp; other gases</span>
+      <span><i class="o"></i><span data-i18n="trap_leg_o2">Oxygen</span></span>
+      <span><i></i><span data-i18n="trap_leg_other">Nitrogen &amp; other gases</span></span>
     </div>
   </div>
   
   <!-- Breath Hold Stopwatch -->
   <div id="bt" class="rv">
-    <span class="k">2 taps · how long can you go?</span>
+    <span class="k" data-i18n="bt_k">2 taps · how long can you go?</span>
     <b id="bn">0.0s</b>
-    <button class="btn p" id="bb">Start, then tap when you need air</button>
+    <button class="btn p" id="bb" data-i18n="bt_btn">Start, then tap when you need air</button>
   </div>
 </section>
 
@@ -1169,12 +1169,12 @@ footer b {
       <div class="moment-img-box">
         <img src="assets/hero-lifestyle.jpg" alt="Trekker holding YU 99% Pure Oxygen Canister on Himalayan Mountain Trail">
         <div class="moment-img-overlay"></div>
-        <span class="moment-badge-tag">01 · Alpine</span>
+        <span class="moment-badge-tag" data-i18n="m1_tag">01 · Alpine</span>
       </div>
       <div class="moment-body">
         <h3 data-i18n="m1_title">Thin-air trails</h3>
         <p data-i18n="m1_desc">Above 3,000 meters the air holds far less oxygen. Carry a few deep breaths of reassurance on steep mountain paths, alongside proper acclimatisation.</p>
-        <span class="moment-perk-pill">⚡ High Altitude Elevation</span>
+        <span class="moment-perk-pill" data-i18n="m1_perk">⚡ High Altitude Elevation</span>
       </div>
     </div>
 
@@ -1183,12 +1183,12 @@ footer b {
       <div class="moment-img-box">
         <img src="assets/athlete.jpg" alt="Athlete in workout gear resting on gym box holding YU Oxygen Canister">
         <div class="moment-img-overlay"></div>
-        <span class="moment-badge-tag">02 · Effort</span>
+        <span class="moment-badge-tag" data-i18n="m2_tag">02 · Effort</span>
       </div>
       <div class="moment-body">
         <h3 data-i18n="m2_title">Between hard sets</h3>
         <p data-i18n="m2_desc">Inhale 99% pure oxygen between intense workout sets, hill sprints, or CrossFit rounds to accelerate muscle clearance and sharpen mental focus.</p>
-        <span class="moment-perk-pill">⚡ Rapid Lactate Reset</span>
+        <span class="moment-perk-pill" data-i18n="m2_perk">⚡ Rapid Lactate Reset</span>
       </div>
     </div>
 
@@ -1197,12 +1197,12 @@ footer b {
       <div class="moment-img-box">
         <img src="assets/wellness.jpg" alt="Mindful breathing meditation ritual with YU Canister in sunlit living room">
         <div class="moment-img-overlay"></div>
-        <span class="moment-badge-tag">03 · Ritual</span>
+        <span class="moment-badge-tag" data-i18n="m3_tag">03 · Ritual</span>
       </div>
       <div class="moment-body">
         <h3 data-i18n="m3_title">Daily wellness ritual</h3>
         <p data-i18n="m3_desc">Three intentional breaths of pure oxygen before morning focus sessions, meditation, or unwinding from screen fatigue. Clear, calm, and grounded.</p>
-        <span class="moment-perk-pill">⚡ 3-Breath Calm Pause</span>
+        <span class="moment-perk-pill" data-i18n="m3_perk">⚡ 3-Breath Calm Pause</span>
       </div>
     </div>
 
@@ -1211,12 +1211,12 @@ footer b {
       <div class="moment-img-box">
         <img src="assets/family.jpg" alt="Family caring for elderly mother on high-altitude Himalayan pilgrimage yatra trail with YU Canister">
         <div class="moment-img-overlay"></div>
-        <span class="moment-badge-tag">04 · Family</span>
+        <span class="moment-badge-tag" data-i18n="m4_tag">04 · Family</span>
       </div>
       <div class="moment-body">
         <h3 data-i18n="m4_title">Yatra with parents</h3>
         <p data-i18n="m4_desc">Kedarnath, Badrinath, Vaishno Devi: high steep gradients test older lungs. Compact, lightweight, single-trigger reassurance in your palm.</p>
-        <span class="moment-perk-pill">⚡ Himalayan Pilgrim Care</span>
+        <span class="moment-perk-pill" data-i18n="m4_perk">⚡ Himalayan Pilgrim Care</span>
       </div>
     </div>
 
@@ -1225,20 +1225,20 @@ footer b {
       <div class="moment-img-box">
         <img src="assets/gifting.jpg" alt="Gift box with YU 12L Canister and handwritten card for Leh-Ladakh trek">
         <div class="moment-img-overlay"></div>
-        <span class="moment-badge-tag">05 · Gifting</span>
+        <span class="moment-badge-tag" data-i18n="m5_tag">05 · Gifting</span>
       </div>
       <div class="moment-body">
         <h3 data-i18n="m5_title">A gift of pure care</h3>
         <p data-i18n="m5_desc">Give peace of mind to friends heading to Leh Ladakh, trekking trails, or elderly family members embarking on sacred mountain pilgrimages.</p>
-        <span class="moment-perk-pill">⚡ Complimentary Allocation</span>
+        <span class="moment-perk-pill" data-i18n="m5_perk">⚡ Complimentary Allocation</span>
       </div>
     </div>
   </div>
 
   <div class="card rv" id="care" style="margin-top:22px">
-    <span class="k" style="margin-bottom:8px">Medical Transparency</span>
-    <h3>Buying for someone with breathing issues?</h3>
-    <p>YU is a lifestyle wellness product and is NOT a medical device, medicine, or treatment. If you or a family member has asthma, COPD, a cardiovascular condition, or prescribed clinical oxygen, strictly adhere to your physician's plan and seek medical clearance before travelling to high altitudes.</p>
+    <span class="k" style="margin-bottom:8px" data-i18n="care_badge">Medical Transparency</span>
+    <h3 data-i18n="care_title">Buying for someone with breathing issues?</h3>
+    <p data-i18n="care_desc">YU is a lifestyle wellness product and is NOT a medical device, medicine, or treatment. If you or a family member has asthma, COPD, a cardiovascular condition, or prescribed clinical oxygen, strictly adhere to your physician's plan and seek medical clearance before travelling to high altitudes.</p>
   </div>
 </section>
 
@@ -1338,7 +1338,7 @@ footer b {
         </div>
 
         <select id="f-country" required aria-label="Select Country"></select>
-        <select id="f-state" required aria-label="Select State or Union Territory"><option value="">Select State / UT</option></select>
+        <select id="f-state" required aria-label="Select State or Union Territory"><option value="" data-i18n="select_state">Select State / UT</option></select>
 
         <div style="position:relative">
           <input id="f-city" list="city-datalist" data-i18n="form_city" required placeholder="Select or type city name" autocomplete="address-level2" maxlength="100">
@@ -1346,18 +1346,18 @@ footer b {
         </div>
 
         <select id="f-quantity" class="f" aria-label="Quantity of canisters">
-          <option>1 can (12L YU Canister)</option>
-          <option>2 cans (trek / couple)</option>
-          <option>3 cans (travel pack)</option>
-          <option>5+ cans (family / group)</option>
+          <option value="1 can" data-i18n="qty_opt1">1 can (12L YU Canister)</option>
+          <option value="2 cans" data-i18n="qty_opt2">2 cans (trek / couple)</option>
+          <option value="3 cans" data-i18n="qty_opt3">3 cans (travel pack)</option>
+          <option value="5+ cans" data-i18n="qty_opt4">5+ cans (family / group)</option>
         </select>
 
         <select class="f" id="mom" aria-label="Primary moment of use">
-          <option value="trek">Himalayan trek / altitude</option>
-          <option value="fam">Yatra (Kedarnath, Amarnath, Vaishno Devi)</option>
-          <option value="ath">Training &amp; workout recovery</option>
-          <option value="city">City smog &amp; gridlock reset</option>
-          <option value="well">Daily wellness breathing ritual</option>
+          <option value="trek" data-i18n="mom_opt1">Himalayan trek / altitude</option>
+          <option value="fam" data-i18n="mom_opt2">Yatra (Kedarnath, Amarnath, Vaishno Devi)</option>
+          <option value="ath" data-i18n="mom_opt3">Training &amp; workout recovery</option>
+          <option value="city" data-i18n="mom_opt4">City smog &amp; gridlock reset</option>
+          <option value="well" data-i18n="mom_opt5">Daily wellness breathing ritual</option>
         </select>
 
         <div id="form-error" style="display:none; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); border-radius:10px; padding:12px; margin-bottom:14px; font-size:14px; text-align:center; font-weight:500;"></div>
@@ -1370,21 +1370,21 @@ footer b {
         <div class="aside-img-box">
           <img src="assets/product.png" alt="YU 12L Canister">
         </div>
-        <span class="k" style="margin-bottom:4px">Batch 001 Open</span>
-        <h3>YU 12L Canister</h3>
-        <p>99% Pure Medical-Grade O₂</p>
+        <span class="k" style="margin-bottom:4px" data-i18n="aside_badge">Batch 001 Open</span>
+        <h3 data-i18n="aside_title">YU 12L Canister</h3>
+        <p data-i18n="aside_sub">99% Pure Medical-Grade O₂</p>
         <ul class="aside-checklist">
-          <li><span>✓</span> 99% Pure Oxygen (5× Concentration)</li>
-          <li><span>✓</span> 12 Liters Compressed (150+ Breaths)</li>
-          <li><span>✓</span> Ergonomic Mask &amp; Trigger Built In</li>
-          <li><span>✓</span> Priority Dispatch Notification</li>
+          <li data-i18n="aside_f1"><span>✓</span> 99% Pure Oxygen (5× Concentration)</li>
+          <li data-i18n="aside_f2"><span>✓</span> 12 Liters Compressed (150+ Breaths)</li>
+          <li data-i18n="aside_f3"><span>✓</span> Ergonomic Mask &amp; Trigger Built In</li>
+          <li data-i18n="aside_f4"><span>✓</span> Priority Dispatch Notification</li>
         </ul>
       </div>
     </div>
 
     <div id="ok">
-      <b style="font-size:17px">✓ Priority Reservation Confirmed!</b><br>
-      Your allocation has been securely recorded in our database. Our team will reach out with dispatch schedules and delivery details prior to shipping.
+      <b style="font-size:17px" data-i18n="ok_title">✓ Priority Reservation Confirmed!</b><br>
+      <span data-i18n="ok_desc">Your allocation has been securely recorded in our database. Our team will reach out with dispatch schedules and delivery details prior to shipping.</span>
     </div>
   </div>
 </section>
@@ -1392,9 +1392,9 @@ footer b {
 <!-- Footer -->
 <footer>
   <b>YU</b><br>
-  Oxygen means YU. 99% pure portable oxygen engineered for peak output, high altitude, and clean urban living.<br>
-  Made with trust in India. · <a href="mailto:support@yucares.com" style="color:var(--ac);text-decoration:none">support@yucares.com</a><br><br>
-  <b>Important Medical Disclaimer:</b> YU is a wellness and lifestyle product, NOT a medicine or medical device, and does not diagnose, treat, cure, or prevent any disease. Not a substitute for acclimatisation, rest, descent, or medical care. Anyone with respiratory, cardiovascular, or blood-pressure conditions should consult a doctor before travelling to altitude.
+  <span data-i18n="footer_desc">Oxygen means YU. 99% pure portable oxygen engineered for peak output, high altitude, and clean urban living.</span><br>
+  <span data-i18n="footer_origin">Made with trust in India.</span> · <a href="mailto:support@yucares.com" style="color:var(--ac);text-decoration:none">support@yucares.com</a><br><br>
+  <b data-i18n="footer_disclaimer_title">Important Medical Disclaimer:</b> <span data-i18n="footer_disclaimer_text">YU is a wellness and lifestyle product, NOT a medicine or medical device, and does not diagnose, treat, cure, or prevent any disease. Not a substitute for acclimatisation, rest, descent, or medical care. Anyone with respiratory, cardiovascular, or blood-pressure conditions should consult a doctor before travelling to altitude.</span>
 </footer>
 
 <script>
@@ -1763,8 +1763,11 @@ const S = {
   fam: ['Simple one-hand reassurance for parents on yatra. Ask their doctor before altitude.', 'fam']
 };
 
+let currentPersona = 'trek';
 function pick(k) {
-  $('hp').textContent = S[k][0];
+  currentPersona = k;
+  const t = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
+  $('hp').textContent = (t && t['s_' + k]) ? t['s_' + k] : S[k][0];
   document.querySelectorAll('.ch').forEach(b => b.classList.toggle('on', b.dataset.k == k));
   // Highlight matching card without fading out text!
   document.querySelectorAll('.moment-card').forEach(c => {
@@ -1887,11 +1890,23 @@ function applyLanguage(lang) {
     if (t[key]) {
       if (el.tagName === 'INPUT') {
         el.placeholder = t[key];
+      } else if (el.tagName === 'OPTION') {
+        el.textContent = t[key];
       } else {
         el.innerHTML = t[key];
       }
     }
   });
+
+  // Update dynamic persona subtitle if set
+  if (typeof currentPersona !== 'undefined' && $('hp')) {
+    $('hp').textContent = (t['s_' + currentPersona]) || (typeof S !== 'undefined' && S[currentPersona] ? S[currentPersona][0] : $('hp').textContent);
+  }
+  // Update canister gauge status
+  if (typeof lvl !== 'undefined' && $('ct')) {
+    const ctTpl = t.ct_demo || '12 L can · {lvl}% left (demo, sound on)';
+    $('ct').textContent = ctTpl.replace('{lvl}', Math.round(lvl));
+  }
 
   const langBtn = $('lang-btn');
   if (langBtn) {
