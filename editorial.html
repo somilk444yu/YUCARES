@@ -231,7 +231,18 @@ if (typeof COUNTRY_DATA !== 'undefined') {
   fillStates('India');
 }
 
-/* Secure Firebase Form Submission */
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxtgA6Yqde93oBGajuM8ge3zB61GTImxuiALIFjMkzP95aa6O57zGCA81K3fNB7BIRj/exec';
+const SHEET_SECRET = 'put-a-long-random-string-here';
+
+async function submitLead(f) {
+  if (!SHEET_URL || SHEET_URL.includes('XXXX')) return;
+  const payload = JSON.stringify({ secret: SHEET_SECRET, ...f, page: location.pathname || '/', utm: location.search ? location.search.slice(1) : '' });
+  try {
+    await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: payload });
+  } catch(e) {}
+}
+
+/* Secure Form Submission (Google Sheets + Firebase) */
 let lastSub = 0;
 getEl('fm').onsubmit = async e => {
   e.preventDefault();
@@ -248,13 +259,14 @@ getEl('fm').onsubmit = async e => {
     country: getEl('f-country').value,
     state: getEl('f-state').value,
     city: getEl('f-city').value.trim(),
-    quantity: getEl('f-quantity').value,
+    cans: getEl('f-quantity').value,
     moment: getEl('f-moment').value,
     timestamp: window.firebase ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString(),
     source: 'yu-editorial-v1'
   };
 
   try {
+    try { await submitLead(data); } catch(sheetErr) {}
     if (db) {
       await db.collection('prebookings').add(data);
     }
