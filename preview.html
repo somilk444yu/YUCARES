@@ -2483,12 +2483,22 @@ function hideFormError() {
   if (errBox) errBox.style.display = 'none';
 }
 
-/* ================= DIRECT FIREBASE FIRESTORE SUBMISSION (SECURE CLOUD STORAGE) ================= */
-/* ================= LEAD DISPATCH (GOOGLE SHEETS & FIRESTORE CLOUD SYNC) ================= */
-// Google Sheets Webhook Configuration (Apps Script)
-// Paste your deployed Google Apps Script Web App URL below
-const GOOGLE_SHEET_ENDPOINT = '';
-const GOOGLE_SHEET_SECRET = 'yu-o2-leads-secure-7f89b2c4e1a0';
+/* ================= GOOGLE APPS SCRIPT LEAD CAPTURE ================= */
+const SHEET_URL = 'https://script.google.com/macros/s/XXXX/exec';
+const SHEET_SECRET = 'put-a-long-random-string-here';
+
+async function submitLead(f) {
+  if (!SHEET_URL || SHEET_URL.includes('XXXX')) {
+    console.warn('Google Sheets SHEET_URL not configured yet with deployment ID.');
+    return;
+  }
+  const r = await fetch(SHEET_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight
+    body: JSON.stringify({ secret: SHEET_SECRET, ...f, page: location.pathname, utm: location.search.slice(1) })
+  });
+  if (!r.ok) throw new Error('save failed');
+}
 
 let lastSub = 0;
 const SUBMIT_COOLDOWN = 10000;
@@ -2570,10 +2580,8 @@ $('fm').onsubmit = async e => {
   btn.disabled = true;
   btn.textContent = 'Recording Reservation...';
 
-  // 1. Google Sheets Payload (Direct spreadsheet row insertion)
-  const sheetPayload = {
-    secret: GOOGLE_SHEET_SECRET,
-    website: honeypot,
+  // Lead payload for Google Sheets & Firebase
+  const leadPayload = {
     name: name,
     email: email,
     phone: code + ' ' + phone,
@@ -2583,12 +2591,10 @@ $('fm').onsubmit = async e => {
     moment: moment,
     persona: typeof currentPersona !== 'undefined' ? currentPersona : 'general',
     consent: true,
-    page: window.location.href,
-    utm: window.location.search ? window.location.search.substring(1) : ''
+    website: honeypot
   };
 
-  // 2. Firebase Firestore Payload (Structured Cloud Database)
-  const data = {
+  const firestoreData = {
     name: name,
     email: email,
     phone: code + ' ' + phone,
@@ -2603,28 +2609,21 @@ $('fm').onsubmit = async e => {
   };
 
   try {
-    // Send to Google Sheets if endpoint is configured
-    if (GOOGLE_SHEET_ENDPOINT) {
-      try {
-        fetch(GOOGLE_SHEET_ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(sheetPayload)
-        }).catch(err => console.warn('Google Sheets sync warning:', err));
-      } catch(sheetErr) {
-        console.warn('Google Sheets dispatch error:', sheetErr);
-      }
+    // 1. Google Sheets Webhook Dispatch
+    try {
+      await submitLead(leadPayload);
+    } catch(sheetErr) {
+      console.warn('Google Sheets save error:', sheetErr);
     }
 
-    // Save to Firebase Firestore
+    // 2. Firebase Firestore Database Backup
     if (!db && window.firebase && firebase.firestore) {
       if (!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
       db = firebase.firestore();
     }
 
     if (db) {
-      await db.collection('prebookings').add(data);
+      await db.collection('prebookings').add(firestoreData);
     } else {
       console.warn('Firebase Firestore unavailable; saved via sheet / locally.');
     }

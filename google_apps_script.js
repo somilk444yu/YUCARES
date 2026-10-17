@@ -20,7 +20,7 @@
  * ============================================================================
  */
 
-const SECRET = 'yu-o2-leads-secure-7f89b2c4e1a0';
+const SECRET = 'put-a-long-random-string-here';
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
