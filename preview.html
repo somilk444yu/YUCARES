@@ -1407,6 +1407,8 @@ footer a[aria-label="YU"]:hover img {
     <div class="prebook-layout">
       <!-- Form Card -->
       <form id="fm">
+        <!-- Anti-bot honeypot field -->
+        <input type="text" id="f-website" name="website" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input required id="f-name" data-i18n="form_name" placeholder="Full name" autocomplete="name" maxlength="100">
         <input required id="f-email" type="email" data-i18n="form_email" placeholder="Email address" autocomplete="email" maxlength="120">
         
@@ -2482,12 +2484,27 @@ function hideFormError() {
 }
 
 /* ================= DIRECT FIREBASE FIRESTORE SUBMISSION (SECURE CLOUD STORAGE) ================= */
+/* ================= LEAD DISPATCH (GOOGLE SHEETS & FIRESTORE CLOUD SYNC) ================= */
+// Google Sheets Webhook Configuration (Apps Script)
+// Paste your deployed Google Apps Script Web App URL below
+const GOOGLE_SHEET_ENDPOINT = '';
+const GOOGLE_SHEET_SECRET = 'yu-o2-leads-secure-7f89b2c4e1a0';
+
 let lastSub = 0;
 const SUBMIT_COOLDOWN = 10000;
 
 $('fm').onsubmit = async e => {
   e.preventDefault();
   hideFormError();
+
+  // Bot Honeypot Check
+  const honeypot = $('f-website') ? $('f-website').value : '';
+  if (honeypot) {
+    // Silently deceive bots by displaying confirmation without writing to sheets/DB
+    $('ok').style.display = 'block';
+    $('fm').style.display = 'none';
+    return;
+  }
 
   const now = Date.now();
   if (now - lastSub < SUBMIT_COOLDOWN) {
@@ -2553,6 +2570,24 @@ $('fm').onsubmit = async e => {
   btn.disabled = true;
   btn.textContent = 'Recording Reservation...';
 
+  // 1. Google Sheets Payload (Direct spreadsheet row insertion)
+  const sheetPayload = {
+    secret: GOOGLE_SHEET_SECRET,
+    website: honeypot,
+    name: name,
+    email: email,
+    phone: code + ' ' + phone,
+    country: country || 'India',
+    city: (city ? city + ', ' : '') + state,
+    cans: quantity,
+    moment: moment,
+    persona: typeof currentPersona !== 'undefined' ? currentPersona : 'general',
+    consent: true,
+    page: window.location.href,
+    utm: window.location.search ? window.location.search.substring(1) : ''
+  };
+
+  // 2. Firebase Firestore Payload (Structured Cloud Database)
   const data = {
     name: name,
     email: email,
@@ -2562,11 +2597,27 @@ $('fm').onsubmit = async e => {
     city: city,
     quantity: quantity,
     moment: moment,
+    persona: typeof currentPersona !== 'undefined' ? currentPersona : 'general',
     timestamp: window.firebase && firebase.firestore ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString(),
     source: 'yu-luxury-v3'
   };
 
   try {
+    // Send to Google Sheets if endpoint is configured
+    if (GOOGLE_SHEET_ENDPOINT) {
+      try {
+        fetch(GOOGLE_SHEET_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(sheetPayload)
+        }).catch(err => console.warn('Google Sheets sync warning:', err));
+      } catch(sheetErr) {
+        console.warn('Google Sheets dispatch error:', sheetErr);
+      }
+    }
+
+    // Save to Firebase Firestore
     if (!db && window.firebase && firebase.firestore) {
       if (!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
       db = firebase.firestore();
@@ -2575,14 +2626,14 @@ $('fm').onsubmit = async e => {
     if (db) {
       await db.collection('prebookings').add(data);
     } else {
-      console.warn('Firebase Firestore unavailable; saved locally.');
+      console.warn('Firebase Firestore unavailable; saved via sheet / locally.');
     }
 
     lastSub = Date.now();
     $('ok').style.display = 'block';
     $('fm').style.display = 'none';
   } catch(err) {
-    console.error('Firebase save error:', err);
+    console.error('Reservation save error:', err);
     showFormError('Could not record reservation. Please check your network connection or email support@yucares.com.');
     btn.disabled = false;
     btn.textContent = origText;
