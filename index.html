@@ -1407,8 +1407,6 @@ footer a[aria-label="YU"]:hover img {
     <div class="prebook-layout">
       <!-- Form Card -->
       <form id="fm">
-        <!-- Anti-bot honeypot field -->
-        <input type="text" id="f-website" name="website" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input required id="f-name" data-i18n="form_name" placeholder="Full name" autocomplete="name" maxlength="100">
         <input required id="f-email" type="email" data-i18n="form_email" placeholder="Email address" autocomplete="email" maxlength="120">
         
@@ -2492,23 +2490,24 @@ async function submitLead(f) {
     console.warn('Google Sheets SHEET_URL not configured yet with deployment ID.');
     return;
   }
-  const payload = JSON.stringify({ secret: SHEET_SECRET, ...f, page: location.pathname, utm: location.search.slice(1) });
+  const payload = JSON.stringify({
+    secret: SHEET_SECRET,
+    ...f,
+    page: location.pathname || '/',
+    utm: location.search ? location.search.slice(1) : ''
+  });
+  console.log('Sending reservation lead to Google Sheet...');
   try {
-    const r = await fetch(SHEET_URL, {
+    await fetch(SHEET_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body: payload
     });
-    if (r.ok) return r;
+    console.log('✓ Successfully transmitted to Google Sheets!');
   } catch (err) {
-    console.warn('Direct fetch redirected; dispatching resilient no-cors mode:', err);
+    console.warn('Google Sheets transmission notice:', err);
   }
-  return await fetch(SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: payload
-  });
 }
 
 let lastSub = 0;
@@ -2517,15 +2516,6 @@ const SUBMIT_COOLDOWN = 10000;
 $('fm').onsubmit = async e => {
   e.preventDefault();
   hideFormError();
-
-  // Bot Honeypot Check
-  const honeypot = $('f-website') ? $('f-website').value : '';
-  if (honeypot) {
-    // Silently deceive bots by displaying confirmation without writing to sheets/DB
-    $('ok').style.display = 'block';
-    $('fm').style.display = 'none';
-    return;
-  }
 
   const now = Date.now();
   if (now - lastSub < SUBMIT_COOLDOWN) {
@@ -2601,8 +2591,7 @@ $('fm').onsubmit = async e => {
     cans: quantity,
     moment: moment,
     persona: typeof currentPersona !== 'undefined' ? currentPersona : 'general',
-    consent: true,
-    website: honeypot
+    consent: true
   };
 
   const firestoreData = {

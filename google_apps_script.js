@@ -36,7 +36,7 @@ function doPost(e) {
   lock.waitLock(10000);
   try {
     const d = JSON.parse(e.postData.contents);
-    if (d.secret !== SECRET || d.website) return out({ ok: false }); // wrong key or bot
+    if (d.secret !== SECRET) return out({ ok: false }); // wrong key
     let ss;
     try {
       ss = SpreadsheetApp.openById(SPREADSHEET_ID);
