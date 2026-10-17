@@ -20,6 +20,7 @@
  * ============================================================================
  */
 
+const SPREADSHEET_ID = '1Zue-Hmuj-VIRy3mupMD1SYyuRQxu-LVZIq4ipoQL_RI';
 const SECRET = 'put-a-long-random-string-here';
 
 function doPost(e) {
@@ -28,7 +29,12 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     if (d.secret !== SECRET || d.website) return out({ ok: false }); // wrong key or bot honeypot tripped
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let ss;
+    try {
+      ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    } catch(err) {
+      ss = SpreadsheetApp.getActiveSpreadsheet();
+    }
     const sh = ss.getSheetByName('Leads') || ss.insertSheet('Leads');
     if (!sh.getLastRow()) {
       sh.appendRow(['Time', 'Name', 'Email', 'Phone', 'Country', 'City', 'Cans', 'Moment', 'Persona', 'Consent', 'Page', 'UTM']);
