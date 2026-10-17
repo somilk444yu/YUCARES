@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
+<script>
+  if (localStorage.getItem('yu_cookie_consent') === 'declined') {
+    window['ga-disable-G-SJE0HCWY5P'] = true;
+  }
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJE0HCWY5P"></script>
 <script>
@@ -1002,6 +1007,134 @@ footer a[aria-label="YU"]:hover img {
   *, ::before, ::after { animation: none !important; transition: none !important; }
   .rv { opacity: 1; transform: none; }
 }
+
+/* Form Consent Checkbox */
+.consent-group {
+  margin: 16px 0 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--ln);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+:root[data-theme="light"] .consent-group {
+  background: rgba(0, 0, 0, 0.02);
+}
+.consent-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--ac);
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.consent-group label {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--mu);
+  cursor: pointer;
+  user-select: none;
+}
+.consent-group label a {
+  color: var(--ac);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Cookie & Privacy Banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(140%);
+  width: calc(100% - 32px);
+  max-width: 680px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--ln);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  border-radius: 16px;
+  padding: 16px 20px;
+  z-index: 9999;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.cookie-banner.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.cookie-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.cookie-content p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--fg);
+  flex: 1;
+  min-width: 240px;
+}
+.cookie-content p a {
+  color: var(--ac);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-left: 4px;
+}
+.cookie-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.cookie-btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.cookie-decline {
+  background: transparent;
+  color: var(--mu);
+  border: 1px solid var(--ln);
+}
+.cookie-decline:hover {
+  color: var(--fg);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.cookie-accept {
+  background: var(--ac);
+  color: #07090b;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 10px var(--ac-glow);
+}
+.cookie-accept:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+@media (max-width: 580px) {
+  .cookie-banner {
+    bottom: 16px;
+    width: calc(100% - 24px);
+    padding: 14px 16px;
+  }
+  .cookie-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
 </style>
 </head>
 <body>
@@ -1448,6 +1581,14 @@ footer a[aria-label="YU"]:hover img {
           <option value="skin" data-i18n="mom_opt6">Skin nourishment &amp; beauty glow</option>
         </select>
 
+        <!-- DPDP Plain-Language Form Consent Checkbox (Unticked, Required) -->
+        <div class="consent-group">
+          <input type="checkbox" id="f-consent" required aria-required="true">
+          <label for="f-consent" id="f-consent-label">
+            I agree to YU contacting me on WhatsApp, phone or email about my pre-booking, and I have read the <a href="privacy.html" target="_blank" rel="noopener">Privacy Notice</a>. I am 18 or older.
+          </label>
+        </div>
+
         <div id="form-error" style="display:none; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); border-radius:10px; padding:12px; margin-bottom:14px; font-size:14px; text-align:center; font-weight:500;"></div>
 
         <button class="btn p f" id="sub-btn" type="submit" style="padding:18px;font-size:16px" data-i18n="btn_submit_order">Reserve Batch 001 Allocation</button>
@@ -1481,7 +1622,7 @@ footer a[aria-label="YU"]:hover img {
 <footer>
   <a href="#hero" aria-label="YU" style="display:inline-block;margin-bottom:12px;text-decoration:none"><img src="assets/logo.png" alt="YU" style="height:48px;width:auto;vertical-align:middle"></a><br>
   <span data-i18n="footer_desc">Oxygen means YU. 99% pure portable oxygen engineered for peak output, high altitude, and clean urban living.</span><br>
-  <span data-i18n="footer_origin">Made with trust in India.</span> · <a href="mailto:support@yucares.com" style="color:var(--ac);text-decoration:none">support@yucares.com</a><br><br>
+  <span data-i18n="footer_origin">Made with trust in India.</span> · <a href="mailto:support@yucares.com" style="color:var(--ac);text-decoration:none">support@yucares.com</a> · <a href="privacy.html" style="color:var(--ac);text-decoration:none">Privacy Notice</a><br><br>
   <b data-i18n="footer_disclaimer_title">Important Medical Disclaimer:</b> <span data-i18n="footer_disclaimer_text">YU is a wellness and lifestyle product, NOT a medicine or medical device, and does not diagnose, treat, cure, or prevent any disease. Not a substitute for acclimatisation, rest, descent, or medical care. Anyone with respiratory, cardiovascular, or blood-pressure conditions should consult a doctor before travelling to altitude.</span>
 </footer>
 
@@ -2585,6 +2726,13 @@ $('fm').onsubmit = async e => {
     return;
   }
 
+  const consentBox = $('f-consent');
+  if (!consentBox || !consentBox.checked) {
+    showFormError('Please agree to the Privacy Notice and confirm you are 18 or older to reserve your allocation.');
+    if (consentBox) consentBox.focus();
+    return;
+  }
+
   const btn = $('sub-btn');
   const origText = btn.textContent;
   btn.disabled = true;
@@ -2647,6 +2795,50 @@ $('fm').onsubmit = async e => {
     btn.textContent = origText;
   }
 };
+
+/* ================= COOKIE & PRIVACY BANNER ================= */
+(function() {
+  const banner = $('cookie-banner');
+  const btnAccept = $('cookie-accept');
+  const btnDecline = $('cookie-decline');
+  const choice = localStorage.getItem('yu_cookie_consent');
+
+  if (!choice && banner) {
+    setTimeout(function() { banner.classList.add('visible'); }, 800);
+  }
+
+  if (btnAccept) {
+    btnAccept.onclick = function() {
+      localStorage.setItem('yu_cookie_consent', 'accepted');
+      if (banner) banner.classList.remove('visible');
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted',
+          'ad_storage': 'granted'
+        });
+      }
+    };
+  }
+
+  if (btnDecline) {
+    btnDecline.onclick = function() {
+      localStorage.setItem('yu_cookie_consent', 'declined');
+      window['ga-disable-G-SJE0HCWY5P'] = true;
+      if (banner) banner.classList.remove('visible');
+    };
+  }
+})();
 </script>
+
+<!-- Cookie & Privacy Banner -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookie and Privacy Notice">
+  <div class="cookie-content">
+    <p>We use cookies to see which pages help travellers, and to measure our ads. Accept or decline: the site works either way. <a href="privacy.html">Privacy Notice</a></p>
+    <div class="cookie-actions">
+      <button type="button" class="cookie-btn cookie-decline" id="cookie-decline">Decline</button>
+      <button type="button" class="cookie-btn cookie-accept" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
