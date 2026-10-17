@@ -742,6 +742,9 @@ input[type=range] {
 .moment-card[data-s="gift"] .moment-img-box img {
   object-position: center;
 }
+.moment-card[data-s="skin"] .moment-img-box img {
+  object-position: center 15%;
+}
 .moment-card:hover .moment-img-box img {
   transform: scale(1.06);
 }
@@ -1656,37 +1659,266 @@ function ritual() {
   cx.lineWidth = 1;
 }
 
+let skinPt = [];
+let rbcPt = [];
+
 function skinGlow() {
   const isLight = isLightTheme();
-  const X = W * .68, Y = H * .52;
-  const R0 = Math.min(W, H) * .36;
-  const pulse = Math.sin(T * 2.2) * 0.12;
-  const glowR = R0 * (1 + pulse + (boost > 0 ? (boost / 4) * 0.4 : 0));
+  const hyp = h / 100; // 0 to 1 hypoxia / stress
+  const isBoosting = boost > 0;
+  const boostRatio = isBoosting ? (boost / m.d) : 0; // 1 down to 0
 
-  // Radiating cellular glow rings
-  for (let i = 3; i >= 1; i--) {
-    cx.beginPath();
-    cx.arc(X, Y, glowR * (1 + i * 0.28), 0, 7);
-    const alpha = (boost > 0 ? 0.35 : 0.12) / i;
-    cx.fillStyle = isLight ? `rgba(2, 132, 199, ${alpha})` : `rgba(166, 219, 230, ${alpha})`;
-    cx.fill();
-  }
+  // Colors
+  const textColor = isLight ? '#0f172a' : '#ffffff';
+  const subTextColor = isLight ? '#64748b' : '#94a3b8';
+  const capillaryWall = isLight ? 'rgba(239, 68, 68, 0.22)' : 'rgba(244, 63, 94, 0.28)';
 
-  // Core dermal vitality orb
+  // 1. Epidermal Surface Layer (Top)
+  const epiY = H * 0.18;
   cx.beginPath();
-  cx.arc(X, Y, glowR, 0, 7);
-  cx.fillStyle = isLight ? (boost > 0 ? 'rgba(2, 132, 199, 0.45)' : 'rgba(2, 132, 199, 0.22)') : (boost > 0 ? 'rgba(166, 219, 230, 0.55)' : 'rgba(166, 219, 230, 0.25)');
+  cx.moveTo(0, epiY);
+  for (let x = 0; x <= W; x += 15) {
+    const wave = Math.sin(x * 0.02 + T * 1.5) * 2.5;
+    cx.lineTo(x, epiY + wave);
+  }
+  cx.lineTo(W, 0);
+  cx.lineTo(0, 0);
+  cx.closePath();
+  // Ambient surface glow above skin
+  const surfaceGrad = cx.createLinearGradient(0, epiY, 0, 0);
+  if (isBoosting) {
+    surfaceGrad.addColorStop(0, isLight ? 'rgba(2, 132, 199, 0.35)' : 'rgba(56, 189, 248, 0.4)');
+    surfaceGrad.addColorStop(1, 'transparent');
+  } else {
+    const baseAlpha = 0.06 + (1 - hyp) * 0.12;
+    surfaceGrad.addColorStop(0, isLight ? `rgba(2, 132, 199, ${baseAlpha})` : `rgba(166, 219, 230, ${baseAlpha})`);
+    surfaceGrad.addColorStop(1, 'transparent');
+  }
+  cx.fillStyle = surfaceGrad;
   cx.fill();
-  cx.strokeStyle = isLight ? '#0284c7' : '#a6dbe6';
-  cx.lineWidth = 2.5;
+
+  // Epidermal surface boundary line
+  cx.beginPath();
+  for (let x = 0; x <= W; x += 15) {
+    const wave = Math.sin(x * 0.02 + T * 1.5) * 2.5;
+    x === 0 ? cx.moveTo(x, epiY + wave) : cx.lineTo(x, epiY + wave);
+  }
+  cx.strokeStyle = isBoosting ? (isLight ? '#0284c7' : '#38bdf8') : (isLight ? 'rgba(148, 163, 184, 0.5)' : 'rgba(100, 116, 139, 0.4)');
+  cx.lineWidth = isBoosting ? 2.5 : 1.5;
   cx.stroke();
   cx.lineWidth = 1;
 
-  // Dermal cellular text
-  cx.fillStyle = isLight ? '#0f172a' : '#ffffff';
-  cx.font = '700 16px "Plus Jakarta Sans", sans-serif';
-  cx.textAlign = 'center';
-  cx.fillText(boost > 0 ? '✨ Dermal Oxygenated' : '✨ Cellular Glow', X, Y + 6);
+  // 2. Collagen Matrix Strands (Vertical wavy connective fibers)
+  const cols = 7;
+  cx.lineWidth = 1;
+  for (let c = 1; c < cols; c++) {
+    const baseX = (c / cols) * W;
+    cx.beginPath();
+    for (let y = epiY + 10; y <= H * 0.72; y += 8) {
+      const strandWave = Math.sin(y * 0.08 + T * 2 + c) * (isBoosting ? 6 : 3);
+      y === (epiY + 10) ? cx.moveTo(baseX + strandWave, y) : cx.lineTo(baseX + strandWave, y);
+    }
+    const colAlpha = isBoosting ? 0.35 : (0.08 + (1 - hyp) * 0.1);
+    cx.strokeStyle = isBoosting ? (isLight ? `rgba(2, 132, 199, ${colAlpha})` : `rgba(56, 189, 248, ${colAlpha})`) : (isLight ? `rgba(203, 213, 225, ${colAlpha})` : `rgba(71, 85, 105, ${colAlpha})`);
+    cx.stroke();
+  }
+
+  // 3. Dermal Cells Lattice (2 staggered rows of living cells)
+  const cellRows = [
+    { y: H * 0.34, count: 6, offset: 0 },
+    { y: H * 0.52, count: 5, offset: 0.5 }
+  ];
+
+  cellRows.forEach((row, ri) => {
+    const spacing = W / (row.count + 0.8);
+    for (let ci = 0; ci < row.count; ci++) {
+      const cxPos = (ci + 0.8 + row.offset) * spacing;
+      const cyPos = row.y + Math.sin(T * 1.8 + ci * 1.2 + ri) * 2;
+      const baseR = Math.min(W, H) * 0.055;
+      const cellR = baseR * (isBoosting ? (1.18 + Math.sin(T * 4 + ci) * 0.08) : (0.9 - hyp * 0.15));
+
+      // Cellular outer glow when boosting
+      if (isBoosting) {
+        cx.beginPath();
+        cx.arc(cxPos, cyPos, cellR * 1.6, 0, 7);
+        cx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.15)' : 'rgba(56, 189, 248, 0.2)';
+        cx.fill();
+      }
+
+      // Cell Membrane
+      cx.beginPath();
+      cx.arc(cxPos, cyPos, cellR, 0, 7);
+      if (isBoosting) {
+        cx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.28)' : 'rgba(56, 189, 248, 0.35)';
+      } else if (hyp > 0.6) {
+        // Hypoxic dull cell
+        cx.fillStyle = isLight ? 'rgba(148, 163, 184, 0.22)' : 'rgba(51, 65, 85, 0.4)';
+      } else {
+        // Healthy baseline cell
+        cx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.12)' : 'rgba(166, 219, 230, 0.18)';
+      }
+      cx.fill();
+      cx.strokeStyle = isBoosting ? (isLight ? '#0284c7' : '#38bdf8') : (hyp > 0.6 ? (isLight ? '#94a3b8' : '#475569') : (isLight ? '#38bdf8' : '#a6dbe6'));
+      cx.lineWidth = isBoosting ? 2 : 1;
+      cx.stroke();
+      cx.lineWidth = 1;
+
+      // Cell Nucleus
+      cx.beginPath();
+      const nucR = cellR * 0.35;
+      cx.arc(cxPos, cyPos, nucR, 0, 7);
+      cx.fillStyle = isBoosting ? (isLight ? '#0369a1' : '#e0f2fe') : (hyp > 0.6 ? (isLight ? '#64748b' : '#334155') : (isLight ? '#0284c7' : '#7dd3fc'));
+      cx.fill();
+    }
+  });
+
+  // 4. Microcapillary Channel (Bottom)
+  const capY = H * 0.78;
+  const capH = Math.min(26, H * 0.14);
+  
+  // Capillary background channel
+  cx.fillStyle = capillaryWall;
+  cx.beginPath();
+  cx.rect(0, capY - capH / 2, W, capH);
+  cx.fill();
+
+  // Capillary upper & lower endothelial vessel walls
+  cx.strokeStyle = isLight ? 'rgba(239, 68, 68, 0.45)' : 'rgba(244, 63, 94, 0.55)';
+  cx.beginPath();
+  cx.moveTo(0, capY - capH / 2);
+  cx.lineTo(W, capY - capH / 2);
+  cx.moveTo(0, capY + capH / 2);
+  cx.lineTo(W, capY + capH / 2);
+  cx.stroke();
+
+  // Capillary loops reaching up to dermal papillae
+  const loopCount = 4;
+  for (let li = 1; li <= loopCount; li++) {
+    const lx = (li / (loopCount + 1)) * W;
+    cx.beginPath();
+    cx.moveTo(lx - 12, capY - capH / 2);
+    cx.quadraticCurveTo(lx, capY - capH - 14, lx + 12, capY - capH / 2);
+    cx.strokeStyle = isLight ? 'rgba(239, 68, 68, 0.35)' : 'rgba(244, 63, 94, 0.45)';
+    cx.stroke();
+  }
+
+  // 5. Circulating Red Blood Corpuscles (RBCs) in Capillary
+  const rbcCount = 10;
+  if (rbcPt.length !== rbcCount) {
+    rbcPt = [];
+    for (let i = 0; i < rbcCount; i++) {
+      rbcPt.push({ x: (i / rbcCount) * W, yOff: (Math.random() - 0.5) * (capH * 0.5) });
+    }
+  }
+  const rbcSpeed = isBoosting ? 140 : (70 - hyp * 45); // Slower in hypoxia, fast in boost
+  rbcPt.forEach(rbc => {
+    rbc.x += rbcSpeed * DT;
+    if (rbc.x > W + 20) rbc.x = -20;
+    
+    // Draw oval RBC
+    cx.save();
+    cx.translate(rbc.x, capY + rbc.yOff);
+    cx.scale(1.3, 0.8);
+    cx.beginPath();
+    cx.arc(0, 0, 5.5, 0, 7);
+    if (isBoosting) {
+      // Oxygenated vibrant crimson-red
+      cx.fillStyle = '#ef4444';
+      cx.shadowColor = '#f87171';
+      cx.shadowBlur = 6;
+    } else if (hyp > 0.6) {
+      // Deoxygenated dark plum/maroon
+      cx.fillStyle = isLight ? '#991b1b' : '#881337';
+    } else {
+      cx.fillStyle = '#dc2626';
+    }
+    cx.fill();
+    cx.restore();
+  });
+
+  // 6. Upward O₂ Infusion Bubbles & Sparkles (from Capillary to Dermal Cells)
+  const o2TargetCount = isBoosting ? 40 : Math.round(12 * (1 - hyp * 0.7));
+  while (skinPt.length < o2TargetCount) {
+    skinPt.push({
+      x: Math.random() * W,
+      y: capY - Math.random() * 10,
+      vy: 20 + Math.random() * 40,
+      vx: (Math.random() - 0.5) * 12,
+      r: 1.5 + Math.random() * 2.5,
+      alpha: 0.2 + Math.random() * 0.7,
+      pulse: Math.random() * 6.28
+    });
+  }
+  if (skinPt.length > o2TargetCount) skinPt.length = o2TargetCount;
+
+  skinPt.forEach(p => {
+    const riseMult = isBoosting ? 2.5 : 1;
+    p.y -= p.vy * DT * riseMult;
+    p.x += p.vx * DT;
+    p.pulse += DT * 4;
+    if (p.y < epiY) {
+      p.y = capY + (Math.random() - 0.5) * (capH * 0.6);
+      p.x = Math.random() * W;
+    }
+    cx.beginPath();
+    cx.arc(p.x, p.y, p.r * (isBoosting ? 1.4 : 1), 0, 7);
+    if (isBoosting) {
+      cx.fillStyle = isLight ? `rgba(2, 132, 199, ${0.4 + 0.4 * Math.sin(p.pulse)})` : `rgba(56, 189, 248, ${0.5 + 0.4 * Math.sin(p.pulse)})`;
+      cx.shadowColor = '#38bdf8';
+      cx.shadowBlur = 8;
+    } else {
+      cx.fillStyle = isLight ? `rgba(148, 163, 184, ${p.alpha * 0.4})` : `rgba(203, 213, 225, ${p.alpha * 0.35})`;
+      cx.shadowBlur = 0;
+    }
+    cx.fill();
+    cx.shadowBlur = 0;
+  });
+
+  // 7. Dynamic Biomedical Canvas HUD Overlays
+  // Left: Layer Guides
+  cx.font = '600 9px "Plus Jakarta Sans", sans-serif';
+  cx.fillStyle = subTextColor;
+  cx.textAlign = 'left';
+  cx.fillText('EPIDERMIS', 14, epiY - 6);
+  cx.fillText('DERMIS & COLLAGEN', 14, H * 0.32);
+  cx.fillText('CAPILLARY MICROCIRCULATION', 14, capY - capH / 2 - 4);
+
+  // Top Right: Live Clinical Status Badge
+  cx.textAlign = 'right';
+  const badgeX = W - 14;
+  if (isBoosting) {
+    cx.font = '700 13px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = isLight ? '#0284c7' : '#38bdf8';
+    cx.fillText('✨ 99% O₂ INFUSION ACTIVE', badgeX, 22);
+
+    cx.font = '600 10px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = isLight ? '#059669' : '#34d399';
+    cx.fillText('Microcirculation: +300% · Collagen Synthesis Active', badgeX, 36);
+  } else if (hyp >= 0.75) {
+    cx.font = '700 12px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = isLight ? '#dc2626' : '#f87171';
+    cx.fillText('⚠️ SKIN HYPOXIA DETECTED', badgeX, 22);
+
+    cx.font = '600 10px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = subTextColor;
+    cx.fillText('Microcirculation: Sluggish · Cellular Renewal Stalled', badgeX, 36);
+  } else if (hyp >= 0.45) {
+    cx.font = '700 12px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = isLight ? '#d97706' : '#fbbf24';
+    cx.fillText('⚡ SCREEN FATIGUE & DULLNESS', badgeX, 22);
+
+    cx.font = '600 10px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = subTextColor;
+    cx.fillText('Capillaries under-fueled · Cells craving fuel', badgeX, 36);
+  } else {
+    cx.font = '700 12px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = isLight ? '#059669' : '#34d399';
+    cx.fillText('🌿 RESTED BASELINE', badgeX, 22);
+
+    cx.font = '600 10px "Plus Jakarta Sans", sans-serif';
+    cx.fillStyle = subTextColor;
+    cx.fillText('Equilibrium · Standard ambient delivery', badgeX, 36);
+  }
 }
 
 const M = {
@@ -1764,15 +1996,15 @@ const M = {
     k: 'Beauty lab · 5 seconds',
     h: 'Nourish your skin.<br>From within.',
     p: 'Select daily skin stress levels. Tap YU to flood capillaries with 99% pure oxygen.',
-    pk: [['Resting', 20], ['Screen fatigue', 50], ['City pollution', 80], ['Skin hypoxia', 100]],
-    min: 0, max: 100, def: 50, u: '% glow',
-    n: v => Math.min(100, 35 + v * 0.4),
-    nm: v => 'Skin vitality',
-    f: v => v > 70 ? 'Skin hypoxia: microcirculation sluggish, cellular renewal slow.' : v > 40 ? 'Moderate dullness. Capillaries craving cellular fuel.' : 'Balanced. Hydrated and rested.',
-    fx: () => ({ b: 0, vg: 0 }),
+    pk: [['Rested', 15], ['Screen fatigue', 45], ['City pollution', 75], ['Skin hypoxia', 100]],
+    min: 0, max: 100, def: 45, u: '% O₂ saturation',
+    n: v => Math.max(22, Math.round(96 - v * 0.72)),
+    nm: v => 'Dermal Oxygenation',
+    f: v => v >= 75 ? 'Skin hypoxia: oxygen starvation slows cellular turnover and microcirculation.' : v >= 40 ? 'Moderate dullness: capillaries under-fueled from screen time & shallow breathing.' : 'Rested baseline: balanced cellular equilibrium.',
+    fx: v => ({ b: Math.max(0, (v - 65) / 20), vg: Math.max(0, (v - 40) / 120) }),
     yb: 'TAP · INFUSE PURE OXYGEN',
-    y: 'Capillaries saturated. Oxygen stimulates fibroblast collagen production and accelerates dermal cell repair.',
-    clr: 0, d: 4.5, r: skinGlow
+    y: 'Capillaries saturated. 99% pure O₂ accelerates microcirculation +300% and fuels collagen synthesis from within.',
+    clr: 1, d: 4.5, r: skinGlow
   }
 };
 
@@ -1809,7 +2041,7 @@ function setMode(k) {
   $('rg').max = m.max;
   $('rg').value = m.def;
   $('ybtn').textContent = m.yb;
-  boost = 0; rt = -1; cnt = 0; pt = []; lvl = 100;
+  boost = 0; rt = -1; cnt = 0; pt = []; skinPt = []; rbcPt = []; lvl = 100;
   $('cli').style.width = '100%';
   h = m.def; pace = 14 + h * .45;
   draw();
